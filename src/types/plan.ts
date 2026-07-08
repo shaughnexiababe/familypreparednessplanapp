@@ -52,6 +52,8 @@ export interface GoBagChecklist {
     emergencyMoney: boolean;
     govIds: boolean;
     importantDocs: boolean;
+    familyPhotos: boolean;
+    notebookPencil: boolean;
   };
   toiletries: {
     covidKit: boolean;
@@ -60,12 +62,16 @@ export interface GoBagChecklist {
     mosquitoRepellant: boolean;
     menstrualPads: boolean;
     babyDiapers: boolean;
+    wetWipesTissue: boolean;
+    blanketRaincoat: boolean;
   };
   foodMeds: {
     drinkingWater: boolean;
     readyToEatFood: boolean;
     firstAidMeds: boolean;
     babyMeds: boolean;
+    canOpenerUtensils: boolean;
+    maintenanceMeds: boolean;
   };
   tools: {
     flashlight: boolean;
@@ -74,8 +80,8 @@ export interface GoBagChecklist {
     candleMatches: boolean;
     ropeRaincoat: boolean;
     radioBlanket: boolean;
-    notebookPencil: boolean;
-    emergencyNumbersList: boolean;
+    multiToolKnife: boolean;
+    extraBatteries: boolean;
     comfortToy: boolean;
   };
   eBalde: {
@@ -205,7 +211,9 @@ export const DEFAULT_PLAN_STATE: FamilyPlanState = {
     documentsCash: {
       emergencyMoney: true,
       govIds: true,
-      importantDocs: true
+      importantDocs: true,
+      familyPhotos: true,
+      notebookPencil: true
     },
     toiletries: {
       covidKit: true,
@@ -213,13 +221,17 @@ export const DEFAULT_PLAN_STATE: FamilyPlanState = {
       clothes: true,
       mosquitoRepellant: false,
       menstrualPads: true,
-      babyDiapers: false
+      babyDiapers: false,
+      wetWipesTissue: true,
+      blanketRaincoat: true
     },
     foodMeds: {
       drinkingWater: true,
       readyToEatFood: true,
       firstAidMeds: true,
-      babyMeds: false
+      babyMeds: false,
+      canOpenerUtensils: true,
+      maintenanceMeds: false
     },
     tools: {
       flashlight: true,
@@ -228,8 +240,8 @@ export const DEFAULT_PLAN_STATE: FamilyPlanState = {
       candleMatches: true,
       ropeRaincoat: true,
       radioBlanket: false,
-      notebookPencil: true,
-      emergencyNumbersList: true,
+      multiToolKnife: true,
+      extraBatteries: true,
       comfortToy: false
     },
     eBalde: {
