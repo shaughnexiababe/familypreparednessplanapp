@@ -601,6 +601,20 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
                 />
                 <span className="text-sm text-slate-700">{t("Importanteng dokumento (passports, birth certificates, atbp.)", "Important documents (passports, birth certificates, etc.)")}</span>
               </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.documentsCash.familyPhotos}
+                  onCheckedChange={() => toggleChecklistItem("documentsCash", "familyPhotos")}
+                />
+                <span className="text-sm text-slate-700">{t("Larawan ng Pamilya (para sa pagkakakilanlan)", "Family Photos (for identification)")}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.documentsCash.notebookPencil}
+                  onCheckedChange={() => toggleChecklistItem("documentsCash", "notebookPencil")}
+                />
+                <span className="text-sm text-slate-700">{t("Notebook at Lapis/Ballpen", "Notebook and Pencil/Pen")}</span>
+              </label>
             </div>
           </div>
 
@@ -628,6 +642,27 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
                   onCheckedChange={() => toggleChecklistItem("toiletries", "clothes")}
                 />
                 <span className="text-sm text-slate-700">{t("Mga damit at kumot", "Clothes and blankets")}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.toiletries.mosquitoRepellant}
+                  onCheckedChange={() => toggleChecklistItem("toiletries", "mosquitoRepellant")}
+                />
+                <span className="text-sm text-slate-700">{t("Mosquito Repellant", "Mosquito Repellant")}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.toiletries.menstrualPads}
+                  onCheckedChange={() => toggleChecklistItem("toiletries", "menstrualPads")}
+                />
+                <span className="text-sm text-slate-700">{t("Sanitary Pads / Menstrual Hygiene items", "Sanitary Pads / Menstrual Hygiene items")}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.toiletries.babyDiapers}
+                  onCheckedChange={() => toggleChecklistItem("toiletries", "babyDiapers")}
+                />
+                <span className="text-sm text-slate-700">{t("Diapers para sa sanggol (kung mayroon)", "Baby Diapers (if applicable)")}</span>
               </label>
             </div>
           </div>
@@ -657,6 +692,20 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
                 />
                 <span className="text-sm text-slate-700">{t("First aid kit (gamot sa lagnat, ubo, sipon, atbp.)", "First aid kit (medicines for fever, cough, cold, etc.)")}</span>
               </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.foodMeds.canOpenerUtensils}
+                  onCheckedChange={() => toggleChecklistItem("foodMeds", "canOpenerUtensils")}
+                />
+                <span className="text-sm text-slate-700">{t("Can Opener at mga kubyertos", "Can Opener and utensils")}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.foodMeds.maintenanceMeds}
+                  onCheckedChange={() => toggleChecklistItem("foodMeds", "maintenanceMeds")}
+                />
+                <span className="text-sm text-slate-700">{t("Maintenance medicines (para sa may sakit)", "Maintenance medicines (if applicable)")}</span>
+              </label>
             </div>
           </div>
 
@@ -684,6 +733,27 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
                   onCheckedChange={() => toggleChecklistItem("tools", "whistle")}
                 />
                 <span className="text-sm text-slate-700">{t("Pito / Whistle (isa bawat miyembro)", "Whistle (one for each member)")}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.tools.candleMatches}
+                  onCheckedChange={() => toggleChecklistItem("tools", "candleMatches")}
+                />
+                <span className="text-sm text-slate-700">{t("Kandila at Posporo / Lighter", "Candles and Matches / Lighter")}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.tools.ropeRaincoat}
+                  onCheckedChange={() => toggleChecklistItem("tools", "ropeRaincoat")}
+                />
+                <span className="text-sm text-slate-700">{t("Tali at Kapote", "Rope and Raincoat")}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.tools.multiToolKnife}
+                  onCheckedChange={() => toggleChecklistItem("tools", "multiToolKnife")}
+                />
+                <span className="text-sm text-slate-700">{t("Multi-tool o Swiss Army Knife", "Multi-tool or Swiss Army Knife")}</span>
               </label>
             </div>
           </div>
