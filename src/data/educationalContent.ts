@@ -8,16 +8,19 @@ export interface AgeGuideline {
   title: Translation;
   desc: Translation;
   icon: string;
+  imageUrl: string;
 }
 
 export interface PreparednessCharacteristic {
   title: Translation;
   items: Translation[];
+  imageUrl: string;
 }
 
 export interface DisasterTip {
   hazard: string;
   title: Translation;
+  imageUrl: string;
   before: Translation[];
   during: Translation[];
   after: Translation[];
@@ -31,10 +34,11 @@ export const AGE_GUIDELINES: AgeGuideline[] = [
       en: "3 Years Old Guidelines"
     },
     desc: {
-      tl: "Turuan silang gumamit ng pito, tumawag ng tulong, at tandan ang address ng bahay at pangalan ng mga magulang.",
+      tl: "Turuan silang gumamit ng pito, tumawag ng tulong, at tandaan ang address ng bahay at pangalan ng mga magulang.",
       en: "Teach them to use a whistle, call for help, and memorize their home address and parents' names."
     },
-    icon: "Megaphone"
+    icon: "Megaphone",
+    imageUrl: "https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=300&q=80" // Child with whistle/toy
   },
   {
     age: "5",
@@ -46,7 +50,8 @@ export const AGE_GUIDELINES: AgeGuideline[] = [
       tl: "Turuan silang mag-pack ng kanilang sariling Go-Bags o emergency kits na may paboritong laruan o meryenda.",
       en: "Teach them to pack their own Go-Bags or emergency kits with a favorite toy or snack."
     },
-    icon: "Briefcase"
+    icon: "Briefcase",
+    imageUrl: "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=300&q=80" // Child with backpack
   },
   {
     age: "7",
@@ -58,7 +63,8 @@ export const AGE_GUIDELINES: AgeGuideline[] = [
       tl: "Turuan silang mag 'Drop, Cover, and Hold' kapag may lindol, at alamin ang mga ligtas na lugar sa bahay.",
       en: "Teach them to 'Drop, Cover, and Hold' during an earthquake, and identify safe spots in the house."
     },
-    icon: "ShieldAlert"
+    icon: "ShieldAlert",
+    imageUrl: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=300&q=80" // Active kids learning
   },
   {
     age: "15-17",
@@ -70,7 +76,8 @@ export const AGE_GUIDELINES: AgeGuideline[] = [
       tl: "Bigyan sila ng listahan ng emergency hotlines para i-save sa kanilang mobile phones. Turuan silang mag-monitor ng updates gamit ang social media.",
       en: "Give them a list of emergency hotlines to save on their mobile phones. Teach them to monitor updates using social media."
     },
-    icon: "Smartphone"
+    icon: "Smartphone",
+    imageUrl: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=300&q=80" // Teenager with phone
   },
   {
     age: "18+",
@@ -82,7 +89,8 @@ export const AGE_GUIDELINES: AgeGuideline[] = [
       tl: "Turuan silang tumulong na gawing mas matibay ang bahay sa anumang emergency at maging lider sa paglikas.",
       en: "Teach them to help reinforce the house for any emergency and act as leaders during evacuation."
     },
-    icon: "Home"
+    icon: "Home",
+    imageUrl: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=300&q=80" // Young adult helping at home
   }
 ];
 
@@ -92,6 +100,7 @@ export const PREPARED_FAMILY_CHARACTERISTICS: PreparednessCharacteristic[] = [
       tl: "Alam ang mga Sumusunod (Knowledgeable of the Following)",
       en: "Knowledgeable of the Following"
     },
+    imageUrl: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=500&q=80", // Family studying map/info
     items: [
       {
         tl: "Mga bantang panganib na maaring makaapekto sa Barangay at pamilya.",
@@ -124,6 +133,7 @@ export const PREPARED_FAMILY_CHARACTERISTICS: PreparednessCharacteristic[] = [
       tl: "May mga Praktikal na Gawain o Hakbang (Practical Actions & Steps)",
       en: "Practical Actions & Steps"
     },
+    imageUrl: "https://images.unsplash.com/photo-1584263343329-73652ad895a4?auto=format&fit=crop&w=500&q=80", // Emergency supplies / Go Bag
     items: [
       {
         tl: "May sapat na emergency supplies (pagkain, tubig, gamot) para sa 3 araw.",
@@ -148,6 +158,7 @@ export const PREPARED_FAMILY_CHARACTERISTICS: PreparednessCharacteristic[] = [
       tl: "May Plano sa Paghahanda (Preparedness Planning)",
       en: "Preparedness Planning"
     },
+    imageUrl: "https://images.unsplash.com/photo-1609234656388-0ff363383899?auto=format&fit=crop&w=500&q=80", // Family meeting / discussion
     items: [
       {
         tl: "Regular na nagpupulong ang pamilya tungkol sa kaligtasan.",
@@ -172,6 +183,7 @@ export const DISASTER_TIPS: DisasterTip[] = [
       tl: "Bagyo at Baha (Typhoon & Flood)",
       en: "Typhoon & Flood"
     },
+    imageUrl: "https://images.unsplash.com/photo-1545007805-a44ee83438fa?auto=format&fit=crop&w=600&q=80", // Heavy rain / storm
     before: [
       {
         tl: "I-monitor ang ulat ng panahon at mga babala sa radyo o TV.",
@@ -221,6 +233,7 @@ export const DISASTER_TIPS: DisasterTip[] = [
       tl: "Lindol (Earthquake)",
       en: "Earthquake"
     },
+    imageUrl: "https://images.unsplash.com/photo-1469571486090-7d99c11d5024?auto=format&fit=crop&w=600&q=80", // Ground / structural safety
     before: [
       {
         tl: "I-secure ang mga mabibigat na kasangkapan sa pader.",
@@ -270,6 +283,7 @@ export const DISASTER_TIPS: DisasterTip[] = [
       tl: "Sunog (Fire)",
       en: "Fire"
     },
+    imageUrl: "https://images.unsplash.com/photo-1508873696983-2df519f0397e?auto=format&fit=crop&w=600&q=80", // Fire safety / extinguisher
     before: [
       {
         tl: "Iwasan ang overloading ng mga saksakan ng kuryente.",

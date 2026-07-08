@@ -5,8 +5,7 @@ import { MobilePlanWizard } from "@/components/MobilePlanWizard";
 import { PlanPreview } from "@/components/PlanPreview";
 import { AGE_GUIDELINES, PREPARED_FAMILY_CHARACTERISTICS, DISASTER_TIPS } from "@/data/educationalContent";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Shield, Smartphone, Monitor, BookOpen, HelpCircle, CheckCircle, Info, Heart, Sparkles } from "lucide-react";
+import { Shield, Smartphone, Monitor, BookOpen, CheckCircle, Info, Heart, Sparkles, MapPin } from "lucide-react";
 
 const Index = () => {
   const [plan, setPlan] = useState<FamilyPlanState>(DEFAULT_PLAN_STATE);
@@ -64,6 +63,36 @@ const Index = () => {
           </div>
         </div>
       </header>
+
+      {/* Hero Visual Banner */}
+      <div className="relative bg-slate-900 text-white overflow-hidden">
+        <div className="absolute inset-0 opacity-40 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=1200&q=80')" }}></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/80 to-transparent"></div>
+        <div className="relative max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-20 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="max-w-2xl space-y-4">
+            <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 px-3 py-1 rounded-full text-amber-400 text-xs font-bold uppercase tracking-wider">
+              <MapPin className="w-3.5 h-3.5" />
+              {t("Probinsya ng Camarines Norte", "Province of Camarines Norte")}
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-tight">
+              {t("Maging Handa, Maging Ligtas ang Pamilyang Pilipino", "Be Prepared, Keep the Filipino Family Safe")}
+            </h2>
+            <p className="text-sm md:text-base text-slate-300 leading-relaxed">
+              {t(
+                "Ang paghahanda ay nagsisimula sa tahanan. Gumawa ng inyong sariling Family Preparedness Plan ngayon upang masiguro ang kaligtasan ng bawat miyembro ng pamilya sa anumang sakuna.",
+                "Preparedness starts at home. Create your own Family Preparedness Plan today to ensure the safety of every family member during any disaster."
+              )}
+            </p>
+          </div>
+          <div className="shrink-0 hidden md:block">
+            <img 
+              src="https://images.unsplash.com/photo-1590402449133-79410c36a006?auto=format&fit=crop&w=400&q=80" 
+              alt="Filipino Family Preparedness" 
+              className="w-72 h-48 object-cover rounded-2xl border-4 border-white/10 shadow-2xl"
+            />
+          </div>
+        </div>
+      </div>
 
       {/* Main Dashboard Layout */}
       <main className="max-w-7xl mx-auto px-4 md:px-8 mt-8 space-y-8">
@@ -188,18 +217,27 @@ const Index = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {PREPARED_FAMILY_CHARACTERISTICS.map((char, idx) => (
-                  <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
-                    <h3 className="font-bold text-slate-800 text-base border-b pb-2 text-amber-600">
-                      {t(char.title.tl, char.title.en)}
-                    </h3>
-                    <ul className="space-y-2">
-                      {char.items.map((item, itemIdx) => (
-                        <li key={itemIdx} className="text-xs text-slate-600 flex items-start gap-2">
-                          <span className="text-amber-500 font-bold">•</span>
-                          <span>{t(item.tl, item.en)}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  <div key={idx} className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden flex flex-col justify-between">
+                    <div>
+                      <img 
+                        src={char.imageUrl} 
+                        alt={t(char.title.tl, char.title.en)} 
+                        className="w-full h-48 object-cover"
+                      />
+                      <div className="p-6 space-y-4">
+                        <h3 className="font-bold text-slate-800 text-base border-b pb-2 text-amber-600">
+                          {t(char.title.tl, char.title.en)}
+                        </h3>
+                        <ul className="space-y-2">
+                          {char.items.map((item, itemIdx) => (
+                            <li key={itemIdx} className="text-xs text-slate-600 flex items-start gap-2">
+                              <span className="text-amber-500 font-bold">•</span>
+                              <span>{t(item.tl, item.en)}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -222,17 +260,24 @@ const Index = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                 {AGE_GUIDELINES.map((guide, idx) => (
-                  <div key={idx} className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm text-center space-y-3 flex flex-col justify-between">
-                    <div className="space-y-2">
-                      <div className="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto font-black text-lg">
-                        {guide.age}
+                  <div key={idx} className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden flex flex-col justify-between">
+                    <div>
+                      <img 
+                        src={guide.imageUrl} 
+                        alt={t(guide.title.tl, guide.title.en)} 
+                        className="w-full h-32 object-cover"
+                      />
+                      <div className="p-4 space-y-2 text-center">
+                        <div className="w-10 h-10 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto font-black text-sm -mt-8 relative border-2 border-white shadow-md">
+                          {guide.age}
+                        </div>
+                        <h3 className="font-bold text-slate-800 text-xs pt-1">
+                          {t(guide.title.tl, guide.title.en)}
+                        </h3>
+                        <p className="text-[11px] text-slate-500 leading-relaxed">
+                          {t(guide.desc.tl, guide.desc.en)}
+                        </p>
                       </div>
-                      <h3 className="font-bold text-slate-800 text-xs">
-                        {t(guide.title.tl, guide.title.en)}
-                      </h3>
-                      <p className="text-[11px] text-slate-500 leading-relaxed">
-                        {t(guide.desc.tl, guide.desc.en)}
-                      </p>
                     </div>
                   </div>
                 ))}
@@ -255,11 +300,20 @@ const Index = () => {
 
               <div className="space-y-6">
                 {DISASTER_TIPS.map((tip, idx) => (
-                  <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
-                    <h3 className="text-lg font-bold text-slate-800 border-b pb-2 text-amber-600">
-                      {t(tip.title.tl, tip.title.en)}
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                  <div key={idx} className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+                    <div className="relative h-48 md:h-64 bg-slate-900">
+                      <img 
+                        src={tip.imageUrl} 
+                        alt={t(tip.title.tl, tip.title.en)} 
+                        className="w-full h-full object-cover opacity-60"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent flex items-end p-6">
+                        <h3 className="text-xl md:text-2xl font-black text-white">
+                          {t(tip.title.tl, tip.title.en)}
+                        </h3>
+                      </div>
+                    </div>
+                    <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
                       <div className="bg-amber-50/50 p-4 rounded-xl space-y-2">
                         <h4 className="font-bold text-amber-700 uppercase tracking-wider">
                           {t("BAGO (BEFORE)", "BEFORE")}
