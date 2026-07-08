@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Trash2, Shield, Users, Calendar, MapPin, CheckSquare, Phone, BookOpen } from "lucide-react";
+import { Plus, Trash2, Shield, Users, Calendar, MapPin, CheckSquare, Phone, BookOpen, Zap, Droplets } from "lucide-react";
 import { toast } from "sonner";
 
 interface WebPlanWizardProps {
@@ -152,6 +152,10 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
     });
   };
 
+  const selectedMuni = CAMARINES_NORTE_HOTLINES.municipalities.find(
+    (m) => m.name.toLowerCase() === plan.profile.municipality.toLowerCase()
+  ) || CAMARINES_NORTE_HOTLINES.municipalities[2];
+
   return (
     <div className="space-y-8">
       {/* Step 1: Household Profile */}
@@ -207,6 +211,24 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
           </div>
 
           <div className="space-y-2">
+            <Label className="text-slate-700 font-semibold">{t("Pagmamay-ari ng Bahay", "House Ownership")}</Label>
+            <Select
+              value={plan.profile.houseOwnership}
+              onValueChange={(val) => updateProfile({ houseOwnership: val })}
+            >
+              <SelectTrigger className="rounded-xl border-slate-200">
+                <SelectValue placeholder={t("Pumili ng Pagmamay-ari", "Select Ownership")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Owned">{t("May-ari (Owned)", "Owned")}</SelectItem>
+                <SelectItem value="Rented">{t("Nangungupahan (Rented)", "Rented")}</SelectItem>
+                <SelectItem value="Shared">{t("Nakikitira (Shared)", "Shared")}</SelectItem>
+                <SelectItem value="Informal Settler">{t("Informal Settler", "Informal Settler")}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
             <Label className="text-slate-700 font-semibold">{t("Estruktura ng Bahay", "House Structure")}</Label>
             <Select
               value={plan.profile.houseStructure}
@@ -216,15 +238,86 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
                 <SelectValue placeholder={t("Pumili ng Estruktura", "Select Structure")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Semento / Concrete">{t("Semento (Concrete)", "Concrete")}</SelectItem>
-                <SelectItem value="Kahoy / Wood">{t("Kahoy (Wood)", "Wood")}</SelectItem>
+                <SelectItem value="Concrete">{t("Semento (Concrete)", "Concrete")}</SelectItem>
+                <SelectItem value="Wood">{t("Kahoy (Wood)", "Wood")}</SelectItem>
                 <SelectItem value="Semi-Concrete">{t("Semi-Concrete", "Semi-Concrete")}</SelectItem>
-                <SelectItem value="Magaan na Materyales (Light Materials)">{t("Magaan na Materyales (Light Materials)", "Light Materials")}</SelectItem>
+                <SelectItem value="Light Materials">{t("Magaan na Materyales", "Light Materials")}</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
-          <div className="md:col-span-2 space-y-2">
+          <div className="space-y-2">
+            <Label className="text-slate-700 font-semibold">{t("Pinagkukunan ng Tubig", "Water Source")}</Label>
+            <Select
+              value={plan.profile.waterSource}
+              onValueChange={(val) => updateProfile({ waterSource: val })}
+            >
+              <SelectTrigger className="rounded-xl border-slate-200">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Faucet">{t("Gripo (Faucet)", "Faucet")}</SelectItem>
+                <SelectItem value="Well">{t("Balon (Well)", "Well")}</SelectItem>
+                <SelectItem value="Shared">{t("Nakikihati (Shared)", "Shared")}</SelectItem>
+                <SelectItem value="Spring">{t("Bukal (Spring)", "Spring")}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label className="text-slate-700 font-semibold">{t("Uri ng Palikuran", "Toilet Facility")}</Label>
+            <Select
+              value={plan.profile.toiletFacility}
+              onValueChange={(val) => updateProfile({ toiletFacility: val })}
+            >
+              <SelectTrigger className="rounded-xl border-slate-200">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Water-sealed">{t("Water-sealed", "Water-sealed")}</SelectItem>
+                <SelectItem value="Open pit">{t("Open pit", "Open pit")}</SelectItem>
+                <SelectItem value="None">{t("Walang sariling CR", "None")}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label className="text-slate-700 font-semibold">{t("Kuryente", "Electricity")}</Label>
+            <Select
+              value={plan.profile.electricitySource}
+              onValueChange={(val) => updateProfile({ electricitySource: val })}
+            >
+              <SelectTrigger className="rounded-xl border-slate-200">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="CANORECO">CANORECO</SelectItem>
+                <SelectItem value="Solar">{t("Solar", "Solar")}</SelectItem>
+                <SelectItem value="Generator">{t("Generator", "Generator")}</SelectItem>
+                <SelectItem value="None">{t("Wala", "None")}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label className="text-slate-700 font-semibold">{t("Gamit sa Pagluluto", "Cooking")}</Label>
+            <Select
+              value={plan.profile.cookingFacility}
+              onValueChange={(val) => updateProfile({ cookingFacility: val })}
+            >
+              <SelectTrigger className="rounded-xl border-slate-200">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Gas">LPG / Gas</SelectItem>
+                <SelectItem value="Charcoal">{t("Uling (Charcoal)", "Charcoal")}</SelectItem>
+                <SelectItem value="Electric">{t("Kuryente (Electric)", "Electric")}</SelectItem>
+                <SelectItem value="Wood">{t("Kahoy (Wood)", "Wood")}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="md:col-span-3 space-y-2">
             <Label className="text-slate-700 font-semibold">{t("Mga Bantang Panganib sa Lokasyon", "Hazards in Location")}</Label>
             <div className="flex flex-wrap gap-3 pt-1">
               {["Baha (Flood)", "Lindol (Earthquake)", "Landslide", "Bagyo (Typhoon)", "Tsunami", "Storm Surge"].map((hazard) => {
@@ -627,21 +720,21 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
                   checked={plan.checklist.toiletries.covidKit}
                   onCheckedChange={() => toggleChecklistItem("toiletries", "covidKit")}
                 />
-                <span className="text-sm text-slate-700">{t("COVID-19 safety kit (alcohol, face masks)", "COVID-19 safety kit (alcohol, face masks)")}</span>
+                <span className="text-sm text-slate-700">{t("Alcohol at Face Masks", "Alcohol & Face Masks")}</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <Checkbox
                   checked={plan.checklist.toiletries.soapToothbrush}
                   onCheckedChange={() => toggleChecklistItem("toiletries", "soapToothbrush")}
                 />
-                <span className="text-sm text-slate-700">{t("Anti-bacterial soap, toothbrush at toothpaste", "Anti-bacterial soap, toothbrush and toothpaste")}</span>
+                <span className="text-sm text-slate-700">{t("Sabon, Toothbrush at Toothpaste", "Soap, Toothbrush and Toothpaste")}</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <Checkbox
                   checked={plan.checklist.toiletries.clothes}
                   onCheckedChange={() => toggleChecklistItem("toiletries", "clothes")}
                 />
-                <span className="text-sm text-slate-700">{t("Mga damit at kumot", "Clothes and blankets")}</span>
+                <span className="text-sm text-slate-700">{t("Ekstrang damit at kumot", "Extra clothes and blankets")}</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <Checkbox
@@ -760,7 +853,120 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
         </div>
       </div>
 
-      {/* Step 6: Meeting Schedule */}
+      {/* Step 6: Personal Hotlines */}
+      <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-6">
+        <div className="flex items-center gap-3 border-b pb-4">
+          <div className="p-2 bg-blue-100 text-blue-700 rounded-xl">
+            <Phone className="w-6 h-6" />
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-slate-800">{t("Personalize Hotlines ng Barangay", "Personalize Barangay Hotlines")}</h2>
+            <p className="text-sm text-slate-500">{t("Ilagay ang mga numero ng inyong barangay para sa mabilis na pagtawag", "Enter your barangay contact numbers for quick access")}</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="space-y-2">
+            <Label className="text-slate-700 font-semibold">{t("Hotline ng Brgy.", "Barangay Hotline")}</Label>
+            <Input
+              value={plan.profile.brgyHotline}
+              onChange={(e) => updateProfile({ brgyHotline: e.target.value })}
+              placeholder="09XX-XXX-XXXX"
+              className="rounded-xl border-slate-200"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label className="text-slate-700 font-semibold">BPSO</Label>
+            <Input
+              value={plan.profile.bpsoHotline}
+              onChange={(e) => updateProfile({ bpsoHotline: e.target.value })}
+              placeholder="Hotline"
+              className="rounded-xl border-slate-200"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label className="text-slate-700 font-semibold">BHW</Label>
+            <Input
+              value={plan.profile.bhwHotline}
+              onChange={(e) => updateProfile({ bhwHotline: e.target.value })}
+              placeholder="Hotline"
+              className="rounded-xl border-slate-200"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label className="text-slate-700 font-semibold">{t("At Iba pa", "Others")}</Label>
+            <Input
+              value={plan.profile.otherHotline}
+              onChange={(e) => updateProfile({ otherHotline: e.target.value })}
+              placeholder="Other contact"
+              className="rounded-xl border-slate-200"
+            />
+          </div>
+        </div>
+
+        {/* Display Reference Hotlines */}
+        <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-6">
+          <h3 className="font-bold text-slate-800 flex items-center gap-2">
+            <Shield className="w-5 h-5 text-amber-600" />
+            {t("Reference: Mga Emergency Hotline ng Probinsya", "Reference: Provincial Emergency Hotlines")}
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white p-4 rounded-xl border border-slate-200 space-y-3">
+              <p className="font-black text-amber-800 uppercase text-xs border-b pb-2">PDRRMO CamNorte</p>
+              <div className="grid grid-cols-2 gap-y-2 text-xs">
+                <span className="font-bold text-slate-500">OPCEN:</span> <span className="font-black text-slate-800">{CAMARINES_NORTE_HOTLINES.pdrrmo.opcen}</span>
+                <span className="font-bold text-slate-500">SMART:</span> <span className="font-black text-slate-800">{CAMARINES_NORTE_HOTLINES.pdrrmo.smart}</span>
+                <span className="font-bold text-slate-500">GLOBE:</span> <span className="font-black text-slate-800">{CAMARINES_NORTE_HOTLINES.pdrrmo.globe}</span>
+                <span className="font-bold text-slate-500">PNP:</span> <span className="font-black text-slate-800">{CAMARINES_NORTE_HOTLINES.pdrrmo.pnp}</span>
+                <span className="font-bold text-slate-500">BFP:</span> <span className="font-black text-slate-800">{CAMARINES_NORTE_HOTLINES.pdrrmo.bfp}</span>
+              </div>
+            </div>
+
+            <div className="bg-white p-4 rounded-xl border border-slate-200 space-y-3">
+              <p className="font-black text-emerald-800 uppercase text-xs border-b pb-2">MDRRMO {selectedMuni.name}</p>
+              <div className="grid grid-cols-1 gap-y-2 text-xs">
+                <div className="flex justify-between">
+                  <span className="font-bold text-slate-500">{t("MDRRMO Hotline:", "MDRRMO Hotline:")}</span>
+                  <span className="font-black text-slate-800">{selectedMuni.mdrrmo.join(" / ")}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-bold text-slate-500">PNP {selectedMuni.name}:</span>
+                  <span className="font-black text-slate-800">{selectedMuni.pnp}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-bold text-slate-500">BFP {selectedMuni.name}:</span>
+                  <span className="font-black text-slate-800">{selectedMuni.bfp}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="md:col-span-2 bg-white p-4 rounded-xl border border-slate-200 space-y-3">
+              <p className="font-black text-blue-800 uppercase text-xs border-b pb-2">{t("Mga Utility Hotline", "Utility Hotlines")}</p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+                <div className="flex flex-col gap-1">
+                  <span className="font-bold text-slate-500 flex items-center gap-1"><Zap className="w-3 h-3 text-amber-500" /> CANORECO</span>
+                  <span className="font-black text-slate-800">{CAMARINES_NORTE_HOTLINES.utilities.canoreco}</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="font-bold text-slate-500 flex items-center gap-1"><Droplets className="w-3 h-3 text-blue-400" /> Prime Water</span>
+                  <span className="font-black text-slate-800">{CAMARINES_NORTE_HOTLINES.utilities.primeWater}</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="font-bold text-slate-500 flex items-center gap-1"><Droplets className="w-3 h-3 text-blue-600" /> CN Water District</span>
+                  <span className="font-black text-slate-800">{CAMARINES_NORTE_HOTLINES.utilities.waterDistrict}</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="font-bold text-slate-500 flex items-center gap-1"><Shield className="w-3 h-3 text-red-500" /> BFP Provincial</span>
+                  <span className="font-black text-slate-800">{CAMARINES_NORTE_HOTLINES.utilities.bfpProvincial}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Step 7: Meeting Schedule */}
       <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-6">
         <div className="flex items-center gap-3 border-b pb-4">
           <div className="p-2 bg-amber-100 text-amber-700 rounded-xl">

@@ -7,12 +7,12 @@ export interface MunicipalityHotline {
 
 export const CAMARINES_NORTE_HOTLINES = {
   pdrrmo: {
-    title: "Camarines Norte Provincial Disaster Risk Reduction and Management Office (PDRRMO)",
+    title: "Provincial Disaster Risk Reduction and Management Office (PDRRMO)",
     address: "2nd Floor Provincial Capitol Building, Daet, Camarines Norte",
     fbPage: "@fb.com/pdrrmocamnorte",
     email: "camarinesnortepdrrmo@gmail.com",
     frequency: "167.325 MHz",
-    opcen: "054-216-0328",
+    opcen: "054-216-0328 / 0998-561-5388",
     smart: "0998-561-5388",
     globe: "0917-583-9147",
     pnp: "0998 598 5951",
@@ -40,7 +40,7 @@ export const CAMARINES_NORTE_HOTLINES = {
     {
       name: "Daet",
       pnp: "0998 598 5954",
-      bfp: "0939 833 7795",
+      bfp: "0939 933 7795",
       mdrrmo: ["0912 855 5551"]
     },
     {
@@ -58,7 +58,7 @@ export const CAMARINES_NORTE_HOTLINES = {
     {
       name: "Mercedes",
       pnp: "0998 598 5958",
-      bfp: "0998 547 0476",
+      bfp: "0998 547 0478",
       mdrrmo: ["0919 098 3190"]
     },
     {
@@ -70,7 +70,7 @@ export const CAMARINES_NORTE_HOTLINES = {
     {
       name: "San Lorenzo Ruiz",
       pnp: "0998 598 5961",
-      bfp: "0939 696 1561",
+      bfp: "0938 696 1561",
       mdrrmo: ["0910 102 0528", "0950 356 2460"]
     },
     {
@@ -88,7 +88,7 @@ export const CAMARINES_NORTE_HOTLINES = {
     {
       name: "Talisay",
       pnp: "0998 598 5964",
-      bfp: "0939 486 3555",
+      bfp: "0930 466 3555",
       mdrrmo: ["0909 063 5567", "0967 330 3136"]
     },
     {

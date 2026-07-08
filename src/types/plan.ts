@@ -99,6 +99,11 @@ export interface HouseholdProfile {
   barangay: string;
   sitio: string;
   houseStructure: string; // e.g., Concrete, Wood, Light materials
+  houseOwnership: string; // e.g., Owned, Rented, Informal Settler
+  waterSource: string; // e.g., Shared, Faucet, Well
+  toiletFacility: string; // e.g., Water-sealed, Open pit, None
+  electricitySource: string; // e.g., CANORECO, Solar, Generator
+  cookingFacility: string; // e.g., Gas, Charcoal, Electric
   hazardVulnerability: string[]; // e.g., Flood-prone, Landslide-prone, Coastal
   brgyHotline: string;
   bpsoHotline: string;
@@ -122,6 +127,11 @@ export const DEFAULT_PLAN_STATE: FamilyPlanState = {
     barangay: "",
     sitio: "",
     houseStructure: "Concrete",
+    houseOwnership: "Owned",
+    waterSource: "Faucet",
+    toiletFacility: "Water-sealed",
+    electricitySource: "CANORECO",
+    cookingFacility: "Gas",
     hazardVulnerability: [],
     brgyHotline: "",
     bpsoHotline: "",

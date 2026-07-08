@@ -22,7 +22,7 @@ export const PlanPreview: React.FC<PlanPreviewProps> = ({ plan, lang }) => {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(plan, null, 2));
     const downloadAnchor = document.createElement("a");
     downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", `Family_Preparedness_Plan_${plan.profile.barangay || "CamNorte"}.json`);
+    downloadAnchor.setAttribute("download", `Family_Preparedness_Plan_${plan.profile.barangay || "famprepplan"}.json`);
     document.body.appendChild(downloadAnchor);
     downloadAnchor.click();
     downloadAnchor.remove();
@@ -90,10 +90,30 @@ export const PlanPreview: React.FC<PlanPreviewProps> = ({ plan, lang }) => {
               <span className="font-bold text-slate-800 text-base">{plan.profile.sitio || "---"}</span>
             </div>
             <div>
-              <span className="font-semibold text-slate-500 block">{t("Estruktura ng Bahay (House Structure):", "House Structure:")}</span>
+              <span className="font-semibold text-slate-500 block">{t("Pagmamay-ari (Ownership):", "Ownership:")}</span>
+              <span className="font-bold text-slate-800">{plan.profile.houseOwnership || "---"}</span>
+            </div>
+            <div>
+              <span className="font-semibold text-slate-500 block">{t("Estruktura (Structure):", "Structure:")}</span>
               <span className="font-bold text-slate-800">{plan.profile.houseStructure}</span>
             </div>
-            <div className="md:col-span-2">
+            <div>
+              <span className="font-semibold text-slate-500 block">{t("Tubig (Water Source):", "Water Source:")}</span>
+              <span className="font-bold text-slate-800">{plan.profile.waterSource || "---"}</span>
+            </div>
+            <div>
+              <span className="font-semibold text-slate-500 block">{t("Palikuran (Toilet):", "Toilet Facility:")}</span>
+              <span className="font-bold text-slate-800">{plan.profile.toiletFacility || "---"}</span>
+            </div>
+            <div>
+              <span className="font-semibold text-slate-500 block">{t("Kuryente (Electricity):", "Electricity:")}</span>
+              <span className="font-bold text-slate-800">{plan.profile.electricitySource || "---"}</span>
+            </div>
+            <div>
+              <span className="font-semibold text-slate-500 block">{t("Pagluluto (Cooking):", "Cooking Facility:")}</span>
+              <span className="font-bold text-slate-800">{plan.profile.cookingFacility || "---"}</span>
+            </div>
+            <div className="md:col-span-3">
               <span className="font-semibold text-slate-500 block">{t("Mga Bantang Panganib sa Lokasyon (Hazards):", "Hazards in Location:")}</span>
               <span className="font-bold text-slate-800">
                 {plan.profile.hazardVulnerability.length > 0
@@ -276,11 +296,81 @@ export const PlanPreview: React.FC<PlanPreviewProps> = ({ plan, lang }) => {
           </div>
         </section>
 
-        {/* 7. Emergency Hotlines */}
+        {/* 7. Go Bag & E-Balde Checklist */}
+        <section className="border border-slate-200 rounded-xl p-5">
+          <h2 className="text-lg font-bold text-slate-800 border-b pb-2 mb-4 flex items-center gap-2">
+            <CheckSquare className="w-5 h-5 text-amber-600" />
+            {t("VII. CHECKLIST NG GO BAG AT E-BALDE", "VII. GO BAG & E-BUCKET CHECKLIST")}
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-[10px]">
+            <div>
+              <h3 className="font-bold text-amber-700 uppercase mb-2">{t("DOKUMENTO & PERA", "DOCUMENTS & CASH")}</h3>
+              <ul className="space-y-1">
+                {Object.entries(plan.checklist.documentsCash).map(([key, val]) => (
+                  <li key={key} className="flex items-center gap-1">
+                    <div className={`w-3 h-3 border rounded-sm flex items-center justify-center ${val ? 'bg-amber-500 border-amber-500' : 'bg-white border-slate-300'}`}>
+                      {val && <div className="w-1.5 h-1.5 bg-white rounded-full"></div>}
+                    </div>
+                    <span className={val ? 'font-bold text-slate-800' : 'text-slate-400 italic line-through'}>
+                      {key === "emergencyMoney" ? t("Pera/ATM", "Cash/ATM") : key === "govIds" ? t("IDs", "IDs") : key === "importantDocs" ? t("Docs", "Docs") : key === "familyPhotos" ? t("Larawan", "Photos") : t("Notebook", "Notebook")}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-bold text-pink-700 uppercase mb-2">{t("KALINISAN & DAMIT", "TOILETRIES & CLOTHES")}</h3>
+              <ul className="space-y-1">
+                {Object.entries(plan.checklist.toiletries).map(([key, val]) => (
+                  <li key={key} className="flex items-center gap-1">
+                    <div className={`w-3 h-3 border rounded-sm flex items-center justify-center ${val ? 'bg-pink-500 border-pink-500' : 'bg-white border-slate-300'}`}>
+                      {val && <div className="w-1.5 h-1.5 bg-white rounded-full"></div>}
+                    </div>
+                    <span className={val ? 'font-bold text-slate-800' : 'text-slate-400 italic line-through'}>
+                      {key === "covidKit" ? t("COVID Kit", "COVID Kit") : key === "soapToothbrush" ? t("Soap/Brush", "Soap/Brush") : key === "clothes" ? t("Damit", "Clothes") : key === "mosquitoRepellant" ? t("Mosquito Rep.", "Repellant") : key === "menstrualPads" ? t("Pads", "Pads") : key === "babyDiapers" ? t("Diapers", "Diapers") : key === "wetWipesTissue" ? t("Wipes", "Wipes") : t("Kumot", "Blanket")}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-bold text-emerald-700 uppercase mb-2">{t("PAGKAIN & GAMOT", "FOOD & MEDICINES")}</h3>
+              <ul className="space-y-1">
+                {Object.entries(plan.checklist.foodMeds).map(([key, val]) => (
+                  <li key={key} className="flex items-center gap-1">
+                    <div className={`w-3 h-3 border rounded-sm flex items-center justify-center ${val ? 'bg-emerald-500 border-emerald-500' : 'bg-white border-slate-300'}`}>
+                      {val && <div className="w-1.5 h-1.5 bg-white rounded-full"></div>}
+                    </div>
+                    <span className={val ? 'font-bold text-slate-800' : 'text-slate-400 italic line-through'}>
+                      {key === "drinkingWater" ? t("Tubig", "Water") : key === "readyToEatFood" ? t("Pagkain", "Food") : key === "firstAidMeds" ? t("First Aid", "First Aid") : key === "babyMeds" ? t("Baby Meds", "Baby Meds") : key === "canOpenerUtensils" ? t("Can Opener", "Opener") : t("Maintenance", "Maintenance")}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-bold text-blue-700 uppercase mb-2">{t("KASANGKAPAN", "TOOLS & GEAR")}</h3>
+              <ul className="space-y-1">
+                {Object.entries(plan.checklist.tools).map(([key, val]) => (
+                  <li key={key} className="flex items-center gap-1">
+                    <div className={`w-3 h-3 border rounded-sm flex items-center justify-center ${val ? 'bg-blue-500 border-blue-500' : 'bg-white border-slate-300'}`}>
+                      {val && <div className="w-1.5 h-1.5 bg-white rounded-full"></div>}
+                    </div>
+                    <span className={val ? 'font-bold text-slate-800' : 'text-slate-400 italic line-through'}>
+                      {key === "flashlight" ? t("Flashlight", "Flashlight") : key === "whistle" ? t("Pito", "Whistle") : key === "candleMatches" ? t("Posporo", "Matches") : key === "ropeRaincoat" ? t("Tali/Kapote", "Rope/Rain") : key === "radioBlanket" ? t("Radio", "Radio") : key === "multiToolKnife" ? t("Swiss Knife", "Knife") : key === "extraBatteries" ? t("Baterya", "Battery") : t("Laruan", "Toy")}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* 8. Emergency Hotlines */}
         <section className="border border-slate-200 rounded-xl p-5 bg-amber-50/30">
           <h2 className="text-lg font-bold text-slate-800 border-b pb-2 mb-4 flex items-center gap-2">
             <Phone className="w-5 h-5 text-amber-600" />
-            {t("VII. MGA EMERGENCY HOTLINE NG CAMARINES NORTE", "VII. CAMARINES NORTE EMERGENCY HOTLINES")}
+            {t("VIII. MGA EMERGENCY HOTLINE NG CAMARINES NORTE", "VIII. CAMARINES NORTE EMERGENCY HOTLINES")}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
             <div className="bg-white p-3 rounded border border-amber-200">
