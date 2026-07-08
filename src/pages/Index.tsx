@@ -23,7 +23,7 @@ import {
   User, 
   LogOut, 
   CloudLightning, 
-  CloudCheck 
+  Cloud 
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -405,7 +405,7 @@ const Index = () => {
                     {isSaving ? (
                       <CloudLightning className="w-4 h-4 text-emerald-600 animate-bounce" />
                     ) : (
-                      <CloudCheck className="w-4 h-4 text-emerald-600" />
+                      <Cloud className="w-4 h-4 text-emerald-600" />
                     )}
                     <span>
                       {isSaving 
@@ -425,7 +425,7 @@ const Index = () => {
                 <Info className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
                 <div className="text-xs text-amber-800 space-y-1">
                   <p className="font-bold">
-                    {t("Real-time Parallel Sync Aktibo!", "Real-time Parallel Sync Active!")}
+                    {t("Real-time Parallel Sync Hack!", "Real-time Parallel Sync Active!")}
                   </p>
                   <p>
                     {t(
