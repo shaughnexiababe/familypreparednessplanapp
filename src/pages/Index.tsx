@@ -1,22 +1,148 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FamilyPlanState, DEFAULT_PLAN_STATE } from "@/types/plan";
 import { WebPlanWizard } from "@/components/WebPlanWizard";
 import { MobilePlanWizard } from "@/components/MobilePlanWizard";
 import { PlanPreview } from "@/components/PlanPreview";
 import { AGE_GUIDELINES, PREPARED_FAMILY_CHARACTERISTICS, DISASTER_TIPS } from "@/data/educationalContent";
 import { Button } from "@/components/ui/button";
-import { Shield, Smartphone, Monitor, BookOpen, CheckCircle, Info, Heart, Sparkles, MapPin } from "lucide-react";
+import { Shield, Smartphone, Monitor, BookOpen, CheckCircle, Info, Heart, Sparkles, MapPin, RotateCcw, Volume2, AlertTriangle, Search } from "lucide-react";
+import { toast } from "sonner";
 
 const Index = () => {
-  const [plan, setPlan] = useState<FamilyPlanState>(DEFAULT_PLAN_STATE);
+  // Load initial state from localStorage if available
+  const [plan, setPlan] = useState<FamilyPlanState>(() => {
+    const saved = localStorage.getItem("ligtas_camnorte_plan");
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        return DEFAULT_PLAN_STATE;
+      }
+    }
+    return DEFAULT_PLAN_STATE;
+  });
+
   const [lang, setLang] = useState<"tl" | "en">("tl");
   const [activeSection, setActiveSection] = useState<"wizard" | "preview" | "education">("wizard");
+  const [isSirenPlaying, setIsSirenPlaying] = useState(false);
+  const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
+  const [oscillator, setOscillator] = useState<OscillatorNode | null>(null);
 
   const t = (tl: string, en: string) => (lang === "tl" ? tl : en);
+
+  // Save to localStorage on change
+  useEffect(() => {
+    localStorage.setItem("ligtas_camnorte_plan", JSON.stringify(plan));
+  }, [plan]);
 
   const handlePlanChange = (updated: FamilyPlanState) => {
     setPlan(updated);
   };
+
+  const handleReset = () => {
+    if (window.confirm(t("Sigurado ka ba na nais mong i-reset ang iyong plano?", "Are you sure you want to reset your plan?"))) {
+      setPlan(DEFAULT_PLAN_STATE);
+      localStorage.removeItem("ligtas_camnorte_plan");
+      toast.success(t("Na-reset ang plano sa default!", "Plan reset to default successfully!"));
+    }
+  };
+
+  // Web Audio API Siren Simulator (No external assets needed!)
+  const toggleSiren = () => {
+    if (isSirenPlaying) {
+      if (oscillator) {
+        try {
+          oscillator.stop();
+        } catch (e) {}
+        setOscillator(null);
+      }
+      setIsSirenPlaying(false);
+      toast.info(t("Pinatay ang emergency siren.", "Emergency siren stopped."));
+    } else {
+      const ctx = audioContext || new (window.AudioContext || (window as any).webkitAudioContext)();
+      if (!audioContext) setAudioContext(ctx);
+
+      const osc = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+
+      osc.type = "sawtooth";
+      osc.frequency.setValueAtTime(440, ctx.currentTime);
+
+      // Create a sweeping siren effect
+      const now = ctx.currentTime;
+      osc.frequency.linearRampToValueAtTime(880, now + 0.5);
+      osc.frequency.linearRampToValueAtTime(440, now + 1.0);
+      
+      // Loop the sweep
+      let interval = setInterval(() => {
+        if (!isSirenPlaying) {
+          const tNow = ctx.currentTime;
+          osc.frequency.linearRampToValueAtTime(880, tNow + 0.5);
+          osc.frequency.linearRampToValueAtTime(440, tNow + 1.0);
+        }
+      }, 1000);
+
+      osc.connect(gainNode);
+      gainNode.connect(ctx.destination);
+      gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
+
+      osc.start();
+      setOscillator(osc);
+      setIsSirenPlaying(true);
+      toast.error(t("Emergency Siren ay Aktibo! Gamitin lamang sa tunay na sakuna.", "Emergency Siren Active! Use only in real emergencies."));
+
+      // Store interval reference to clear it later
+      (osc as any).sirenInterval = interval;
+    }
+  };
+
+  // Clean up audio on unmount
+  useEffect(() => {
+    return () => {
+      if (oscillator) {
+        try {
+          oscillator.stop();
+          clearInterval((oscillator as any).sirenInterval);
+        } catch (e) {}
+      }
+    };
+  }, [oscillator]);
+
+  // Calculate Preparedness Score
+  const calculateScore = () => {
+    let score = 0;
+    let total = 10;
+
+    // 1. Profile filled
+    if (plan.profile.barangay) score += 1;
+    if (plan.profile.sitio) score += 1;
+    if (plan.profile.hazardVulnerability.length > 0) score += 1;
+
+    // 2. Family members added
+    if (plan.members.length > 0) score += 2;
+
+    // 3. Evacuation places filled
+    if (plan.evacuation.meetingPlace1) score += 1;
+    if (plan.evacuation.evacCenter1) score += 1;
+
+    // 4. Checklist items checked (at least 5 items)
+    const checkedCount = 
+      Object.values(plan.checklist.documentsCash).filter(Boolean).length +
+      Object.values(plan.checklist.toiletries).filter(Boolean).length +
+      Object.values(plan.checklist.foodMeds).filter(Boolean).length +
+      Object.values(plan.checklist.tools).filter(Boolean).length;
+    
+    if (checkedCount >= 15) score += 3;
+    else if (checkedCount >= 8) score += 2;
+    else if (checkedCount >= 3) score += 1;
+
+    return {
+      percentage: Math.round((score / total) * 100),
+      badge: score >= 9 ? t("Handang-Handa! 🌟", "Fully Prepared! 🌟") : score >= 6 ? t("Sapat ang Handa 👍", "Moderately Prepared 👍") : t("Kailangan pa ng Paghahanda ⚠️", "Needs More Preparation ⚠️")
+    };
+  };
+
+  const prepScore = calculateScore();
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-16">
@@ -41,7 +167,20 @@ const Index = () => {
           </div>
 
           {/* Language & Navigation Controls */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-wrap justify-center">
+            {/* Emergency Siren Button */}
+            <Button
+              onClick={toggleSiren}
+              className={`rounded-xl text-xs font-bold px-4 py-2 flex items-center gap-2 transition-all ${
+                isSirenPlaying 
+                  ? "bg-red-600 hover:bg-red-700 text-white animate-bounce" 
+                  : "bg-white/10 hover:bg-white/20 text-white border border-white/20"
+              }`}
+            >
+              <Volume2 className="w-4 h-4" />
+              {isSirenPlaying ? t("I-off ang Siren", "Turn off Siren") : t("Emergency Siren", "Emergency Siren")}
+            </Button>
+
             <div className="bg-white/10 backdrop-blur-md p-1 rounded-xl border border-white/20 flex">
               <button
                 onClick={() => setLang("tl")}
@@ -96,8 +235,40 @@ const Index = () => {
 
       {/* Main Dashboard Layout */}
       <main className="max-w-7xl mx-auto px-4 md:px-8 mt-8 space-y-8">
+        {/* Preparedness Score Widget */}
+        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="space-y-2 text-center md:text-left">
+            <h3 className="text-lg font-bold text-slate-800 flex items-center justify-center md:justify-start gap-2">
+              <Sparkles className="w-5 h-5 text-amber-500" />
+              {t("Antas ng Kahandaan ng Pamilya", "Family Preparedness Level")}
+            </h3>
+            <p className="text-xs text-slate-500">
+              {t(
+                "Awtomatikong kinakalkula batay sa mga impormasyon at checklist na iyong sinagutan.",
+                "Automatically calculated based on the information and checklist items you completed."
+              )}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-4 w-full md:w-auto">
+            <div className="text-center">
+              <span className="text-3xl font-black text-amber-600">{prepScore.percentage}%</span>
+              <span className="text-[10px] text-slate-400 block uppercase font-bold">{t("KUMPLETO", "COMPLETE")}</span>
+            </div>
+            <div className="flex-1 md:w-48 bg-slate-100 h-3 rounded-full overflow-hidden">
+              <div 
+                className="bg-gradient-to-r from-amber-500 to-emerald-500 h-full transition-all duration-500"
+                style={{ width: `${prepScore.percentage}%` }}
+              ></div>
+            </div>
+            <div className="bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-xl text-xs font-bold text-amber-800">
+              {prepScore.badge}
+            </div>
+          </div>
+        </div>
+
         {/* Navigation Tabs */}
-        <div className="flex justify-center">
+        <div className="flex justify-between items-center flex-wrap gap-4">
           <div className="bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm flex gap-2">
             <Button
               variant={activeSection === "wizard" ? "default" : "ghost"}
@@ -130,6 +301,16 @@ const Index = () => {
               {t("Edukasyon at Gabay", "Education & Guidelines")}
             </Button>
           </div>
+
+          {/* Reset Button */}
+          <Button
+            onClick={handleReset}
+            variant="outline"
+            className="border-slate-200 text-slate-500 hover:bg-slate-50 rounded-xl text-xs flex items-center gap-2"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            {t("I-reset ang Plano", "Reset Plan")}
+          </Button>
         </div>
 
         {/* Section 1: Parallel Wizard View */}
