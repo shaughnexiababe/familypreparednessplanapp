@@ -71,15 +71,27 @@ To enable real-time emergency alerts:
    ```
 5. **Push Notification Icons**: For Android, you should add notification icons to `android/app/src/main/res` to ensure they display correctly in the status bar.
 
----
+## Public Deployment
 
-## Option 2: Progressive Web App (PWA)
+### 1. Web & PWA Deployment (Recommended for Instant Access)
+The fastest way to share your app is by deploying it as a **Progressive Web App (PWA)**.
+1. **Push to Vercel/Netlify**: Your project is already configured for Vercel. Simply push your code to your repository.
+2. **Installation**: Once live, users can visit the URL in Chrome (Android) or Safari (iOS).
+   - **Android**: Tap the "Add to Home Screen" prompt or the three dots > "Install App".
+   - **iOS**: Tap the "Share" icon > "Add to Home Screen".
+3. **Benefits**: The app will work offline, have its own icon, and run in full-screen mode without a browser bar.
 
-If you don't want to install Android Studio or upload to the Google Play Store, you can make this a Progressive Web App. 
+### 2. Native Android App (Play Store / APK)
+If you want to distribute a native `.apk` or list it on the Google Play Store:
+1. Ensure you have **Android Studio** installed.
+2. Run `npx cap open android`.
+3. In Android Studio, go to **Build > Build Bundle(s) / APK(s) > Build APK(s)**.
+4. You can share the resulting `.apk` file directly or follow Google's guide to upload the `.aab` to the Play Store.
 
-PWAs allow users to visit your website in Google Chrome on Android and click **"Add to Home Screen"**. It will install as an app icon, run full-screen without the browser address bar, and work offline!
-
-### How to set up PWA:
-1. Deploy your website to a free hosting provider like **Vercel** or **Netlify**.
-2. When users open your link in Chrome on their Android phone, they will see a prompt saying **"Install App"** or **"Add to Home Screen"**.
-3. Once added, it behaves exactly like a native mobile app!
+### 3. App Icons & Splash Screens
+To make the app look professional:
+1. Replace the placeholder icons in the `public/` folder with your own `pwa-192x192.png` and `pwa-512x512.png`.
+2. Use the [Capacitor Assets](https://github.com/ionic-team/capacitor-assets) tool to generate all native icons and splash screens:
+   ```bash
+   npx @capacitor/assets generate --android
+   ```
