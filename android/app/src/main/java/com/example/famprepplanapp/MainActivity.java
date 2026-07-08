@@ -1,4 +1,4 @@
-package com.ligtas.camnorte;
+package com.example.famprepplanapp;
 
 import com.getcapacitor.BridgeActivity;
 
