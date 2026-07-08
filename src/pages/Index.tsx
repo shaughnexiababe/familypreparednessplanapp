@@ -3,12 +3,36 @@ import { FamilyPlanState, DEFAULT_PLAN_STATE } from "@/types/plan";
 import { WebPlanWizard } from "@/components/WebPlanWizard";
 import { MobilePlanWizard } from "@/components/MobilePlanWizard";
 import { PlanPreview } from "@/components/PlanPreview";
+import { AuthModal } from "@/components/AuthModal";
+import { useAuth } from "@/hooks/useAuth";
 import { AGE_GUIDELINES, PREPARED_FAMILY_CHARACTERISTICS, DISASTER_TIPS } from "@/data/educationalContent";
 import { Button } from "@/components/ui/button";
-import { Shield, Smartphone, Monitor, BookOpen, CheckCircle, Info, Heart, Sparkles, MapPin, RotateCcw, Volume2, AlertTriangle, Search } from "lucide-react";
+import { 
+  Shield, 
+  Smartphone, 
+  Monitor, 
+  BookOpen, 
+  CheckCircle, 
+  Info, 
+  Heart, 
+  Sparkles, 
+  MapPin, 
+  RotateCcw, 
+  Volume2, 
+  AlertTriangle, 
+  User, 
+  LogOut, 
+  CloudLightning, 
+  CloudCheck 
+} from "lucide-react";
 import { toast } from "sonner";
 
 const Index = () => {
+  const { user, logout, savePlanToCloud, loadPlanFromCloud } = useAuth();
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [lastSaved, setLastSaved] = useState<string | null>(null);
+
   // Load initial state from localStorage if available
   const [plan, setPlan] = useState<FamilyPlanState>(() => {
     const saved = localStorage.getItem("ligtas_camnorte_plan");
@@ -34,6 +58,39 @@ const Index = () => {
   useEffect(() => {
     localStorage.setItem("ligtas_camnorte_plan", JSON.stringify(plan));
   }, [plan]);
+
+  // Load plan from Firestore when user logs in
+  useEffect(() => {
+    const fetchCloudPlan = async () => {
+      if (user) {
+        const cloudPlan = await loadPlanFromCloud();
+        if (cloudPlan) {
+          setPlan(cloudPlan);
+          toast.success(t("Na-load ang iyong plano mula sa cloud!", "Loaded your plan from the cloud!"));
+        }
+      }
+    };
+    fetchCloudPlan();
+  }, [user]);
+
+  // Auto-save to Firestore when plan changes and user is logged in
+  useEffect(() => {
+    if (!user) return;
+
+    const delayDebounceFn = setTimeout(async () => {
+      setIsSaving(true);
+      try {
+        await savePlanToCloud(plan);
+        setLastSaved(new Date().toLocaleTimeString());
+      } catch (error) {
+        console.error("Auto-save failed:", error);
+      } finally {
+        setIsSaving(false);
+      }
+    }, 2000); // Debounce auto-save by 2 seconds
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [plan, user]);
 
   const handlePlanChange = (updated: FamilyPlanState) => {
     setPlan(updated);
@@ -166,7 +223,7 @@ const Index = () => {
             </div>
           </div>
 
-          {/* Language & Navigation Controls */}
+          {/* Language, Auth & Navigation Controls */}
           <div className="flex items-center gap-3 flex-wrap justify-center">
             {/* Emergency Siren Button */}
             <Button
@@ -180,6 +237,29 @@ const Index = () => {
               <Volume2 className="w-4 h-4" />
               {isSirenPlaying ? t("I-off ang Siren", "Turn off Siren") : t("Emergency Siren", "Emergency Siren")}
             </Button>
+
+            {/* User Authentication Button */}
+            {user ? (
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/20">
+                <User className="w-4 h-4 text-white" />
+                <span className="text-xs font-bold text-white max-w-[120px] truncate">{user.email}</span>
+                <button 
+                  onClick={logout} 
+                  className="text-white hover:text-red-200 transition-colors ml-1"
+                  title={t("Mag-logout", "Logout")}
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <Button
+                onClick={() => setIsAuthModalOpen(true)}
+                className="bg-white text-amber-600 hover:bg-amber-50 rounded-xl text-xs font-bold px-4 py-2"
+              >
+                <User className="w-4 h-4 mr-1.5" />
+                {t("Mag-login / Register", "Login / Register")}
+              </Button>
+            )}
 
             <div className="bg-white/10 backdrop-blur-md p-1 rounded-xl border border-white/20 flex">
               <button
@@ -318,6 +398,29 @@ const Index = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left Side: Desktop Web App Wizard */}
             <div className="lg:col-span-8 space-y-6">
+              {/* Cloud Sync Status Indicator */}
+              {user && (
+                <div className="bg-emerald-50 border border-emerald-200 p-3 rounded-2xl flex items-center justify-between text-xs text-emerald-800">
+                  <div className="flex items-center gap-2">
+                    {isSaving ? (
+                      <CloudLightning className="w-4 h-4 text-emerald-600 animate-bounce" />
+                    ) : (
+                      <CloudCheck className="w-4 h-4 text-emerald-600" />
+                    )}
+                    <span>
+                      {isSaving 
+                        ? t("Sini-sync ang iyong plano sa cloud...", "Syncing your plan to the cloud...") 
+                        : t("Naka-sync ang iyong plano sa cloud!", "Your plan is synced to the cloud!")}
+                    </span>
+                  </div>
+                  {lastSaved && (
+                    <span className="text-[10px] opacity-80">
+                      {t("Huling save: ", "Last saved: ")} {lastSaved}
+                    </span>
+                  )}
+                </div>
+              )}
+
               <div className="bg-amber-50 border border-amber-200 p-4 rounded-2xl flex items-start gap-3">
                 <Info className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
                 <div className="text-xs text-amber-800 space-y-1">
@@ -535,6 +638,13 @@ const Index = () => {
           </div>
         )}
       </main>
+
+      {/* Auth Modal */}
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)} 
+        lang={lang} 
+      />
     </div>
   );
 };
