@@ -111,7 +111,7 @@ export const PlanPreview: React.FC<PlanPreviewProps> = ({ plan, lang }) => {
             {t("II. DIREKTORYO NG MIYEMBRO NG PAMILYA", "II. FAMILY MEMBER DIRECTORY")}
           </h2>
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm border-collapse">
+            <table className="w-full min-w-[700px] text-left text-sm border-collapse">
               <thead>
                 <tr className="bg-slate-100 text-slate-700 font-bold">
                   <th className="p-2 border">{t("Pangalan (Name)", "Name")}</th>
@@ -156,7 +156,7 @@ export const PlanPreview: React.FC<PlanPreviewProps> = ({ plan, lang }) => {
               {t("III. DIREKTORYO NG KAMAG-ANAK O KAIBIGAN NA MAARING TAWAGAN", "III. EMERGENCY CONTACTS (RELATIVES/FRIENDS)")}
             </h2>
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm border-collapse">
+              <table className="w-full min-w-[600px] text-left text-sm border-collapse">
                 <thead>
                   <tr className="bg-slate-100 text-slate-700 font-bold">
                     <th className="p-2 border">{t("Pangalan (Name)", "Name")}</th>

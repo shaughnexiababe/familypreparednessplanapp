@@ -23,8 +23,16 @@ import {
   User, 
   LogOut, 
   CloudLightning, 
-  Cloud 
+  Cloud,
+  Menu
 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator
+} from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 
 const Index = () => {
@@ -202,9 +210,71 @@ const Index = () => {
   const prepScore = calculateScore();
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-16">
-      {/* Top Branding Header */}
-      <header className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white py-6 px-4 md:px-8 shadow-lg sticky top-0 z-50">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-16 lg:pb-0">
+      {/* Mobile Header (Matches Screenshot) */}
+      <header className="lg:hidden bg-[#f39c12] text-white px-4 py-4 flex items-center justify-between shadow-md sticky top-0 z-50">
+        <div className="flex items-center gap-3">
+          <Shield className="w-7 h-7 text-white" />
+          <div>
+            <h1 className="text-base font-black tracking-tight uppercase leading-tight">
+              LIGTAS CAMNORTE
+            </h1>
+            <p className="text-[10px] font-bold opacity-90 tracking-wide">
+              {t("Plano ng Pamilya", "Family Preparedness Plan")}
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setLang(lang === "tl" ? "en" : "tl")}
+            className="bg-black/20 hover:bg-black/30 px-2 py-0.5 rounded text-[10px] font-bold uppercase transition-colors"
+          >
+            {lang.toUpperCase()}
+          </button>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="text-white hover:bg-white/10 h-8 w-8">
+                <Menu className="w-5 h-5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 rounded-xl shadow-xl border-slate-200 z-[100]">
+              <DropdownMenuItem onClick={() => setActiveSection("wizard")} className="py-2.5 font-medium">
+                <Monitor className="w-4 h-4 mr-2 text-amber-500" />
+                {t("Bumuo ng Plano", "Build Family Plan")}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setActiveSection("preview")} className="py-2.5 font-medium">
+                <CheckCircle className="w-4 h-4 mr-2 text-emerald-500" />
+                {t("I-preview at I-download", "Preview & Download")}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setActiveSection("education")} className="py-2.5 font-medium">
+                <BookOpen className="w-4 h-4 mr-2 text-blue-500" />
+                {t("Edukasyon at Gabay", "Education & Guidelines")}
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={toggleSiren} className={`py-2.5 font-medium ${isSirenPlaying ? 'text-red-600 animate-pulse' : ''}`}>
+                <Volume2 className="w-4 h-4 mr-2" />
+                {isSirenPlaying ? t("I-off ang Siren", "Stop Emergency Siren") : t("Emergency Siren", "Test Emergency Siren")}
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              {user ? (
+                <DropdownMenuItem onClick={logout} className="py-2.5 font-medium text-red-600">
+                  <LogOut className="w-4 h-4 mr-2" />
+                  {t("Mag-logout", "Logout")}
+                </DropdownMenuItem>
+              ) : (
+                <DropdownMenuItem onClick={() => setIsAuthModalOpen(true)} className="py-2.5 font-medium">
+                  <User className="w-4 h-4 mr-2 text-slate-500" />
+                  {t("Mag-login", "Login / Register")}
+                </DropdownMenuItem>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </header>
+
+      {/* Desktop Branding Header */}
+      <header className="hidden lg:block bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white py-6 px-8 shadow-lg sticky top-0 z-50">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-white/20 backdrop-blur-md rounded-2xl border border-white/30">
@@ -283,8 +353,8 @@ const Index = () => {
         </div>
       </header>
 
-      {/* Hero Visual Banner */}
-      <div className="relative bg-slate-900 text-white overflow-hidden">
+      {/* Hero Visual Banner (Desktop Only) */}
+      <div className="hidden lg:block relative bg-slate-900 text-white overflow-hidden">
         <div className="absolute inset-0 opacity-40 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80')" }}></div>
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/80 to-transparent"></div>
         <div className="relative max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-20 flex flex-col md:flex-row items-center justify-between gap-8">
@@ -314,9 +384,9 @@ const Index = () => {
       </div>
 
       {/* Main Dashboard Layout */}
-      <main className="max-w-7xl mx-auto px-4 md:px-8 mt-8 space-y-8">
+      <main className="max-w-7xl mx-auto px-4 md:px-8 mt-4 lg:mt-8 space-y-6 lg:space-y-8">
         {/* Preparedness Score Widget */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="hidden sm:flex bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-center md:text-left">
             <h3 className="text-lg font-bold text-slate-800 flex items-center justify-center md:justify-start gap-2">
               <Sparkles className="w-5 h-5 text-amber-500" />
@@ -347,23 +417,23 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Navigation Tabs */}
-        <div className="flex justify-between items-center flex-wrap gap-4">
-          <div className="bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm flex gap-2">
+        {/* Navigation Tabs (Desktop Only) */}
+        <div className="hidden lg:flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
             <Button
               variant={activeSection === "wizard" ? "default" : "ghost"}
               onClick={() => setActiveSection("wizard")}
-              className={`rounded-xl text-xs font-bold px-4 py-2 ${
+              className={`rounded-xl text-xs font-bold px-4 py-2 justify-start sm:justify-center ${
                 activeSection === "wizard" ? "bg-amber-500 hover:bg-amber-600 text-white" : "text-slate-600"
               }`}
             >
               <Monitor className="w-4 h-4 mr-2" />
-              {t("Gumawa ng Plano (Parallel View)", "Create Plan (Parallel View)")}
+              {t("Gumawa ng Plano", "Create Plan")}
             </Button>
             <Button
               variant={activeSection === "preview" ? "default" : "ghost"}
               onClick={() => setActiveSection("preview")}
-              className={`rounded-xl text-xs font-bold px-4 py-2 ${
+              className={`rounded-xl text-xs font-bold px-4 py-2 justify-start sm:justify-center ${
                 activeSection === "preview" ? "bg-amber-500 hover:bg-amber-600 text-white" : "text-slate-600"
               }`}
             >
@@ -373,7 +443,7 @@ const Index = () => {
             <Button
               variant={activeSection === "education" ? "default" : "ghost"}
               onClick={() => setActiveSection("education")}
-              className={`rounded-xl text-xs font-bold px-4 py-2 ${
+              className={`rounded-xl text-xs font-bold px-4 py-2 justify-start sm:justify-center ${
                 activeSection === "education" ? "bg-amber-500 hover:bg-amber-600 text-white" : "text-slate-600"
               }`}
             >
@@ -386,17 +456,18 @@ const Index = () => {
           <Button
             onClick={handleReset}
             variant="outline"
-            className="border-slate-200 text-slate-500 hover:bg-slate-50 rounded-xl text-xs flex items-center gap-2"
+            className="border-slate-200 text-slate-500 hover:bg-slate-50 rounded-xl text-xs flex items-center gap-2 w-full sm:w-auto justify-center"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             {t("I-reset ang Plano", "Reset Plan")}
           </Button>
         </div>
 
-        {/* Section 1: Parallel Wizard View */}
+        {/* Section 1: Plan Builder View */}
         {activeSection === "wizard" && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* Left Side: Desktop Web App Wizard */}
+            {/* On Mobile/Tablet: Show Optimized Mobile Wizard Experience */}
+            {/* On Desktop: Left Side of Parallel View */}
             <div className="lg:col-span-8 space-y-6">
               {/* Cloud Sync Status Indicator */}
               {user && (
@@ -421,25 +492,34 @@ const Index = () => {
                 </div>
               )}
 
-              <div className="bg-amber-50 border border-amber-200 p-4 rounded-2xl flex items-start gap-3">
-                <Info className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-                <div className="text-xs text-amber-800 space-y-1">
-                  <p className="font-bold">
-                    {t("Real-time Parallel Sync Hack!", "Real-time Parallel Sync Active!")}
-                  </p>
-                  <p>
-                    {t(
-                      "Ang anumang pagbabago na iyong gagawin sa Web App (kaliwa) ay awtomatikong magpapakita sa Mobile App (kanan) at vice versa.",
-                      "Any changes you make in the Web App (left) will automatically reflect in the Mobile App (right) and vice-versa."
-                    )}
-                  </p>
+              {/* Mobile optimized view for small screens */}
+              <div className="lg:hidden flex flex-col -mx-4 sm:mx-0">
+                <div className="bg-white rounded-t-3xl sm:rounded-3xl overflow-hidden border-t sm:border border-slate-200 shadow-xl min-h-[calc(100vh-140px)] flex flex-col">
+                  <MobilePlanWizard plan={plan} onChange={handlePlanChange} lang={lang} />
                 </div>
               </div>
 
-              <WebPlanWizard plan={plan} onChange={handlePlanChange} lang={lang} />
+              {/* Desktop wizard view */}
+              <div className="hidden lg:block space-y-6">
+                <div className="bg-amber-50 border border-amber-200 p-4 rounded-2xl flex items-start gap-3">
+                  <Info className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                  <div className="text-xs text-amber-800 space-y-1">
+                    <p className="font-bold">
+                      {t("Real-time Parallel Sync Hack!", "Real-time Parallel Sync Active!")}
+                    </p>
+                    <p>
+                      {t(
+                        "Ang anumang pagbabago na iyong gagawin sa Web App (kaliwa) ay awtomatikong magpapakita sa Mobile App (kanan) at vice versa.",
+                        "Any changes you make in the Web App (left) will automatically reflect in the Mobile App (right) and vice-versa."
+                      )}
+                    </p>
+                  </div>
+                </div>
+                <WebPlanWizard plan={plan} onChange={handlePlanChange} lang={lang} />
+              </div>
             </div>
 
-            {/* Right Side: Simulated Smartphone Frame (Mobile App View) */}
+            {/* Right Side: Simulated Smartphone Frame (Mobile App View) - Only on Desktop */}
             <div className="lg:col-span-4 sticky top-28 hidden lg:block">
               <div className="relative mx-auto w-[320px] h-[640px] bg-slate-900 rounded-[40px] shadow-2xl border-[12px] border-slate-800 overflow-hidden flex flex-col">
                 {/* Speaker & Camera Notch */}

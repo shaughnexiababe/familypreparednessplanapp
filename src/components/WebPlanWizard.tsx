@@ -251,7 +251,7 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
 
       {/* Step 2: Family Directory */}
       <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-6">
-        <div className="flex items-center justify-between border-b pb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4 gap-4">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-amber-100 text-amber-700 rounded-xl">
               <Users className="w-6 h-6" />
@@ -261,7 +261,7 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
               <p className="text-sm text-slate-500">{t("Ilista ang lahat ng miyembro ng pamilya na kasama sa bahay", "List all family members living in the household")}</p>
             </div>
           </div>
-          <Button onClick={addMember} className="bg-amber-500 hover:bg-amber-600 text-white rounded-xl flex items-center gap-2">
+          <Button onClick={addMember} className="bg-amber-500 hover:bg-amber-600 text-white rounded-xl flex items-center gap-2 w-full sm:w-auto justify-center">
             <Plus className="w-4 h-4" />
             {t("Magdagdag", "Add Member")}
           </Button>
@@ -379,17 +379,17 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
 
       {/* Step 3: Family Roles & Tasks */}
       <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-6">
-        <div className="flex items-center justify-between border-b pb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4 gap-4">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-amber-100 text-amber-700 rounded-xl">
               <CheckSquare className="w-6 h-6" />
             </div>
             <div>
               <h2 className="text-xl font-bold text-slate-800">{t("Mga Tungkulin at Gawain", "Roles & Tasks")}</h2>
-              <p className="text-sm text-slate-500">{t("Italaga ang mga responsibilidad bago, habang, at pagkatapos ng kalamidad", "Assign responsibilities before, during, and after disasters")}</p>
+              <p className="text-sm text-slate-500">{t("Italaga ang mga responsibilities bago, habang, at pagkatapos ng kalamidad", "Assign responsibilities before, during, and after disasters")}</p>
             </div>
           </div>
-          <Button onClick={addRole} className="bg-amber-500 hover:bg-amber-600 text-white rounded-xl flex items-center gap-2">
+          <Button onClick={addRole} className="bg-amber-500 hover:bg-amber-600 text-white rounded-xl flex items-center gap-2 w-full sm:w-auto justify-center">
             <Plus className="w-4 h-4" />
             {t("Magdagdag ng Tungkulin", "Add Role")}
           </Button>

@@ -78,44 +78,32 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
   ) || CAMARINES_NORTE_HOTLINES.municipalities[2];
 
   return (
-    <div className="flex flex-col h-full bg-slate-50 text-slate-900 font-sans select-none">
-      {/* Mobile App Header */}
-      <div className="bg-amber-500 text-white px-4 py-3 flex items-center justify-between shadow-md shrink-0">
-        <div className="flex items-center gap-2">
-          <Shield className="w-6 h-6 text-white animate-pulse" />
-          <div>
-            <h1 className="text-sm font-black tracking-tight uppercase">Ligtas CamNorte</h1>
-            <p className="text-[10px] opacity-90">{t("Plano ng Pamilya", "Family Preparedness Plan")}</p>
-          </div>
-        </div>
-        <div className="bg-amber-600 px-2 py-0.5 rounded text-[10px] font-bold uppercase">
-          {lang.toUpperCase()}
-        </div>
-      </div>
-
+    <div className="flex flex-col h-full bg-slate-50 text-slate-900 font-sans select-none relative">
       {/* Mobile App Content Area */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-20">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-28">
         {/* Tab 1: Profile */}
         {activeTab === "profile" && (
           <div className="space-y-4 animate-fadeIn">
-            <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
-              <h2 className="text-sm font-bold text-slate-800 flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-amber-500" />
+            <div className="bg-white p-6 rounded-[32px] shadow-xl border border-slate-100 space-y-5 mt-2">
+              <h2 className="text-lg font-black text-slate-800 flex items-center gap-3">
+                <div className="p-2 bg-amber-50 rounded-xl text-amber-500">
+                  <MapPin className="w-5 h-5" />
+                </div>
                 {t("Lokasyon ng Bahay", "Home Location")}
               </h2>
 
               <div className="space-y-2">
-                <Label className="text-xs text-slate-600">{t("Munisipyo", "Municipality")}</Label>
+                <Label className="text-sm font-bold text-slate-500 ml-1">{t("Munisipyo", "Municipality")}</Label>
                 <Select
                   value={plan.profile.municipality}
                   onValueChange={(val) => updateProfile({ municipality: val })}
                 >
-                  <SelectTrigger className="rounded-xl border-slate-200 h-9 text-xs">
+                  <SelectTrigger className="rounded-2xl border-slate-200 h-12 text-sm px-4 shadow-sm">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="rounded-2xl">
                     {CAMARINES_NORTE_HOTLINES.municipalities.map((m) => (
-                      <SelectItem key={m.name} value={m.name}>
+                      <SelectItem key={m.name} value={m.name} className="py-3">
                         {m.name}
                       </SelectItem>
                     ))}
@@ -124,28 +112,28 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
               </div>
 
               <div className="space-y-2">
-                <Label className="text-xs text-slate-600">{t("Barangay", "Barangay")}</Label>
+                <Label className="text-sm font-bold text-slate-500 ml-1">{t("Barangay", "Barangay")}</Label>
                 <Input
                   value={plan.profile.barangay}
                   onChange={(e) => updateProfile({ barangay: e.target.value })}
                   placeholder={t("Ipasok ang Barangay", "Enter Barangay")}
-                  className="rounded-xl border-slate-200 h-9 text-xs"
+                  className="rounded-2xl border-slate-200 h-12 text-sm px-4 shadow-sm"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label className="text-xs text-slate-600">{t("Estruktura ng Bahay", "House Structure")}</Label>
+                <Label className="text-sm font-bold text-slate-500 ml-1">{t("Estruktura ng Bahay", "House Structure")}</Label>
                 <Select
                   value={plan.profile.houseStructure}
                   onValueChange={(val) => updateProfile({ houseStructure: val })}
                 >
-                  <SelectTrigger className="rounded-xl border-slate-200 h-9 text-xs">
+                  <SelectTrigger className="rounded-2xl border-slate-200 h-12 text-sm px-4 shadow-sm">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Concrete">{t("Semento (Concrete)", "Concrete")}</SelectItem>
-                    <SelectItem value="Wood">{t("Kahoy (Wood)", "Wood")}</SelectItem>
-                    <SelectItem value="Light Materials">{t("Magaan na Materyales", "Light Materials")}</SelectItem>
+                  <SelectContent className="rounded-2xl">
+                    <SelectItem value="Concrete" className="py-3">{t("Semento (Concrete)", "Concrete")}</SelectItem>
+                    <SelectItem value="Wood" className="py-3">{t("Kahoy (Wood)", "Wood")}</SelectItem>
+                    <SelectItem value="Light Materials" className="py-3">{t("Magaan na Materyales", "Light Materials")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -312,45 +300,55 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
       </div>
 
       {/* Mobile App Bottom Navigation Bar */}
-      <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-2 px-4 flex justify-around items-center shadow-lg shrink-0 z-10">
+      <div className="fixed sm:absolute bottom-0 left-0 right-0 bg-white border-t border-slate-100 py-3 px-2 flex justify-around items-center shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.1)] shrink-0 z-50 rounded-t-[32px]">
         <button
           onClick={() => setActiveTab("profile")}
-          className={`flex flex-col items-center gap-1 ${activeTab === "profile" ? "text-amber-500" : "text-slate-400"}`}
+          className={`flex flex-col items-center gap-1.5 transition-all ${activeTab === "profile" ? "text-amber-500 scale-110" : "text-slate-400"}`}
         >
-          <MapPin className="w-5 h-5" />
-          <span className="text-[9px] font-bold">{t("Profil", "Profile")}</span>
+          <div className={`p-1.5 rounded-xl ${activeTab === "profile" ? "bg-amber-50" : ""}`}>
+            <MapPin className="w-6 h-6" />
+          </div>
+          <span className="text-[10px] font-black uppercase tracking-tighter">{t("Profil", "Profile")}</span>
         </button>
 
         <button
           onClick={() => setActiveTab("members")}
-          className={`flex flex-col items-center gap-1 ${activeTab === "members" ? "text-amber-500" : "text-slate-400"}`}
+          className={`flex flex-col items-center gap-1.5 transition-all ${activeTab === "members" ? "text-amber-500 scale-110" : "text-slate-400"}`}
         >
-          <Users className="w-5 h-5" />
-          <span className="text-[9px] font-bold">{t("Pamilya", "Family")}</span>
+          <div className={`p-1.5 rounded-xl ${activeTab === "members" ? "bg-amber-50" : ""}`}>
+            <Users className="w-6 h-6" />
+          </div>
+          <span className="text-[10px] font-black uppercase tracking-tighter">{t("Pamilya", "Family")}</span>
         </button>
 
         <button
           onClick={() => setActiveTab("evac")}
-          className={`flex flex-col items-center gap-1 ${activeTab === "evac" ? "text-amber-500" : "text-slate-400"}`}
+          className={`flex flex-col items-center gap-1.5 transition-all ${activeTab === "evac" ? "text-amber-500 scale-110" : "text-slate-400"}`}
         >
-          <MapPin className="w-5 h-5" />
-          <span className="text-[9px] font-bold">{t("Likas", "Evac")}</span>
+          <div className={`p-1.5 rounded-xl ${activeTab === "evac" ? "bg-amber-50" : ""}`}>
+            <MapPin className="w-6 h-6" />
+          </div>
+          <span className="text-[10px] font-black uppercase tracking-tighter">{t("Likas", "Evac")}</span>
         </button>
 
         <button
           onClick={() => setActiveTab("checklist")}
-          className={`flex flex-col items-center gap-1 ${activeTab === "checklist" ? "text-amber-500" : "text-slate-400"}`}
+          className={`flex flex-col items-center gap-1.5 transition-all ${activeTab === "checklist" ? "text-amber-500 scale-110" : "text-slate-400"}`}
         >
-          <CheckSquare className="w-5 h-5" />
-          <span className="text-[9px] font-bold">{t("Gamit", "Kit")}</span>
+          <div className={`p-1.5 rounded-xl ${activeTab === "checklist" ? "bg-amber-50" : ""}`}>
+            <CheckSquare className="w-6 h-6" />
+          </div>
+          <span className="text-[10px] font-black uppercase tracking-tighter">{t("Gamit", "Kit")}</span>
         </button>
 
         <button
           onClick={() => setActiveTab("hotlines")}
-          className={`flex flex-col items-center gap-1 ${activeTab === "hotlines" ? "text-amber-500" : "text-slate-400"}`}
+          className={`flex flex-col items-center gap-1.5 transition-all ${activeTab === "hotlines" ? "text-amber-500 scale-110" : "text-slate-400"}`}
         >
-          <Phone className="w-5 h-5" />
-          <span className="text-[9px] font-bold">{t("Hotline", "Hotline")}</span>
+          <div className={`p-1.5 rounded-xl ${activeTab === "hotlines" ? "bg-amber-50" : ""}`}>
+            <Phone className="w-6 h-6" />
+          </div>
+          <span className="text-[10px] font-black uppercase tracking-tighter">{t("Hotline", "Hotline")}</span>
         </button>
       </div>
     </div>
