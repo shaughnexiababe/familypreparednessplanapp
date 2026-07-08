@@ -14,7 +14,7 @@ export default defineConfig(() => ({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
+      includeAssets: ["favicon.ico", "robots.txt"],
       manifest: {
         name: "Ligtas CamNorte",
         short_name: "Ligtas",
@@ -22,20 +22,14 @@ export default defineConfig(() => ({
         theme_color: "#f59e0b",
         icons: [
           {
-            src: "pwa-192x192.png",
+            src: "favicon.ico",
             sizes: "192x192",
             type: "image/png",
           },
           {
-            src: "pwa-512x512.png",
+            src: "favicon.ico",
             sizes: "512x512",
             type: "image/png",
-          },
-          {
-            src: "pwa-512x512.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "any maskable",
           },
         ],
       },
