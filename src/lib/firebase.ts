@@ -2,14 +2,14 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-// These are placeholder keys. Users can replace these with their actual Firebase project keys.
+// These are fallback keys using your specific Firebase project details.
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "placeholder-api-key-ligtas-camnorte",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "ligtas-camnorte.firebaseapp.com",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "ligtas-camnorte",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "ligtas-camnorte.appspot.com",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "1234567890",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:1234567890:web:abcdef"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "placeholder-api-key-famprepplan",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "famprepplan-app.firebaseapp.com",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "famprepplan-app",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "famprepplan-app.appspot.com",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "1079491465028",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:1079491465028:web:placeholderappid"
 };
 
 // Initialize Firebase
@@ -19,7 +19,7 @@ const db = getFirestore(app);
 
 // Helper to check if Firebase is using placeholder keys
 export const isFirebasePlaceholder = () => {
-  return firebaseConfig.apiKey === "placeholder-api-key-ligtas-camnorte";
+  return firebaseConfig.apiKey.startsWith("placeholder-api-key");
 };
 
 export { auth, db };
