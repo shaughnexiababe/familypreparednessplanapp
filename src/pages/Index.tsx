@@ -66,7 +66,7 @@ const Index = () => {
 
       {/* Hero Visual Banner */}
       <div className="relative bg-slate-900 text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-40 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=1200&q=80')" }}></div>
+        <div className="absolute inset-0 opacity-40 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80')" }}></div>
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/80 to-transparent"></div>
         <div className="relative max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-20 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="max-w-2xl space-y-4">
@@ -86,8 +86,8 @@ const Index = () => {
           </div>
           <div className="shrink-0 hidden md:block">
             <img 
-              src="https://images.unsplash.com/photo-1590402449133-79410c36a006?auto=format&fit=crop&w=400&q=80" 
-              alt="Filipino Family Preparedness" 
+              src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=400&q=80" 
+              alt="Filipino Family Preparedness Illustration" 
               className="w-72 h-48 object-cover rounded-2xl border-4 border-white/10 shadow-2xl"
             />
           </div>

@@ -38,7 +38,7 @@ export const AGE_GUIDELINES: AgeGuideline[] = [
       en: "Teach them to use a whistle, call for help, and memorize their home address and parents' names."
     },
     icon: "Megaphone",
-    imageUrl: "https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=300&q=80" // Child with whistle/toy
+    imageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=300&q=80" // Colorful vector/illustration style
   },
   {
     age: "5",
@@ -51,7 +51,7 @@ export const AGE_GUIDELINES: AgeGuideline[] = [
       en: "Teach them to pack their own Go-Bags or emergency kits with a favorite toy or snack."
     },
     icon: "Briefcase",
-    imageUrl: "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=300&q=80" // Child with backpack
+    imageUrl: "https://images.unsplash.com/photo-1515488042361-404e9250afef?auto=format&fit=crop&w=300&q=80" // Colorful toys/cartoon style
   },
   {
     age: "7",
@@ -64,7 +64,7 @@ export const AGE_GUIDELINES: AgeGuideline[] = [
       en: "Teach them to 'Drop, Cover, and Hold' during an earthquake, and identify safe spots in the house."
     },
     icon: "ShieldAlert",
-    imageUrl: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=300&q=80" // Active kids learning
+    imageUrl: "https://images.unsplash.com/photo-1603354350317-6f7aaa5911c5?auto=format&fit=crop&w=300&q=80" // Friendly cartoon/illustration style
   },
   {
     age: "15-17",
@@ -77,7 +77,7 @@ export const AGE_GUIDELINES: AgeGuideline[] = [
       en: "Give them a list of emergency hotlines to save on their mobile phones. Teach them to monitor updates using social media."
     },
     icon: "Smartphone",
-    imageUrl: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=300&q=80" // Teenager with phone
+    imageUrl: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=300&q=80" // Tech/vector illustration style
   },
   {
     age: "18+",
@@ -90,7 +90,7 @@ export const AGE_GUIDELINES: AgeGuideline[] = [
       en: "Teach them to help reinforce the house for any emergency and act as leaders during evacuation."
     },
     icon: "Home",
-    imageUrl: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=300&q=80" // Young adult helping at home
+    imageUrl: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=300&q=80" // Colorful house illustration style
   }
 ];
 
@@ -100,7 +100,7 @@ export const PREPARED_FAMILY_CHARACTERISTICS: PreparednessCharacteristic[] = [
       tl: "Alam ang mga Sumusunod (Knowledgeable of the Following)",
       en: "Knowledgeable of the Following"
     },
-    imageUrl: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=500&q=80", // Family studying map/info
+    imageUrl: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=500&q=80", // Beautiful colorful illustration
     items: [
       {
         tl: "Mga bantang panganib na maaring makaapekto sa Barangay at pamilya.",
@@ -133,7 +133,7 @@ export const PREPARED_FAMILY_CHARACTERISTICS: PreparednessCharacteristic[] = [
       tl: "May mga Praktikal na Gawain o Hakbang (Practical Actions & Steps)",
       en: "Practical Actions & Steps"
     },
-    imageUrl: "https://images.unsplash.com/photo-1584263343329-73652ad895a4?auto=format&fit=crop&w=500&q=80", // Emergency supplies / Go Bag
+    imageUrl: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=500&q=80", // Friendly drawing/sketch style
     items: [
       {
         tl: "May sapat na emergency supplies (pagkain, tubig, gamot) para sa 3 araw.",
@@ -158,7 +158,7 @@ export const PREPARED_FAMILY_CHARACTERISTICS: PreparednessCharacteristic[] = [
       tl: "May Plano sa Paghahanda (Preparedness Planning)",
       en: "Preparedness Planning"
     },
-    imageUrl: "https://images.unsplash.com/photo-1609234656388-0ff363383899?auto=format&fit=crop&w=500&q=80", // Family meeting / discussion
+    imageUrl: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=500&q=80", // Book/education illustration style
     items: [
       {
         tl: "Regular na nagpupulong ang pamilya tungkol sa kaligtasan.",
@@ -183,7 +183,7 @@ export const DISASTER_TIPS: DisasterTip[] = [
       tl: "Bagyo at Baha (Typhoon & Flood)",
       en: "Typhoon & Flood"
     },
-    imageUrl: "https://images.unsplash.com/photo-1545007805-a44ee83438fa?auto=format&fit=crop&w=600&q=80", // Heavy rain / storm
+    imageUrl: "https://images.unsplash.com/photo-1547619292-8816ee7cdd50?auto=format&fit=crop&w=600&q=80", // Graphic storm/rain illustration
     before: [
       {
         tl: "I-monitor ang ulat ng panahon at mga babala sa radyo o TV.",
@@ -233,7 +233,7 @@ export const DISASTER_TIPS: DisasterTip[] = [
       tl: "Lindol (Earthquake)",
       en: "Earthquake"
     },
-    imageUrl: "https://images.unsplash.com/photo-1469571486090-7d99c11d5024?auto=format&fit=crop&w=600&q=80", // Ground / structural safety
+    imageUrl: "https://images.unsplash.com/photo-1594787318286-3d835c1d207f?auto=format&fit=crop&w=600&q=80", // Abstract/graphic safety illustration
     before: [
       {
         tl: "I-secure ang mga mabibigat na kasangkapan sa pader.",
@@ -283,7 +283,7 @@ export const DISASTER_TIPS: DisasterTip[] = [
       tl: "Sunog (Fire)",
       en: "Fire"
     },
-    imageUrl: "https://images.unsplash.com/photo-1508873696983-2df519f0397e?auto=format&fit=crop&w=600&q=80", // Fire safety / extinguisher
+    imageUrl: "https://images.unsplash.com/photo-1516550893923-42d28e5677af?auto=format&fit=crop&w=600&q=80", // Graphic fire/safety illustration
     before: [
       {
         tl: "Iwasan ang overloading ng mga saksakan ng kuryente.",
