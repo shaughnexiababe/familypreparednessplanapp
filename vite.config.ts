@@ -14,7 +14,7 @@ export default defineConfig(() => ({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.ico", "robots.txt"],
+      includeAssets: ["robots.txt"],
       manifest: {
         name: "Ligtas CamNorte",
         short_name: "Ligtas",
@@ -22,14 +22,14 @@ export default defineConfig(() => ({
         theme_color: "#f59e0b",
         icons: [
           {
-            src: "favicon.ico",
+            src: "placeholder.svg",
             sizes: "192x192",
-            type: "image/png",
+            type: "image/svg+xml",
           },
           {
-            src: "favicon.ico",
+            src: "placeholder.svg",
             sizes: "512x512",
-            type: "image/png",
+            type: "image/svg+xml",
           },
         ],
       },

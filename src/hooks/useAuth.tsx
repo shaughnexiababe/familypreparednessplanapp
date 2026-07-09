@@ -105,9 +105,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         updatedAt: new Date().toISOString(),
         email: user.email
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error saving plan to Firestore:", error);
-      throw error;
+      if (error.code === 'permission-denied') {
+        toast.error(t(
+          "Sync Error: Pakisuri ang Firestore Security Rules sa Firebase Console.",
+          "Sync Error: Please check Firestore Security Rules in Firebase Console."
+        ));
+      } else {
+        throw error;
+      }
     }
   };
 
@@ -125,8 +132,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return docSnap.data().plan as FamilyPlanState;
       }
       return null;
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error loading plan from Firestore:", error);
+      if (error.code === 'permission-denied') {
+        toast.error("Firebase Sync Error: Could not load data from cloud.");
+      }
       return null;
     }
   };

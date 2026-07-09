@@ -166,11 +166,26 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
           </div>
           <div>
             <h2 className="text-xl font-bold text-slate-800">{t("Profil ng Sambahayan", "Household Profile")}</h2>
-            <p className="text-sm text-slate-500">{t("Tukuyin ang lokasyon at estruktura ng inyong tahanan", "Specify your home location and structure")}</p>
+            <p className="text-sm text-slate-500 italic mt-1">
+              {t(
+                "Sa paglalaan ng oras para magkaroon ng isang mahusay na nakahandang plano sa sakuna para sa pamilya o personal, ang iyong pagkabalisa tungkol sa iyong sarili at kapakanan ng iyong pamilya sa panahon ng agarang banta mula sa isang peligro ay lubos na mababawasan.",
+                "By dedicating time to having a well-prepared disaster plan for the family or personally, your anxiety about your own and your family's welfare during an immediate threat from a hazard will be significantly reduced."
+              )}
+            </p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="md:col-span-3 space-y-2">
+            <Label className="text-slate-700 font-semibold">{t("Pangalan ng Puno ng Pamilya", "Name of Head of Household")}</Label>
+            <Input
+              value={plan.profile.headOfHousehold}
+              onChange={(e) => updateProfile({ headOfHousehold: e.target.value })}
+              placeholder={t("Buong Pangalan ng Puno ng Pamilya", "Full Name of Head of Household")}
+              className="rounded-xl border-slate-200"
+            />
+          </div>
+
           <div className="space-y-2">
             <Label className="text-slate-700 font-semibold">{t("Munisipyo (Municipality)", "Municipality")}</Label>
             <Select
@@ -350,7 +365,7 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
               <Users className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-slate-800">{t("Direktoryo ng Pamilya", "Family Directory")}</h2>
+              <h2 className="text-xl font-bold text-slate-800">{t("Direktoryo ng mga Miyembro ng Pamilya", "Directory of Family Members")}</h2>
               <p className="text-sm text-slate-500">{t("Ilista ang lahat ng miyembro ng pamilya na kasama sa bahay", "List all family members living in the household")}</p>
             </div>
           </div>
@@ -467,6 +482,88 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Web View: Other Emergency Contacts Section */}
+        <div className="pt-6 border-t border-slate-100 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-blue-100 text-blue-700 rounded-xl">
+                <Phone className="w-6 h-6" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-slate-800">{t("Ibang Kontak sa Emergency", "Other Emergency Contacts")}</h2>
+                <p className="text-sm text-slate-500">{t("Ilista ang mga kamag-anak o kaibigan na hindi kasama sa bahay", "List relatives or friends not living in the household")}</p>
+              </div>
+            </div>
+            <Button onClick={addRelative} className="bg-amber-500 hover:bg-amber-600 text-white rounded-xl flex items-center gap-2 w-full sm:w-auto justify-center">
+              <Plus className="w-4 h-4" />
+              {t("Magdagdag ng Kontak", "Add Contact")}
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {plan.relatives.map((relative) => (
+              <div key={relative.id} className="p-4 border border-slate-100 rounded-2xl bg-slate-50/50 space-y-4 relative">
+                <div className="absolute top-4 right-4">
+                  <Button variant="ghost" size="icon" onClick={() => removeRelative(relative.id)} className="text-red-500 hover:text-red-700 hover:bg-red-50 rounded-xl">
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <Label className="text-xs font-bold text-slate-500">{t("Pangalan", "Name")}</Label>
+                    <Input
+                      value={relative.name}
+                      onChange={(e) => updateRelative(relative.id, { name: e.target.value })}
+                      placeholder={t("Buong Pangalan", "Full Name")}
+                      className="rounded-xl border-slate-200 bg-white"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <Label className="text-xs font-bold text-slate-500">{t("Telepono", "Phone")}</Label>
+                    <Input
+                      value={relative.phone}
+                      onChange={(e) => updateRelative(relative.id, { phone: e.target.value })}
+                      placeholder={t("Numero ng Telepono", "Phone Number")}
+                      className="rounded-xl border-slate-200 bg-white"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <Label className="text-xs font-bold text-slate-500">{t("Blood Type", "Blood Type")}</Label>
+                    <Select
+                      value={relative.bloodType}
+                      onValueChange={(val) => updateRelative(relative.id, { bloodType: val })}
+                    >
+                      <SelectTrigger className="rounded-xl border-slate-200 bg-white">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "Unknown"].map((bt) => (
+                          <SelectItem key={bt} value={bt}>
+                            {bt}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-1">
+                    <Label className="text-xs font-bold text-slate-500">{t("Tirahan / Address", "Address")}</Label>
+                    <Input
+                      value={relative.address}
+                      onChange={(e) => updateRelative(relative.id, { address: e.target.value })}
+                      placeholder={t("Address", "Address")}
+                      className="rounded-xl border-slate-200 bg-white"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -591,7 +688,12 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
           </div>
           <div>
             <h2 className="text-xl font-bold text-slate-800">{t("Plano ng Pag-evacuate at Tagpuan", "Evacuation & Meeting Places")}</h2>
-            <p className="text-sm text-slate-500">{t("Tukuyin ang mga ligtas na lugar at evacuation centers", "Identify safe meeting spots and evacuation centers")}</p>
+            <p className="text-sm text-slate-500 italic mt-1">
+              {t(
+                "Ang pagpaplano ay mahalaga upang matiyak na maaari kang lumikas nang mabilis at ligtas kahit ano man ang mga kalagayan",
+                "Planning is essential to ensure that you can evacuate quickly and safely regardless of the circumstances"
+              )}
+            </p>
           </div>
         </div>
 
@@ -663,8 +765,13 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
             <CheckSquare className="w-6 h-6" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-slate-800">{t("Checklist ng Go Bag at E-Balde", "Go Bag & E-Bucket Checklist")}</h2>
-            <p className="text-sm text-slate-500">{t("Suriin ang mga kailangang gamit para sa 72-oras na emergency kit", "Check the items needed for a 72-hour emergency kit")}</p>
+            <h2 className="text-xl font-bold text-slate-800">{t("Paghahanda ng Emergency Kit", "Emergency Kit Preparation")}</h2>
+            <p className="text-sm text-slate-500 italic mt-1">
+              {t(
+                "Ang Isang family emergency kit o 'Go Bag' ay nilayong magbigay ng personal na ginhawa at pangangalaga sa iyo at sa iyong pamilya sa mga oras na wala kang access sa ginhawa ng iyong tahanan o pamilyar na kapaligiran. Hangga't maaari, ang iyong emergency kit ay dapat na idisenyo upang suportahan ang iyong pamilya sa loob ng hindi bababa sa 3 araw (72 oras).",
+                "A family emergency kit or 'Go Bag' is intended to provide personal comfort and care to you and your family at times when you do not have access to the comfort of your home or familiar surroundings. As much as possible, your emergency kit should be designed to support your family for at least 3 days (72 hours)."
+              )}
+            </p>
           </div>
         </div>
 

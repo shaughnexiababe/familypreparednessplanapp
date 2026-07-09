@@ -24,7 +24,8 @@ import {
   LogOut, 
   CloudLightning, 
   Cloud,
-  Menu
+  Menu,
+  ChevronRight
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -40,6 +41,7 @@ const Index = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<string | null>(null);
+  const [showLanding, setShowLanding] = useState(true);
 
   // Load initial state from localStorage if available
   const [plan, setPlan] = useState<FamilyPlanState>(() => {
@@ -208,6 +210,61 @@ const Index = () => {
   };
 
   const prepScore = calculateScore();
+
+  if (user && showLanding) {
+    return (
+      <div className="min-h-screen bg-white font-sans flex flex-col items-center justify-center p-6 text-center animate-fadeIn">
+        <div className="max-w-md w-full space-y-8">
+          <div className="relative">
+            <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full blur opacity-25 animate-pulse"></div>
+            <div className="relative bg-white p-6 rounded-full inline-block border-2 border-amber-100 shadow-xl">
+              <Shield className="w-16 h-16 text-amber-500" />
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <h1 className="text-3xl font-black text-slate-900 leading-tight">
+              {t("Plano sa Kahandaan ng Pamilya sa mga Sakuna", "Family Disaster Preparedness Plan")}
+            </h1>
+
+            <div className="p-4 bg-amber-50 rounded-2xl border border-amber-100">
+              <p className="text-lg font-bold text-amber-800">
+                {t("Ready ba ang inyong pamilya in case of disaster and emergencies?", "Is your family ready in case of disaster and emergencies?")}
+              </p>
+            </div>
+
+            <p className="text-slate-600 leading-relaxed font-medium">
+              {t(
+                "Ang bawat miyembro ng pamilya ay may role na pwedeng gampanan sa paniniguro na handa ang tahanan at buong pamilya sa anumang sakuna.",
+                "Every family member has a role to play in ensuring the home and the whole family are ready for any disaster."
+              )}
+            </p>
+          </div>
+
+          <div className="pt-8 space-y-4">
+            <Button
+              onClick={() => setShowLanding(false)}
+              className="w-full bg-[#f39c12] hover:bg-[#e67e22] text-white rounded-2xl py-7 text-lg font-black shadow-lg shadow-amber-200 transition-all active:scale-95"
+            >
+              {t("Magsimula Na", "Get Started Now")}
+              <ChevronRight className="ml-2 w-6 h-6" />
+            </Button>
+
+            <button
+              onClick={logout}
+              className="text-slate-400 text-sm font-bold hover:text-red-500 transition-colors"
+            >
+              {t("I-logout ang Account", "Logout Account")}
+            </button>
+          </div>
+        </div>
+
+        <div className="mt-20 text-[10px] text-slate-300 font-bold uppercase tracking-widest">
+          Ligtas CamNorte &copy; 2026
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-16 lg:pb-0">

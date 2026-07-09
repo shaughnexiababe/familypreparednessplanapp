@@ -95,6 +95,7 @@ export interface GoBagChecklist {
 }
 
 export interface HouseholdProfile {
+  headOfHousehold: string;
   municipality: string;
   barangay: string;
   sitio: string;
@@ -123,6 +124,7 @@ export interface FamilyPlanState {
 
 export const DEFAULT_PLAN_STATE: FamilyPlanState = {
   profile: {
+    headOfHousehold: "",
     municipality: "Daet",
     barangay: "",
     sitio: "",
