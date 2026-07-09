@@ -133,7 +133,7 @@ export const PREPARED_FAMILY_CHARACTERISTICS: PreparednessCharacteristic[] = [
       tl: "May mga Praktikal na Gawain o Hakbang (Practical Actions & Steps)",
       en: "Practical Actions & Steps"
     },
-    imageUrl: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=500&q=80", // Friendly drawing/sketch style
+    imageUrl: "/practical-steps.png", // Practical steps illustration
     items: [
       {
         tl: "May sapat na emergency supplies (pagkain, tubig, gamot) para sa 3 araw.",
