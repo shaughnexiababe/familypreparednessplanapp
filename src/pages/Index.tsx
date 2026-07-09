@@ -434,9 +434,9 @@ const Index = () => {
           </div>
           <div className="shrink-0 w-full md:w-auto flex justify-center">
             <img 
-              src="/master-plan.png"
-              alt="Filipino Family Preparedness Illustration" 
-              className="w-full max-w-[300px] md:w-72 h-48 md:h-56 object-contain bg-white/10 backdrop-blur-sm rounded-2xl border-2 border-white/20 shadow-2xl"
+              src="/app-logo.png"
+              alt="Ligtas CamNorte Logo"
+              className="w-full max-w-[200px] md:w-56 h-auto object-contain bg-white/10 backdrop-blur-sm rounded-3xl border-2 border-white/20 shadow-2xl p-4"
             />
           </div>
         </div>
