@@ -377,19 +377,19 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                       </Select>
                     </div>
                   </div>
-                    <div className="space-y-1">
-                      <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Vulnerability", "Condition")}</Label>
-                      <Select value={m.vulnerability} onValueChange={(val) => updateMember(m.id, { vulnerability: val })}>
-                        <SelectTrigger className="rounded-2xl border-slate-200 h-10 text-xs px-3 shadow-sm"><SelectValue /></SelectTrigger>
-                        <SelectContent className="rounded-xl">
-                          <SelectItem value="None">{t("Normal", "None")}</SelectItem>
-                          <SelectItem value="Senior Citizen">Senior Citizen</SelectItem>
-                          <SelectItem value="PWD">PWD</SelectItem>
-                          <SelectItem value="Pregnant">{t("Buntis", "Pregnant")}</SelectItem>
-                          <SelectItem value="Infant">{t("Sanggol", "Infant")}</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+
+                  <div className="space-y-1">
+                    <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Vulnerability", "Condition")}</Label>
+                    <Select value={m.vulnerability} onValueChange={(val) => updateMember(m.id, { vulnerability: val })}>
+                      <SelectTrigger className="rounded-2xl border-slate-200 h-10 text-xs px-3 shadow-sm"><SelectValue /></SelectTrigger>
+                      <SelectContent className="rounded-xl">
+                        <SelectItem value="None">{t("Normal", "None")}</SelectItem>
+                        <SelectItem value="Senior Citizen">Senior Citizen</SelectItem>
+                        <SelectItem value="PWD">PWD</SelectItem>
+                        <SelectItem value="Pregnant">{t("Buntis", "Pregnant")}</SelectItem>
+                        <SelectItem value="Infant">{t("Sanggol", "Infant")}</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
               ))}
