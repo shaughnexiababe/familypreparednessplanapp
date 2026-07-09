@@ -445,7 +445,7 @@ const Index = () => {
       {/* Main Dashboard Layout */}
       <main className="max-w-7xl mx-auto px-4 md:px-8 mt-4 lg:mt-8 space-y-6 lg:space-y-8">
         {/* Preparedness Score Widget */}
-        <div className="hidden sm:flex bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-center md:text-left">
             <h3 className="text-lg font-bold text-slate-800 flex items-center justify-center md:justify-start gap-2">
               <Sparkles className="w-5 h-5 text-amber-500" />
