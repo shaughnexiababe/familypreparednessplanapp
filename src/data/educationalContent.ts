@@ -100,7 +100,7 @@ export const PREPARED_FAMILY_CHARACTERISTICS: PreparednessCharacteristic[] = [
       tl: "Alam ang mga Sumusunod (Knowledgeable of the Following)",
       en: "Knowledgeable of the Following"
     },
-    imageUrl: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=500&q=80", // Map and planning
+    imageUrl: "/master-plan.png", // Family Preparedness Plan
     items: [
       {
         tl: "Mga bantang panganib na maaring makaapekto sa Barangay at pamilya.",
