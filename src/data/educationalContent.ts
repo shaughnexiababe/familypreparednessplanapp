@@ -77,7 +77,7 @@ export const AGE_GUIDELINES: AgeGuideline[] = [
       en: "Give them a list of emergency hotlines to save on their mobile phones. Teach them to monitor updates using social media."
     },
     icon: "Smartphone",
-    imageUrl: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=300&q=80" // Teen with smartphone
+    imageUrl: "/age-15-17.png" // 15-17 years old illustration
   },
   {
     age: "18+",
