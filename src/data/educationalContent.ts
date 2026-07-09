@@ -51,7 +51,7 @@ export const AGE_GUIDELINES: AgeGuideline[] = [
       en: "Teach them to pack their own Go-Bags or emergency kits with a favorite toy or snack."
     },
     icon: "Briefcase",
-    imageUrl: "https://images.unsplash.com/photo-1515488042361-404e9250afef?auto=format&fit=crop&w=300&q=80" // Colorful toys/cartoon style
+    imageUrl: "/age-5.png" // 5 years old illustration
   },
   {
     age: "7",
