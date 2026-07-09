@@ -310,18 +310,29 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
         {/* Tab 2: Family Members (Detailed) */}
         {activeTab === "members" && (
           <div className="space-y-4 animate-fadeIn">
-            <div className="flex items-center justify-between px-1">
-              <h2 className="text-sm font-black text-slate-800 flex items-center gap-2">
-                <Users className="w-5 h-5 text-amber-500" />
-                {t("Direktoryo ng mga Miyembro ng Pamilya", "Directory of Family Members")}
-              </h2>
-              <Button onClick={addMember} size="sm" className="bg-amber-500 hover:bg-amber-600 text-white rounded-2xl text-[10px] font-bold h-9 px-4">
-                <Plus className="w-3.5 h-3.5 mr-1" />
-                {t("DAGDAG", "ADD")}
-              </Button>
-            </div>
+            <div className="bg-white p-6 rounded-[32px] shadow-sm border border-slate-100 space-y-4">
+              <div className="border-b pb-4 mb-2 text-center">
+                <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center justify-center gap-2">
+                  <Users className="w-5 h-5 text-amber-500" />
+                  {t("Direktoryo ng mga Miyembro ng Pamilya", "Directory of Family Members")}
+                </h2>
+                <p className="text-[10px] text-slate-500 font-medium leading-relaxed mt-2 italic px-2">
+                  {t(
+                    "Ang pagkakaroon ng kumpletong listahan ng bawat miyembro ng pamilya ay mahalaga upang matukoy ang mga espesyal na pangangailangan at masiguro ang kaligtasan ng lahat sa oras ng paglikas.",
+                    "Having a complete list of every family member is essential to identify special needs and ensure everyone's safety during evacuation."
+                  )}
+                </p>
+              </div>
 
-            <div className="space-y-4">
+              <div className="flex items-center justify-between px-1 pt-2">
+                <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider">{t("Mga Miyembro sa Bahay", "Household Members")}</h3>
+                <Button onClick={addMember} size="sm" className="bg-amber-500 hover:bg-amber-600 text-white rounded-2xl text-[10px] font-bold h-9 px-4">
+                  <Plus className="w-3.5 h-3.5 mr-1" />
+                  {t("DAGDAG", "ADD")}
+                </Button>
+              </div>
+
+              <div className="space-y-4">
               {plan.members.map((m) => (
                 <div key={m.id} className="bg-white p-5 rounded-[32px] shadow-sm border border-slate-100 space-y-3 relative overflow-hidden">
                   <div className="absolute top-0 right-0 p-2">
@@ -428,19 +439,30 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
         {/* Tab 3: Family Roles */}
         {activeTab === "roles" && (
           <div className="space-y-4 animate-fadeIn">
-            <div className="flex items-center justify-between px-1">
-              <h2 className="text-sm font-black text-slate-800 flex items-center gap-2">
-                <Briefcase className="w-5 h-5 text-amber-500" />
-                {t("Mga Tungkulin", "Family Roles")}
-              </h2>
-              <Button onClick={addRole} size="sm" className="bg-amber-500 hover:bg-amber-600 text-white rounded-2xl text-[10px] font-bold h-9 px-4">
-                <Plus className="w-3.5 h-3.5 mr-1" />
-                {t("DAGDAG", "ADD")}
-              </Button>
-            </div>
+            <div className="bg-white p-6 rounded-[32px] shadow-sm border border-slate-100 space-y-4">
+              <div className="border-b pb-4 mb-2 text-center">
+                <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center justify-center gap-2">
+                  <Briefcase className="w-5 h-5 text-amber-500" />
+                  {t("Mga Tungkulin at Gawain", "Family Roles & Tasks")}
+                </h2>
+                <p className="text-[10px] text-slate-500 font-medium leading-relaxed mt-2 italic px-2">
+                  {t(
+                    "Ang bawat miyembro ng pamilya ay may mahalagang tungkuling dapat gampanan bago, habang, at pagkatapos ng sakuna upang masiguro na mabilis at organisado ang pagtugon ng pamilya sa anumang panganib.",
+                    "Every family member has an important role to play before, during, and after a disaster to ensure the family's response to any hazard is fast and organized."
+                  )}
+                </p>
+              </div>
 
-            <div className="space-y-4">
-              {plan.roles.map((role, idx) => (
+              <div className="flex items-center justify-between px-1 pt-2">
+                <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider">{t("Listahan ng mga Tungkulin", "Roles List")}</h3>
+                <Button onClick={addRole} size="sm" className="bg-amber-500 hover:bg-amber-600 text-white rounded-2xl text-[10px] font-bold h-9 px-4">
+                  <Plus className="w-3.5 h-3.5 mr-1" />
+                  {t("DAGDAG", "ADD")}
+                </Button>
+              </div>
+
+              <div className="space-y-4">
+                {plan.roles.map((role, idx) => (
                 <div key={idx} className="bg-white p-5 rounded-[32px] shadow-sm border border-slate-100 space-y-3 relative">
                   <div className="absolute top-0 right-0 p-2">
                     <Button variant="ghost" size="icon" onClick={() => removeRole(idx)} className="text-red-400 h-8 w-8 hover:bg-red-50 rounded-xl"><Trash2 className="w-4 h-4" /></Button>

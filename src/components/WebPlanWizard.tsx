@@ -366,7 +366,12 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
             </div>
             <div>
               <h2 className="text-xl font-bold text-slate-800">{t("Direktoryo ng mga Miyembro ng Pamilya", "Directory of Family Members")}</h2>
-              <p className="text-sm text-slate-500">{t("Ilista ang lahat ng miyembro ng pamilya na kasama sa bahay", "List all family members living in the household")}</p>
+              <p className="text-sm text-slate-500 italic mt-1">
+                {t(
+                  "Ang pagkakaroon ng kumpletong listahan ng bawat miyembro ng pamilya ay mahalaga upang matukoy ang mga espesyal na pangangailangan at masiguro ang kaligtasan ng lahat sa oras ng paglikas.",
+                  "Having a complete list of every family member is essential to identify special needs and ensure everyone's safety during evacuation."
+                )}
+              </p>
             </div>
           </div>
           <Button onClick={addMember} className="bg-amber-500 hover:bg-amber-600 text-white rounded-xl flex items-center gap-2 w-full sm:w-auto justify-center">
@@ -576,7 +581,12 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
             </div>
             <div>
               <h2 className="text-xl font-bold text-slate-800">{t("Mga Tungkulin at Gawain", "Roles & Tasks")}</h2>
-              <p className="text-sm text-slate-500">{t("Italaga ang mga responsibilities bago, habang, at pagkatapos ng kalamidad", "Assign responsibilities before, during, and after disasters")}</p>
+              <p className="text-sm text-slate-500 italic mt-1">
+                {t(
+                  "Ang bawat miyembro ng pamilya ay may mahalagang tungkuling dapat gampanan bago, habang, at pagkatapos ng sakuna upang masiguro na mabilis at organisado ang pagtugon ng pamilya sa anumang panganib.",
+                  "Every family member has an important role to play before, during, and after a disaster to ensure the family's response to any hazard is fast and organized."
+                )}
+              </p>
             </div>
           </div>
           <Button onClick={addRole} className="bg-amber-500 hover:bg-amber-600 text-white rounded-xl flex items-center gap-2 w-full sm:w-auto justify-center">
