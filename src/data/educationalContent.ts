@@ -38,7 +38,7 @@ export const AGE_GUIDELINES: AgeGuideline[] = [
       en: "Teach them to use a whistle, call for help, and memorize their home address and parents' names."
     },
     icon: "Megaphone",
-    imageUrl: "https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=300&q=80" // Children learning
+    imageUrl: "/age-3.png" // 3 years old illustration
   },
   {
     age: "5",
