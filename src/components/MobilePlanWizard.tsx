@@ -379,6 +379,11 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                   </div>
 
                   <div className="space-y-1">
+                    <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Karaniwang Lugar", "Usual Location")}</Label>
+                    <Input value={m.usualLocation} onChange={(e) => updateMember(m.id, { usualLocation: e.target.value })} placeholder={t("Hal. Paaralan, Trabaho", "e.g. School, Work")} className="rounded-2xl border-slate-200 h-10 text-xs px-3 shadow-sm" />
+                  </div>
+
+                  <div className="space-y-1">
                     <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Vulnerability", "Condition")}</Label>
                     <Select value={m.vulnerability} onValueChange={(val) => updateMember(m.id, { vulnerability: val })}>
                       <SelectTrigger className="rounded-2xl border-slate-200 h-10 text-xs px-3 shadow-sm"><SelectValue /></SelectTrigger>
@@ -498,20 +503,20 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
 
                     <div className="grid grid-cols-2 gap-3">
                       <div className="space-y-1">
-                        <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Tungkulin", "Role Type")}</Label>
+                        <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Tungkulin (Role Type)", "Role Type")}</Label>
                         <Select value={role.roleType} onValueChange={(val: any) => updateRole(idx, { roleType: val })}>
                           <SelectTrigger className="rounded-2xl border-slate-200 h-10 text-xs px-3 shadow-sm"><SelectValue /></SelectTrigger>
                           <SelectContent className="rounded-xl">
-                            <SelectItem value="Nanay">{t("Nanay", "Mother")}</SelectItem>
-                            <SelectItem value="Tatay">{t("Tatay", "Father")}</SelectItem>
-                            <SelectItem value="Anak">{t("Anak", "Child")}</SelectItem>
-                            <SelectItem value="Iba pa">{t("Iba pa", "Other")}</SelectItem>
+                            <SelectItem value="Nanay">{t("Nanay (Mother)", "Mother")}</SelectItem>
+                            <SelectItem value="Tatay">{t("Tatay (Father)", "Father")}</SelectItem>
+                            <SelectItem value="Anak">{t("Anak (Child)", "Child")}</SelectItem>
+                            <SelectItem value="Iba pa">{t("Iba pa (Other)", "Other")}</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                       <div className="space-y-1">
-                        <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Iba pang Tala", "Notes")}</Label>
-                        <Input value={role.otherNotes} onChange={(e) => updateRole(idx, { otherNotes: e.target.value })} placeholder="e.g. Leader" className="rounded-2xl border-slate-200 h-10 text-xs px-3 shadow-sm" />
+                        <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Iba pang Tala", "Other Notes")}</Label>
+                        <Input value={role.otherNotes} onChange={(e) => updateRole(idx, { otherNotes: e.target.value })} placeholder={t("Hal. Lider", "e.g. Leader")} className="rounded-2xl border-slate-200 h-10 text-xs px-3 shadow-sm" />
                       </div>
                     </div>
 

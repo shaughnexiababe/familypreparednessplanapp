@@ -133,6 +133,7 @@ export const PlanPreview: React.FC<PlanPreviewProps> = ({ plan, lang }) => {
                   <th className="p-2 border">{t("Edad", "Age")}</th>
                   <th className="p-2 border">{t("Telepono", "Phone")}</th>
                   <th className="p-2 border">{t("Blood Type", "Blood")}</th>
+                  <th className="p-2 border">{t("Karaniwang Lugar", "Location")}</th>
                   <th className="p-2 border">{t("Kondisyon", "Vulnerability")}</th>
                 </tr>
               </thead>
@@ -144,6 +145,7 @@ export const PlanPreview: React.FC<PlanPreviewProps> = ({ plan, lang }) => {
                     <td className="p-2 border">{m.age}</td>
                     <td className="p-2 border">{m.phone}</td>
                     <td className="p-2 border font-mono">{m.bloodType}</td>
+                    <td className="p-2 border text-xs">{m.usualLocation}</td>
                     <td className="p-2 border">
                       {m.vulnerability !== "None" ? (
                         <span className="px-2 py-0.5 bg-red-100 text-red-800 rounded text-[10px] font-bold">
@@ -203,6 +205,7 @@ export const PlanPreview: React.FC<PlanPreviewProps> = ({ plan, lang }) => {
               <div key={idx} className="border-l-4 border-amber-500 pl-4 py-1">
                 <h3 className="font-bold text-slate-800 text-base">
                   {role.memberName} <span className="text-xs font-normal text-slate-500">({role.roleType})</span>
+                  {role.otherNotes && <span className="text-xs font-normal text-slate-400 ml-2 italic"> - {role.otherNotes}</span>}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mt-2 text-xs">
                   <div className="bg-slate-50 p-2 rounded">
