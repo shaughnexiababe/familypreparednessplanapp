@@ -283,7 +283,7 @@ export const DISASTER_TIPS: DisasterTip[] = [
       tl: "Sunog (Fire)",
       en: "Fire"
     },
-    imageUrl: "https://images.unsplash.com/photo-1516550893923-42d28e5677af?auto=format&fit=crop&w=600&q=80", // Graphic fire/safety illustration
+    imageUrl: "/fire.png", // Fire safety illustration
     before: [
       {
         tl: "Iwasan ang overloading ng mga saksakan ng kuryente.",
