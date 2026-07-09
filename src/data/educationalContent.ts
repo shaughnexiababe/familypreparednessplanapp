@@ -183,7 +183,7 @@ export const DISASTER_TIPS: DisasterTip[] = [
       tl: "Bagyo at Baha (Typhoon & Flood)",
       en: "Typhoon & Flood"
     },
-    imageUrl: "https://images.unsplash.com/photo-1547619292-8816ee7cdd50?auto=format&fit=crop&w=600&q=80", // Graphic storm/rain illustration
+    imageUrl: "/typhoon-flood.png", // Typhoon and flood illustration
     before: [
       {
         tl: "I-monitor ang ulat ng panahon at mga babala sa radyo o TV.",
