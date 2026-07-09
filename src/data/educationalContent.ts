@@ -64,7 +64,7 @@ export const AGE_GUIDELINES: AgeGuideline[] = [
       en: "Teach them to 'Drop, Cover, and Hold' during an earthquake, and identify safe spots in the house."
     },
     icon: "ShieldAlert",
-    imageUrl: "https://images.unsplash.com/photo-1603354350317-6f7aaa5911c5?auto=format&fit=crop&w=300&q=80" // Friendly cartoon/illustration style
+    imageUrl: "/age-7.png" // 7 years old illustration
   },
   {
     age: "15-17",
