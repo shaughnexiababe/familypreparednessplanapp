@@ -90,7 +90,7 @@ export const AGE_GUIDELINES: AgeGuideline[] = [
       en: "Teach them to help reinforce the house for any emergency and act as leaders during evacuation."
     },
     icon: "Home",
-    imageUrl: "/master-plan.png" // Family Preparedness Plan
+    imageUrl: "/age-18.png" // 18+ years old illustration
   }
 ];
 
