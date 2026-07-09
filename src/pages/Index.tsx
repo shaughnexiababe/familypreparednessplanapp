@@ -436,7 +436,7 @@ const Index = () => {
             <img 
               src="/master-plan.png"
               alt="Filipino Family Preparedness Illustration" 
-              className="w-72 h-48 object-cover rounded-2xl border-4 border-white/10 shadow-2xl"
+              className="w-72 h-48 object-contain bg-white/50 rounded-2xl border-4 border-white/10 shadow-2xl"
             />
           </div>
         </div>
@@ -645,7 +645,7 @@ const Index = () => {
                       <img 
                         src={char.imageUrl} 
                         alt={t(char.title.tl, char.title.en)} 
-                        className="w-full h-48 object-cover"
+                        className="w-full h-48 object-contain bg-slate-50"
                       />
                       <div className="p-6 space-y-4">
                         <h3 className="font-bold text-slate-800 text-base border-b pb-2 text-amber-600">
@@ -688,7 +688,7 @@ const Index = () => {
                       <img 
                         src={guide.imageUrl} 
                         alt={t(guide.title.tl, guide.title.en)} 
-                        className="w-full h-32 object-cover"
+                        className="w-full h-32 object-contain bg-slate-50"
                       />
                       <div className="p-4 space-y-2 text-center">
                         <div className="w-10 h-10 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto font-black text-sm -mt-8 relative border-2 border-white shadow-md">
@@ -724,11 +724,11 @@ const Index = () => {
               <div className="space-y-6">
                 {DISASTER_TIPS.map((tip, idx) => (
                   <div key={idx} className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                    <div className="relative h-48 md:h-64 bg-slate-900">
+                    <div className="relative h-48 md:h-64 bg-white">
                       <img 
                         src={tip.imageUrl} 
                         alt={t(tip.title.tl, tip.title.en)} 
-                        className="w-full h-full object-cover opacity-60"
+                        className="w-full h-full object-contain"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent flex items-end p-6">
                         <h3 className="text-xl md:text-2xl font-black text-white">
