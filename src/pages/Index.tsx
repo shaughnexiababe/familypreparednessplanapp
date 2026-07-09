@@ -434,7 +434,7 @@ const Index = () => {
           </div>
           <div className="shrink-0 hidden md:block">
             <img 
-              src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=400&q=80" 
+              src="/master-plan.png"
               alt="Filipino Family Preparedness Illustration" 
               className="w-72 h-48 object-cover rounded-2xl border-4 border-white/10 shadow-2xl"
             />

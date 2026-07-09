@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FamilyPlanState, FamilyMember, FamilyRole } from "@/types/plan";
+import { FamilyPlanState, FamilyMember, FamilyRole, RelativeContact } from "@/types/plan";
 import { CAMARINES_NORTE_HOTLINES } from "@/data/camNorteData";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -234,8 +234,8 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
 
             <div className="bg-white p-5 rounded-[32px] shadow-sm border border-slate-100 space-y-4">
               <h2 className="text-sm font-black text-slate-800 flex items-center gap-2">
-                <div className="w-4 h-4 rounded-sm overflow-hidden">
-                  <img src="/app-logo.png" alt="Logo" className="w-full h-full object-cover" />
+                <div className="p-1.5 bg-blue-50 rounded-lg text-blue-500">
+                  <Briefcase className="w-4 h-4" />
                 </div>
                 {t("Utilities at Panganib", "Utilities & Hazards")}
               </h2>
@@ -486,13 +486,18 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                     </div>
 
                     <div className="space-y-1">
-                      <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Gawain Habang Sakuna", "Task During Disaster")}</Label>
-                      <Textarea value={role.tasksDuring} onChange={(e) => updateRole(idx, { tasksDuring: e.target.value })} placeholder={t("e.g. Patayin ang kuryente", "e.g. Switch off electricity")} className="rounded-2xl border-slate-200 text-xs min-h-[60px]" />
+                      <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Gawain BAGO ang Sakuna", "Task Before")}</Label>
+                      <Textarea value={role.tasksBefore} onChange={(e) => updateRole(idx, { tasksBefore: e.target.value })} placeholder="e.g. Check Go-Bag" className="rounded-2xl border-slate-200 text-xs min-h-[60px]" />
                     </div>
 
                     <div className="space-y-1">
-                      <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Bago ang Sakuna", "Before Disaster")}</Label>
-                      <Input value={role.tasksBefore} onChange={(e) => updateRole(idx, { tasksBefore: e.target.value })} placeholder="e.g. Check Go-Bag" className="rounded-2xl border-slate-200 h-9 text-xs" />
+                      <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Gawain HABANG may Sakuna", "Task During")}</Label>
+                      <Textarea value={role.tasksDuring} onChange={(e) => updateRole(idx, { tasksDuring: e.target.value })} placeholder="e.g. Turn off power" className="rounded-2xl border-slate-200 text-xs min-h-[60px]" />
+                    </div>
+
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Gawain PAGKATAPOS ng Sakuna", "Task After")}</Label>
+                      <Textarea value={role.tasksAfter} onChange={(e) => updateRole(idx, { tasksAfter: e.target.value })} placeholder="e.g. Check for damage" className="rounded-2xl border-slate-200 text-xs min-h-[60px]" />
                     </div>
                   </div>
                 </div>
@@ -567,26 +572,12 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                 <div>
                   <p className="text-[10px] font-black text-amber-600 uppercase mb-2 tracking-widest">{t("Dokumento at Pera", "Documents & Cash")}</p>
                   <div className="space-y-1">
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.documentsCash.emergencyMoney} onCheckedChange={() => toggleChecklistItem("documentsCash", "emergencyMoney")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Pera at ATM Card", "Emergency Cash/ATM")}</span>
-                    </label>
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.documentsCash.govIds} onCheckedChange={() => toggleChecklistItem("documentsCash", "govIds")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Government IDs", "Gov IDs")}</span>
-                    </label>
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.documentsCash.importantDocs} onCheckedChange={() => toggleChecklistItem("documentsCash", "importantDocs")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Importanteng Dokumento", "Important Documents")}</span>
-                    </label>
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.documentsCash.familyPhotos} onCheckedChange={() => toggleChecklistItem("documentsCash", "familyPhotos")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Larawan ng Pamilya", "Family Photos")}</span>
-                    </label>
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.documentsCash.notebookPencil} onCheckedChange={() => toggleChecklistItem("documentsCash", "notebookPencil")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Notebook at Lapis", "Notebook & Pencil")}</span>
-                    </label>
+                    {Object.entries(plan.checklist.documentsCash).map(([key, val]) => (
+                      <label key={key} className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
+                        <Checkbox checked={val} onCheckedChange={() => toggleChecklistItem("documentsCash", key)} className="rounded-lg h-5 w-5" />
+                        <span className="text-xs text-slate-700 font-medium">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
+                      </label>
+                    ))}
                   </div>
                 </div>
 
@@ -594,26 +585,12 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                 <div>
                   <p className="text-[10px] font-black text-emerald-600 uppercase mb-2 tracking-widest">{t("Pagkain at Gamot", "Food & Medicines")}</p>
                   <div className="space-y-1">
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.foodMeds.drinkingWater} onCheckedChange={() => toggleChecklistItem("foodMeds", "drinkingWater")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Tubig na Inumin", "Drinking Water")}</span>
-                    </label>
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.foodMeds.readyToEatFood} onCheckedChange={() => toggleChecklistItem("foodMeds", "readyToEatFood")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Ready-to-eat Food", "Ready-to-eat Food")}</span>
-                    </label>
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.foodMeds.firstAidMeds} onCheckedChange={() => toggleChecklistItem("foodMeds", "firstAidMeds")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("First Aid Kit at Gamot", "First Aid & Meds")}</span>
-                    </label>
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.foodMeds.canOpenerUtensils} onCheckedChange={() => toggleChecklistItem("foodMeds", "canOpenerUtensils")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Can Opener/Kubyertos", "Opener & Utensils")}</span>
-                    </label>
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.foodMeds.maintenanceMeds} onCheckedChange={() => toggleChecklistItem("foodMeds", "maintenanceMeds")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Maintenance Meds", "Maintenance Meds")}</span>
-                    </label>
+                    {Object.entries(plan.checklist.foodMeds).map(([key, val]) => (
+                      <label key={key} className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
+                        <Checkbox checked={val} onCheckedChange={() => toggleChecklistItem("foodMeds", key)} className="rounded-lg h-5 w-5" />
+                        <span className="text-xs text-slate-700 font-medium">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
+                      </label>
+                    ))}
                   </div>
                 </div>
 
@@ -621,30 +598,12 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                 <div>
                   <p className="text-[10px] font-black text-pink-600 uppercase mb-2 tracking-widest">{t("Kalinisan at Damit", "Toiletries & Clothes")}</p>
                   <div className="space-y-1">
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.toiletries.covidKit} onCheckedChange={() => toggleChecklistItem("toiletries", "covidKit")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("COVID Kit (Mask/Alcohol)", "COVID Kit")}</span>
-                    </label>
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.toiletries.soapToothbrush} onCheckedChange={() => toggleChecklistItem("toiletries", "soapToothbrush")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Sabon at Toothbrush", "Soap & Toothbrush")}</span>
-                    </label>
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.toiletries.clothes} onCheckedChange={() => toggleChecklistItem("toiletries", "clothes")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Ekstrang Damit", "Extra Clothes")}</span>
-                    </label>
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.toiletries.mosquitoRepellant} onCheckedChange={() => toggleChecklistItem("toiletries", "mosquitoRepellant")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Mosquito Repellant", "Repellant")}</span>
-                    </label>
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.toiletries.menstrualPads} onCheckedChange={() => toggleChecklistItem("toiletries", "menstrualPads")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Sanitary Pads", "Sanitary Pads")}</span>
-                    </label>
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.toiletries.babyDiapers} onCheckedChange={() => toggleChecklistItem("toiletries", "babyDiapers")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Diapers", "Diapers")}</span>
-                    </label>
+                    {Object.entries(plan.checklist.toiletries).map(([key, val]) => (
+                      <label key={key} className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
+                        <Checkbox checked={val} onCheckedChange={() => toggleChecklistItem("toiletries", key)} className="rounded-lg h-5 w-5" />
+                        <span className="text-xs text-slate-700 font-medium">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
+                      </label>
+                    ))}
                   </div>
                 </div>
 
@@ -652,30 +611,25 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                 <div>
                   <p className="text-[10px] font-black text-blue-600 uppercase mb-2 tracking-widest">{t("Mga Kasangkapan", "Tools & Gear")}</p>
                   <div className="space-y-1">
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.tools.flashlight} onCheckedChange={() => toggleChecklistItem("tools", "flashlight")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Flashlight", "Flashlight")}</span>
-                    </label>
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.tools.powerbank} onCheckedChange={() => toggleChecklistItem("tools", "powerbank")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Powerbank", "Powerbank")}</span>
-                    </label>
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.tools.whistle} onCheckedChange={() => toggleChecklistItem("tools", "whistle")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Pito (Whistle)", "Whistle")}</span>
-                    </label>
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.tools.candleMatches} onCheckedChange={() => toggleChecklistItem("tools", "candleMatches")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Kandila at Posporo", "Candles & Matches")}</span>
-                    </label>
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.tools.ropeRaincoat} onCheckedChange={() => toggleChecklistItem("tools", "ropeRaincoat")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Tali at Kapote", "Rope & Raincoat")}</span>
-                    </label>
-                    <label className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
-                      <Checkbox checked={plan.checklist.tools.multiToolKnife} onCheckedChange={() => toggleChecklistItem("tools", "multiToolKnife")} className="rounded-lg h-5 w-5" />
-                      <span className="text-xs text-slate-700 font-medium">{t("Swiss Knife/Multi-tool", "Multi-tool")}</span>
-                    </label>
+                    {Object.entries(plan.checklist.tools).map(([key, val]) => (
+                      <label key={key} className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
+                        <Checkbox checked={val} onCheckedChange={() => toggleChecklistItem("tools", key)} className="rounded-lg h-5 w-5" />
+                        <span className="text-xs text-slate-700 font-medium">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {/* E-Balde */}
+                <div>
+                  <p className="text-[10px] font-black text-amber-700 uppercase mb-2 tracking-widest">{t("E-Balde", "E-Bucket")}</p>
+                  <div className="space-y-1">
+                    {Object.entries(plan.checklist.eBalde).map(([key, val]) => (
+                      <label key={key} className="flex items-center gap-3 py-2 px-1 rounded-xl transition-colors cursor-pointer">
+                        <Checkbox checked={val} onCheckedChange={() => toggleChecklistItem("eBalde", key)} className="rounded-lg h-5 w-5" />
+                        <span className="text-xs text-slate-700 font-medium">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
+                      </label>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -697,6 +651,11 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
               </p>
 
               <div className="space-y-4 pt-2">
+                <div className="space-y-1">
+                  <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Petsa", "Date Description")}</Label>
+                  <Input value={plan.schedule.date} onChange={(e) => onChange({...plan, schedule: {...plan.schedule, date: e.target.value}})} placeholder="e.g. First Saturday" className="rounded-2xl border-slate-200 h-11 text-xs px-4" />
+                </div>
+
                 <div className="space-y-1">
                   <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Araw ng Pagpupulong", "Preferred Day")}</Label>
                   <Select value={plan.schedule.day} onValueChange={(val) => onChange({...plan, schedule: {...plan.schedule, day: val}})}>
@@ -724,32 +683,32 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
 
       {/* Mobile App Bottom Navigation Bar - Optimized for 6 tabs */}
       <div className="fixed sm:absolute bottom-0 left-0 right-0 bg-white border-t border-slate-100 py-3 px-2 flex justify-between items-center shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.1)] shrink-0 z-50 rounded-t-[32px] overflow-x-auto no-scrollbar">
-        <button onClick={() => setActiveTab("profile")} className={`flex flex-col items-center gap-1 min-w-[62px] transition-all ${activeTab === "profile" ? "text-amber-500 scale-110" : "text-slate-300"}`}>
+        <button onClick={() => setActiveTab("profile")} className={`flex flex-col items-center gap-1.5 min-w-[62px] transition-all ${activeTab === "profile" ? "text-amber-500 scale-110" : "text-slate-300"}`}>
           <div className={`p-1.5 rounded-xl ${activeTab === "profile" ? "bg-amber-50" : ""}`}><MapPin className="w-5 h-5" /></div>
           <span className="text-[8px] font-black uppercase tracking-tighter">{t("Profil", "Profile")}</span>
         </button>
 
-        <button onClick={() => setActiveTab("members")} className={`flex flex-col items-center gap-1 min-w-[62px] transition-all ${activeTab === "members" ? "text-amber-500 scale-110" : "text-slate-300"}`}>
+        <button onClick={() => setActiveTab("members")} className={`flex flex-col items-center gap-1.5 min-w-[62px] transition-all ${activeTab === "members" ? "text-amber-500 scale-110" : "text-slate-300"}`}>
           <div className={`p-1.5 rounded-xl ${activeTab === "members" ? "bg-amber-50" : ""}`}><Users className="w-5 h-5" /></div>
           <span className="text-[8px] font-black uppercase tracking-tighter">{t("Pamilya", "Family")}</span>
         </button>
 
-        <button onClick={() => setActiveTab("roles")} className={`flex flex-col items-center gap-1 min-w-[62px] transition-all ${activeTab === "roles" ? "text-amber-500 scale-110" : "text-slate-300"}`}>
+        <button onClick={() => setActiveTab("roles")} className={`flex flex-col items-center gap-1.5 min-w-[62px] transition-all ${activeTab === "roles" ? "text-amber-500 scale-110" : "text-slate-300"}`}>
           <div className={`p-1.5 rounded-xl ${activeTab === "roles" ? "bg-amber-50" : ""}`}><Briefcase className="w-5 h-5" /></div>
           <span className="text-[8px] font-black uppercase tracking-tighter">{t("Gawain", "Roles")}</span>
         </button>
 
-        <button onClick={() => setActiveTab("evac")} className={`flex flex-col items-center gap-1 min-w-[62px] transition-all ${activeTab === "evac" ? "text-amber-500 scale-110" : "text-slate-300"}`}>
+        <button onClick={() => setActiveTab("evac")} className={`flex flex-col items-center gap-1.5 min-w-[62px] transition-all ${activeTab === "evac" ? "text-amber-500 scale-110" : "text-slate-300"}`}>
           <div className={`p-1.5 rounded-xl ${activeTab === "evac" ? "bg-amber-50" : ""}`}><Home className="w-5 h-5" /></div>
           <span className="text-[8px] font-black uppercase tracking-tighter">{t("Likas", "Evac")}</span>
         </button>
 
-        <button onClick={() => setActiveTab("checklist")} className={`flex flex-col items-center gap-1 min-w-[62px] transition-all ${activeTab === "checklist" ? "text-amber-500 scale-110" : "text-slate-300"}`}>
+        <button onClick={() => setActiveTab("checklist")} className={`flex flex-col items-center gap-1.5 min-w-[62px] transition-all ${activeTab === "checklist" ? "text-amber-500 scale-110" : "text-slate-300"}`}>
           <div className={`p-1.5 rounded-xl ${activeTab === "checklist" ? "bg-amber-50" : ""}`}><CheckSquare className="w-5 h-5" /></div>
           <span className="text-[8px] font-black uppercase tracking-tighter">{t("Gamit", "Kit")}</span>
         </button>
 
-        <button onClick={() => setActiveTab("schedule")} className={`flex flex-col items-center gap-1 min-w-[62px] transition-all ${activeTab === "schedule" ? "text-amber-500 scale-110" : "text-slate-300"}`}>
+        <button onClick={() => setActiveTab("schedule")} className={`flex flex-col items-center gap-1.5 min-w-[62px] transition-all ${activeTab === "schedule" ? "text-amber-500 scale-110" : "text-slate-300"}`}>
           <div className={`p-1.5 rounded-xl ${activeTab === "schedule" ? "bg-amber-50" : ""}`}><Calendar className="w-5 h-5" /></div>
           <span className="text-[8px] font-black uppercase tracking-tighter">{t("Araw", "Sched")}</span>
         </button>

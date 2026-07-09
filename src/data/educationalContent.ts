@@ -38,7 +38,7 @@ export const AGE_GUIDELINES: AgeGuideline[] = [
       en: "Teach them to use a whistle, call for help, and memorize their home address and parents' names."
     },
     icon: "Megaphone",
-    imageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=300&q=80" // Colorful vector/illustration style
+    imageUrl: "https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=300&q=80" // Children learning
   },
   {
     age: "5",
@@ -77,7 +77,7 @@ export const AGE_GUIDELINES: AgeGuideline[] = [
       en: "Give them a list of emergency hotlines to save on their mobile phones. Teach them to monitor updates using social media."
     },
     icon: "Smartphone",
-    imageUrl: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=300&q=80" // Tech/vector illustration style
+    imageUrl: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=300&q=80" // Teen with smartphone
   },
   {
     age: "18+",
@@ -90,7 +90,7 @@ export const AGE_GUIDELINES: AgeGuideline[] = [
       en: "Teach them to help reinforce the house for any emergency and act as leaders during evacuation."
     },
     icon: "Home",
-    imageUrl: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=300&q=80" // Colorful house illustration style
+    imageUrl: "/master-plan.png" // Family Preparedness Plan
   }
 ];
 
@@ -100,7 +100,7 @@ export const PREPARED_FAMILY_CHARACTERISTICS: PreparednessCharacteristic[] = [
       tl: "Alam ang mga Sumusunod (Knowledgeable of the Following)",
       en: "Knowledgeable of the Following"
     },
-    imageUrl: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=500&q=80", // Beautiful colorful illustration
+    imageUrl: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=500&q=80", // Map and planning
     items: [
       {
         tl: "Mga bantang panganib na maaring makaapekto sa Barangay at pamilya.",
