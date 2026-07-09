@@ -347,8 +347,25 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
 
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1">
+                      <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Kasarian", "Gender")}</Label>
+                      <Select value={m.gender} onValueChange={(val) => updateMember(m.id, { gender: val })}>
+                        <SelectTrigger className="rounded-2xl border-slate-200 h-10 text-xs px-3 shadow-sm"><SelectValue /></SelectTrigger>
+                        <SelectContent className="rounded-xl">
+                          <SelectItem value="Lalaki (Male)">{t("Lalaki (Male)", "Male")}</SelectItem>
+                          <SelectItem value="Babae (Female)">{t("Babae (Female)", "Female")}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-1">
                       <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Edad", "Age")}</Label>
                       <Input value={m.age} onChange={(e) => updateMember(m.id, { age: e.target.value })} type="number" className="rounded-2xl border-slate-200 h-10 text-xs" />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Telepono", "Phone")}</Label>
+                      <Input value={m.phone} onChange={(e) => updateMember(m.id, { phone: e.target.value })} placeholder="09XX-XXX-XXXX" className="rounded-2xl border-slate-200 h-10 text-xs" />
                     </div>
                     <div className="space-y-1">
                       <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Blood Type", "Blood")}</Label>
@@ -360,12 +377,6 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                       </Select>
                     </div>
                   </div>
-
-                  <div className="grid grid-cols-1 gap-3">
-                    <div className="space-y-1">
-                      <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Telepono", "Phone")}</Label>
-                      <Input value={m.phone} onChange={(e) => updateMember(m.id, { phone: e.target.value })} placeholder="09XX-XXX-XXXX" className="rounded-2xl border-slate-200 h-10 text-xs" />
-                    </div>
                     <div className="space-y-1">
                       <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Vulnerability", "Condition")}</Label>
                       <Select value={m.vulnerability} onValueChange={(val) => updateMember(m.id, { vulnerability: val })}>
