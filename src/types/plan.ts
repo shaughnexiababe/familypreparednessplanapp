@@ -140,129 +140,69 @@ export const DEFAULT_PLAN_STATE: FamilyPlanState = {
     bhwHotline: "",
     otherHotline: ""
   },
-  members: [
-    {
-      id: "1",
-      name: "Juan Dela Cruz",
-      gender: "Lalaki (Male)",
-      age: "42",
-      phone: "09171234567",
-      bloodType: "O+",
-      usualLocation: "Trabaho sa Daet Town Center",
-      vulnerability: "None"
-    },
-    {
-      id: "2",
-      name: "Maria Dela Cruz",
-      gender: "Babae (Female)",
-      age: "39",
-      phone: "09187654321",
-      bloodType: "A+",
-      usualLocation: "Bahay / Tindahan",
-      vulnerability: "None"
-    },
-    {
-      id: "3",
-      name: "Pedro Dela Cruz",
-      gender: "Lalaki (Male)",
-      age: "8",
-      phone: "N/A",
-      bloodType: "O+",
-      usualLocation: "Daet Elementary School",
-      vulnerability: "None"
-    }
-  ],
-  relatives: [
-    {
-      id: "r1",
-      name: "Lola Elena Dela Cruz",
-      gender: "Babae (Female)",
-      age: "72",
-      phone: "09201112222",
-      bloodType: "O+",
-      address: "Brgy. Gubat, Daet, Camarines Norte"
-    }
-  ],
-  roles: [
-    {
-      memberId: "1",
-      memberName: "Juan Dela Cruz",
-      roleType: "Tatay",
-      tasksBefore: "I-secure ang bubong at bintana, i-charge ang powerbanks.",
-      tasksDuring: "Patayin ang main switch ng kuryente, gabayan ang pamilya sa paglikas.",
-      tasksAfter: "Suriin ang pinsala sa bahay bago pumasok muli.",
-      otherNotes: "Lider ng paglikas."
-    },
-    {
-      memberId: "2",
-      memberName: "Maria Dela Cruz",
-      roleType: "Nanay",
-      tasksBefore: "Ihanda ang Go-Bag, E-Balde, at mga importanteng dokumento.",
-      tasksDuring: "Bitbitin ang Go-Bag, siguraduhing kasama ang mga bata.",
-      tasksAfter: "I-check ang kalusugan ng bawat miyembro ng pamilya.",
-      otherNotes: "Tagapamahala ng emergency supplies."
-    }
-  ],
+  members: [],
+  relatives: [],
+  roles: [],
   schedule: {
-    date: "Unang Sabado ng Buwan",
+    date: "",
     day: "Sabado (Saturday)",
     time: "4:00 PM",
-    frequency: "Isang beses sa isang buwan (Once a month)"
+    frequency: ""
   },
   evacuation: {
-    meetingPlace1: "Plaza ng Barangay",
-    meetingPlace2: "Tapat ng Simbahan",
-    evacCenter1: "Barangay Hall / Covered Court",
-    evacCenter2: "Daet Elementary School",
-    evacCenter3: "Provincial Capitol Gym",
+    meetingPlace1: "",
+    meetingPlace2: "",
+    evacCenter1: "",
+    evacCenter2: "",
+    evacCenter3: "",
     evacCenter4: "",
-    houseLayoutNotes: "May dalawang exit points: Main door sa harap at kitchen door sa likod. Ang bintana sa kwarto ay pwedeng labasan kung emergency.",
-    barangayMapNotes: "Ang ruta ay dadaan sa Main Highway patungo sa Barangay Covered Court."
+    houseLayoutNotes: "",
+    barangayMapNotes: ""
   },
   checklist: {
     documentsCash: {
-      emergencyMoney: true,
-      govIds: true,
-      importantDocs: true,
-      familyPhotos: true,
-      notebookPencil: true
+      emergencyMoney: false,
+      govIds: false,
+      importantDocs: false,
+      familyPhotos: false,
+      notebookPencil: false
     },
     toiletries: {
-      covidKit: true,
-      soapToothbrush: true,
-      clothes: true,
+      covidKit: false,
+      soapToothbrush: false,
+      clothes: false,
       mosquitoRepellant: false,
-      menstrualPads: true,
+      menstrualPads: false,
       babyDiapers: false,
-      wetWipesTissue: true,
-      blanketRaincoat: true
+      wetWipesTissue: false,
+      blanketRaincoat: false
     },
     foodMeds: {
-      drinkingWater: true,
-      readyToEatFood: true,
-      firstAidMeds: true,
+      drinkingWater: false,
+      readyToEatFood: false,
+      firstAidMeds: false,
       babyMeds: false,
-      canOpenerUtensils: true,
+      canOpenerUtensils: false,
       maintenanceMeds: false
     },
     tools: {
-      flashlight: true,
-      powerbank: true,
-      whistle: true,
-      candleMatches: true,
-      ropeRaincoat: true,
+      flashlight: false,
+      powerbank: false,
+      whistle: false,
+      candleMatches: false,
+      ropeRaincoat: false,
       radioBlanket: false,
-      multiToolKnife: true,
-      extraBatteries: true,
+      multiToolKnife: false,
+      extraBatteries: false,
       comfortToy: false
     },
     eBalde: {
-      waterFood3Days: true,
-      medicalSupplies: true,
-      clothingGear: true,
-      gadgetsInfo: true,
-      importantDocsWaterproof: true,
-      otherTools: true
+      waterFood3Days: false,
+      medicalSupplies: false,
+      clothingGear: false,
+      gadgetsInfo: false,
+      importantDocsWaterproof: false,
+      otherTools: false
     }
   }
 };
