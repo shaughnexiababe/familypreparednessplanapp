@@ -233,7 +233,7 @@ export const DISASTER_TIPS: DisasterTip[] = [
       tl: "Lindol (Earthquake)",
       en: "Earthquake"
     },
-    imageUrl: "https://images.unsplash.com/photo-1594787318286-3d835c1d207f?auto=format&fit=crop&w=600&q=80", // Abstract/graphic safety illustration
+    imageUrl: "/earthquake.png", // Earthquake safety illustration
     before: [
       {
         tl: "I-secure ang mga mabibigat na kasangkapan sa pader.",
