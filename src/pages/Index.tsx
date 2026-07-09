@@ -412,31 +412,31 @@ const Index = () => {
         </div>
       </header>
 
-      {/* Hero Visual Banner (Desktop Only) */}
-      <div className="hidden lg:block relative bg-slate-900 text-white overflow-hidden">
+      {/* Hero Visual Banner */}
+      <div className="relative bg-slate-900 text-white overflow-hidden">
         <div className="absolute inset-0 opacity-40 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80')" }}></div>
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/80 to-transparent"></div>
-        <div className="relative max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-20 flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="max-w-2xl space-y-4">
-            <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 px-3 py-1 rounded-full text-amber-400 text-xs font-bold uppercase tracking-wider">
+        <div className="relative max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-16 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="max-w-2xl space-y-4 text-center md:text-left">
+            <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 px-3 py-1 rounded-full text-amber-400 text-[10px] md:text-xs font-bold uppercase tracking-wider mx-auto md:mx-0">
               <MapPin className="w-3.5 h-3.5" />
               {t("Probinsya ng Camarines Norte", "Province of Camarines Norte")}
             </div>
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-tight">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
               {t("Maging Handa, Maging Ligtas ang Pamilyang Pilipino", "Be Prepared, Keep the Filipino Family Safe")}
             </h2>
-            <p className="text-sm md:text-base text-slate-300 leading-relaxed">
+            <p className="text-xs md:text-base text-slate-300 leading-relaxed max-w-xl mx-auto md:mx-0">
               {t(
                 "Ang paghahanda ay nagsisimula sa tahanan. Gumawa ng inyong sariling Family Preparedness Plan ngayon upang masiguro ang kaligtasan ng bawat miyembro ng pamilya sa anumang sakuna.",
                 "Preparedness starts at home. Create your own Family Preparedness Plan today to ensure the safety of every family member during any disaster."
               )}
             </p>
           </div>
-          <div className="shrink-0 hidden md:block">
+          <div className="shrink-0 w-full md:w-auto flex justify-center">
             <img 
               src="/master-plan.png"
               alt="Filipino Family Preparedness Illustration" 
-              className="w-72 h-48 object-contain bg-white/50 rounded-2xl border-4 border-white/10 shadow-2xl"
+              className="w-full max-w-[300px] md:w-72 h-48 md:h-56 object-contain bg-white/10 backdrop-blur-sm rounded-2xl border-2 border-white/20 shadow-2xl"
             />
           </div>
         </div>
@@ -645,7 +645,7 @@ const Index = () => {
                       <img 
                         src={char.imageUrl} 
                         alt={t(char.title.tl, char.title.en)} 
-                        className="w-full h-48 object-contain bg-slate-50"
+                        className="w-full h-56 md:h-48 object-contain bg-slate-50 p-2"
                       />
                       <div className="p-6 space-y-4">
                         <h3 className="font-bold text-slate-800 text-base border-b pb-2 text-amber-600">
@@ -688,7 +688,7 @@ const Index = () => {
                       <img 
                         src={guide.imageUrl} 
                         alt={t(guide.title.tl, guide.title.en)} 
-                        className="w-full h-32 object-contain bg-slate-50"
+                        className="w-full h-48 md:h-32 object-contain bg-slate-50 p-2"
                       />
                       <div className="p-4 space-y-2 text-center">
                         <div className="w-10 h-10 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto font-black text-sm -mt-8 relative border-2 border-white shadow-md">
@@ -724,7 +724,7 @@ const Index = () => {
               <div className="space-y-6">
                 {DISASTER_TIPS.map((tip, idx) => (
                   <div key={idx} className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                    <div className="relative h-48 md:h-64 bg-white">
+                    <div className="relative h-64 md:h-80 bg-white p-2">
                       <img 
                         src={tip.imageUrl} 
                         alt={t(tip.title.tl, tip.title.en)} 
