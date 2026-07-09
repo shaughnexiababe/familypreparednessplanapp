@@ -496,6 +496,25 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                       </Select>
                     </div>
 
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-1">
+                        <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Tungkulin", "Role Type")}</Label>
+                        <Select value={role.roleType} onValueChange={(val: any) => updateRole(idx, { roleType: val })}>
+                          <SelectTrigger className="rounded-2xl border-slate-200 h-10 text-xs px-3 shadow-sm"><SelectValue /></SelectTrigger>
+                          <SelectContent className="rounded-xl">
+                            <SelectItem value="Nanay">{t("Nanay", "Mother")}</SelectItem>
+                            <SelectItem value="Tatay">{t("Tatay", "Father")}</SelectItem>
+                            <SelectItem value="Anak">{t("Anak", "Child")}</SelectItem>
+                            <SelectItem value="Iba pa">{t("Iba pa", "Other")}</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Iba pang Tala", "Notes")}</Label>
+                        <Input value={role.otherNotes} onChange={(e) => updateRole(idx, { otherNotes: e.target.value })} placeholder="e.g. Leader" className="rounded-2xl border-slate-200 h-10 text-xs px-3 shadow-sm" />
+                      </div>
+                    </div>
+
                     <div className="space-y-1">
                       <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Gawain BAGO ang Sakuna", "Task Before")}</Label>
                       <Textarea value={role.tasksBefore} onChange={(e) => updateRole(idx, { tasksBefore: e.target.value })} placeholder="e.g. Check Go-Bag" className="rounded-2xl border-slate-200 text-xs min-h-[60px]" />
