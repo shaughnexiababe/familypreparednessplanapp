@@ -434,6 +434,7 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
               </div>
             </div>
           </div>
+        </div>
         )}
 
         {/* Tab 3: Family Roles */}
@@ -496,6 +497,7 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
               ))}
             </div>
           </div>
+        </div>
         )}
 
         {/* Tab 4: Evacuation Details */}
