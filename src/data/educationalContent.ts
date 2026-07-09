@@ -158,7 +158,7 @@ export const PREPARED_FAMILY_CHARACTERISTICS: PreparednessCharacteristic[] = [
       tl: "May Plano sa Paghahanda (Preparedness Planning)",
       en: "Preparedness Planning"
     },
-    imageUrl: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=500&q=80", // Book/education illustration style
+    imageUrl: "/master-plan.png", // Family Preparedness Plan
     items: [
       {
         tl: "Regular na nagpupulong ang pamilya tungkol sa kaligtasan.",
