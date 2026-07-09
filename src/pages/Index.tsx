@@ -217,8 +217,8 @@ const Index = () => {
         <div className="max-w-md w-full space-y-8">
           <div className="relative">
             <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full blur opacity-25 animate-pulse"></div>
-            <div className="relative bg-white p-6 rounded-full inline-block border-2 border-amber-100 shadow-xl">
-              <Shield className="w-16 h-16 text-amber-500" />
+            <div className="relative bg-white overflow-hidden rounded-full inline-block border-2 border-amber-100 shadow-xl w-32 h-32 flex items-center justify-center">
+              <img src="/app-logo.png" alt="Ligtas CamNorte Logo" className="w-full h-full object-cover" />
             </div>
           </div>
 
@@ -271,7 +271,9 @@ const Index = () => {
       {/* Mobile Header (Matches Screenshot) */}
       <header className="lg:hidden bg-[#f39c12] text-white px-4 py-4 flex items-center justify-between shadow-md sticky top-0 z-50">
         <div className="flex items-center gap-3">
-          <Shield className="w-7 h-7 text-white" />
+          <div className="w-8 h-8 rounded-lg overflow-hidden border border-white/30 shadow-inner bg-white/20">
+            <img src="/app-logo.png" alt="Logo" className="w-full h-full object-cover" />
+          </div>
           <div>
             <h1 className="text-base font-black tracking-tight uppercase leading-tight">
               LIGTAS CAMNORTE
@@ -334,8 +336,8 @@ const Index = () => {
       <header className="hidden lg:block bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white py-6 px-8 shadow-lg sticky top-0 z-50">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-white/20 backdrop-blur-md rounded-2xl border border-white/30">
-              <Shield className="w-8 h-8 text-white animate-pulse" />
+            <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl border border-white/30 overflow-hidden shadow-xl">
+              <img src="/app-logo.png" alt="Logo" className="w-full h-full object-cover" />
             </div>
             <div>
               <h1 className="text-xl md:text-2xl font-black tracking-tight uppercase">

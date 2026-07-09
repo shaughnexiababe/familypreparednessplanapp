@@ -105,8 +105,8 @@ const Login = () => {
     <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-[420px] bg-white rounded-3xl p-8 border border-slate-100 shadow-2xl space-y-6">
         <div className="flex flex-col items-center text-center space-y-4">
-          <div className="p-4 bg-amber-100 text-amber-600 rounded-3xl">
-            <Shield className="w-10 h-10" />
+          <div className="p-0 overflow-hidden rounded-3xl w-24 h-24 shadow-lg border-4 border-amber-100 bg-white flex items-center justify-center">
+            <img src="/app-logo.png" alt="Ligtas CamNorte Logo" className="w-full h-full object-cover" />
           </div>
           <div>
             <h1 className="text-2xl font-black text-slate-900 uppercase tracking-tight">

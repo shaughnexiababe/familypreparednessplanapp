@@ -50,7 +50,9 @@ export const PlanPreview: React.FC<PlanPreviewProps> = ({ plan, lang }) => {
       {/* Printable Document Header */}
       <div className="text-center border-b-4 border-amber-500 pb-6 mb-8">
         <div className="flex justify-center items-center gap-3 mb-2">
-          <Shield className="w-12 h-12 text-amber-600" />
+          <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-md border-2 border-amber-100 bg-white">
+            <img src="/app-logo.png" alt="Ligtas CamNorte Logo" className="w-full h-full object-cover" />
+          </div>
           <div className="text-left">
             <h1 className="text-2xl md:text-3xl font-black tracking-tight text-slate-900 uppercase">
               {t("PLANO SA PAGHAHANDA NG PAMILYA", "FAMILY PREPAREDNESS PLAN")}

@@ -1024,7 +1024,9 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
         {/* Display Reference Hotlines */}
         <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-6">
           <h3 className="font-bold text-slate-800 flex items-center gap-2">
-            <Shield className="w-5 h-5 text-amber-600" />
+            <div className="w-5 h-5 rounded overflow-hidden">
+              <img src="/app-logo.png" alt="Logo" className="w-full h-full object-cover" />
+            </div>
             {t("Reference: Mga Emergency Hotline ng Probinsya", "Reference: Provincial Emergency Hotlines")}
           </h3>
 

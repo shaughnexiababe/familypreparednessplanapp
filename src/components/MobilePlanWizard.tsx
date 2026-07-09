@@ -234,7 +234,9 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
 
             <div className="bg-white p-5 rounded-[32px] shadow-sm border border-slate-100 space-y-4">
               <h2 className="text-sm font-black text-slate-800 flex items-center gap-2">
-                <Shield className="w-4 h-4 text-amber-500" />
+                <div className="w-4 h-4 rounded-sm overflow-hidden">
+                  <img src="/app-logo.png" alt="Logo" className="w-full h-full object-cover" />
+                </div>
                 {t("Utilities at Panganib", "Utilities & Hazards")}
               </h2>
 
