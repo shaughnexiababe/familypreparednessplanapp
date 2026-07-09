@@ -107,11 +107,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
     } catch (error: any) {
       console.error("Error saving plan to Firestore:", error);
-      if (error.code === 'permission-denied') {
-        toast.error(t(
-          "Sync Error: Pakisuri ang Firestore Security Rules sa Firebase Console.",
-          "Sync Error: Please check Firestore Security Rules in Firebase Console."
-        ));
+      if (error.code === 'permission-denied' || error.code === 'unauthenticated') {
+        toast.error(
+          lang === "tl"
+            ? "Session Expired: Mag-login muli para ma-sync ang iyong plano."
+            : "Session Expired: Please login again to sync your plan.",
+          { id: 'auth-error' } // Prevent duplicate toasts
+        );
+      } else if (!navigator.onLine) {
+        toast.warning(
+          lang === "tl"
+            ? "Offline: Naka-save ang iyong plano sa device mo, i-sync namin ito pagbalik ng internet."
+            : "Offline: Plan saved locally, we'll sync it once you're back online."
+        );
       } else {
         throw error;
       }
