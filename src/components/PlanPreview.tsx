@@ -306,34 +306,43 @@ export const PlanPreview: React.FC<PlanPreviewProps> = ({ plan, lang }) => {
         <section className="border border-slate-200 rounded-xl p-5">
           <h2 className="text-lg font-bold text-slate-800 border-b pb-2 mb-4 flex items-center gap-2">
             <CheckSquare className="w-5 h-5 text-amber-600" />
-            {t("VII. CHECKLIST NG MGA GAMIT (GO BAG)", "VII. GO BAG CHECKLIST")}
+            {t("VII. CHECKLIST NG MGA GAMIT", "VII. GO BAG & E-BALDE CHECKLIST")}
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-[10px]">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-[9px]">
             <div>
-              <h3 className="font-bold text-amber-700 uppercase mb-2 border-b border-amber-100">{t("DOKUMENTO & PERA", "DOCS & CASH")}</h3>
+              <h3 className="font-bold text-amber-700 uppercase mb-2 border-b border-amber-100">{t("DOKUMENTO", "DOCS & CASH")}</h3>
               <ul className="space-y-1">
                 {Object.entries(plan.checklist.documentsCash).map(([key, val]) => (
                   <li key={key} className="flex items-center gap-1">
-                    <div className={`w-3 h-3 border rounded-sm flex items-center justify-center ${val ? 'bg-amber-500 border-amber-500' : 'bg-white border-slate-300'}`}>
-                      {val && <div className="w-1.5 h-1.5 bg-white rounded-full"></div>}
+                    <div className={`w-2.5 h-2.5 border rounded-sm flex items-center justify-center ${val ? 'bg-amber-500 border-amber-500' : 'bg-white border-slate-300'}`}>
+                      {val && <div className="w-1 h-1 bg-white rounded-full"></div>}
                     </div>
                     <span className={val ? 'font-bold text-slate-800' : 'text-slate-400 italic line-through'}>
-                      {key.replace(/([A-Z])/g, ' $1').trim()}
+                      {key === 'emergencyMoney' ? t('Pera/ATM', 'Money/ATM') :
+                       key === 'govIds' ? t('Gov IDs', 'Gov IDs') :
+                       key === 'importantDocs' ? t('Docs', 'Docs') :
+                       key === 'familyPhotos' ? t('Photos', 'Photos') :
+                       t('Notebook/Pen', 'Notebook/Pen')}
                     </span>
                   </li>
                 ))}
               </ul>
             </div>
             <div>
-              <h3 className="font-bold text-emerald-700 uppercase mb-2 border-b border-emerald-100">{t("PAGKAIN & GAMOT", "FOOD & MEDS")}</h3>
+              <h3 className="font-bold text-emerald-700 uppercase mb-2 border-b border-emerald-100">{t("PAGKAIN", "FOOD & MEDS")}</h3>
               <ul className="space-y-1">
                 {Object.entries(plan.checklist.foodMeds).map(([key, val]) => (
                   <li key={key} className="flex items-center gap-1">
-                    <div className={`w-3 h-3 border rounded-sm flex items-center justify-center ${val ? 'bg-emerald-500 border-emerald-500' : 'bg-white border-slate-300'}`}>
-                      {val && <div className="w-1.5 h-1.5 bg-white rounded-full"></div>}
+                    <div className={`w-2.5 h-2.5 border rounded-sm flex items-center justify-center ${val ? 'bg-emerald-500 border-emerald-100' : 'bg-white border-slate-300'}`}>
+                      {val && <div className="w-1 h-1 bg-white rounded-full"></div>}
                     </div>
                     <span className={val ? 'font-bold text-slate-800' : 'text-slate-400 italic line-through'}>
-                      {key.replace(/([A-Z])/g, ' $1').trim()}
+                      {key === 'drinkingWater' ? t('Tubig', 'Water') :
+                       key === 'readyToEatFood' ? t('Food', 'Food') :
+                       key === 'firstAidMeds' ? t('First Aid', 'First Aid') :
+                       key === 'babyMeds' ? t('Baby Meds', 'Baby Meds') :
+                       key === 'canOpenerUtensils' ? t('Utensils', 'Utensils') :
+                       t('Maintenance', 'Meds')}
                     </span>
                   </li>
                 ))}
@@ -344,11 +353,39 @@ export const PlanPreview: React.FC<PlanPreviewProps> = ({ plan, lang }) => {
               <ul className="space-y-1">
                 {Object.entries(plan.checklist.tools).map(([key, val]) => (
                   <li key={key} className="flex items-center gap-1">
-                    <div className={`w-3 h-3 border rounded-sm flex items-center justify-center ${val ? 'bg-blue-500 border-blue-500' : 'bg-white border-slate-300'}`}>
-                      {val && <div className="w-1.5 h-1.5 bg-white rounded-full"></div>}
+                    <div className={`w-2.5 h-2.5 border rounded-sm flex items-center justify-center ${val ? 'bg-blue-500 border-blue-500' : 'bg-white border-slate-300'}`}>
+                      {val && <div className="w-1 h-1 bg-white rounded-full"></div>}
                     </div>
                     <span className={val ? 'font-bold text-slate-800' : 'text-slate-400 italic line-through'}>
-                      {key.replace(/([A-Z])/g, ' $1').trim()}
+                      {key === 'flashlight' ? t('Flashlight', 'Flashlight') :
+                       key === 'powerbank' ? t('Powerbank', 'Powerbank') :
+                       key === 'whistle' ? t('Pito', 'Whistle') :
+                       key === 'candleMatches' ? t('Matches', 'Matches') :
+                       key === 'ropeRaincoat' ? t('Tali/Kapote', 'Rope') :
+                       key === 'radioBlanket' ? t('Radio/Kumot', 'Radio') :
+                       key === 'multiToolKnife' ? t('Knife', 'Knife') :
+                       key === 'extraBatteries' ? t('Baterya', 'Batteries') :
+                       t('Laruan', 'Toy')}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="bg-amber-50/50 p-2 rounded-lg border border-amber-100">
+              <h3 className="font-bold text-amber-800 uppercase mb-2 border-b border-amber-200">E-BALDE</h3>
+              <ul className="space-y-1">
+                {Object.entries(plan.checklist.eBalde).map(([key, val]) => (
+                  <li key={key} className="flex items-center gap-1">
+                    <div className={`w-2.5 h-2.5 border rounded-sm flex items-center justify-center ${val ? 'bg-amber-600 border-amber-600' : 'bg-white border-slate-300'}`}>
+                      {val && <div className="w-1 h-1 bg-white rounded-full"></div>}
+                    </div>
+                    <span className={val ? 'font-bold text-slate-800' : 'text-slate-400 italic line-through'}>
+                      {key === 'waterFood3Days' ? t('3-Day Food', '3-Day Food') :
+                       key === 'medicalSupplies' ? t('Medical', 'Medical') :
+                       key === 'clothingGear' ? t('Clothing', 'Clothing') :
+                       key === 'importantDocsWaterproof' ? t('Waterproof Docs', 'Docs') :
+                       key === 'gadgetsInfo' ? t('Gadgets', 'Gadgets') :
+                       t('Other Tools', 'Other')}
                     </span>
                   </li>
                 ))}

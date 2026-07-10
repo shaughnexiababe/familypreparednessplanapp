@@ -874,6 +874,20 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
                 />
                 <span className="text-sm text-slate-700">{t("Diapers para sa sanggol (kung mayroon)", "Baby Diapers (if applicable)")}</span>
               </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.toiletries.wetWipesTissue}
+                  onCheckedChange={() => toggleChecklistItem("toiletries", "wetWipesTissue")}
+                />
+                <span className="text-sm text-slate-700">{t("Wet wipes at Tissue", "Wet wipes and Tissue")}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.toiletries.blanketRaincoat}
+                  onCheckedChange={() => toggleChecklistItem("toiletries", "blanketRaincoat")}
+                />
+                <span className="text-sm text-slate-700">{t("Kapote at Ekstrang Kumot", "Raincoat and Extra Blanket")}</span>
+              </label>
             </div>
           </div>
 
@@ -901,6 +915,13 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
                   onCheckedChange={() => toggleChecklistItem("foodMeds", "firstAidMeds")}
                 />
                 <span className="text-sm text-slate-700">{t("First aid kit (gamot sa lagnat, ubo, sipon, atbp.)", "First aid kit (medicines for fever, cough, cold, etc.)")}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.foodMeds.babyMeds}
+                  onCheckedChange={() => toggleChecklistItem("foodMeds", "babyMeds")}
+                />
+                <span className="text-sm text-slate-700">{t("Gamot para sa sanggol (kung mayroon)", "Medicines for baby (if applicable)")}</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <Checkbox
@@ -964,6 +985,76 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
                   onCheckedChange={() => toggleChecklistItem("tools", "multiToolKnife")}
                 />
                 <span className="text-sm text-slate-700">{t("Multi-tool o Swiss Army Knife", "Multi-tool or Swiss Army Knife")}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.tools.radioBlanket}
+                  onCheckedChange={() => toggleChecklistItem("tools", "radioBlanket")}
+                />
+                <span className="text-sm text-slate-700">{t("Portable Radio at Kumot", "Portable Radio and Blanket")}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.tools.extraBatteries}
+                  onCheckedChange={() => toggleChecklistItem("tools", "extraBatteries")}
+                />
+                <span className="text-sm text-slate-700">{t("Ekstrang Baterya", "Extra Batteries")}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.tools.comfortToy}
+                  onCheckedChange={() => toggleChecklistItem("tools", "comfortToy")}
+                />
+                <span className="text-sm text-slate-700">{t("Laruan o Libangan (para sa bata)", "Comfort Toy or Entertainment (for children)")}</span>
+              </label>
+            </div>
+          </div>
+
+          {/* E-Balde Section */}
+          <div className="md:col-span-2 space-y-3 p-4 border border-amber-200 rounded-2xl bg-amber-50/30">
+            <h3 className="font-bold text-amber-800 text-sm border-b border-amber-200 pb-1">{t("E-Balde (Emergency Bucket)", "E-Bucket (Emergency Bucket)")}</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.eBalde.waterFood3Days}
+                  onCheckedChange={() => toggleChecklistItem("eBalde", "waterFood3Days")}
+                />
+                <span className="text-sm text-slate-700">{t("Pagkain at Tubig para sa 3 araw", "Food and Water for 3 days")}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.eBalde.medicalSupplies}
+                  onCheckedChange={() => toggleChecklistItem("eBalde", "medicalSupplies")}
+                />
+                <span className="text-sm text-slate-700">{t("Medical supplies at First Aid", "Medical supplies and First Aid")}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.eBalde.clothingGear}
+                  onCheckedChange={() => toggleChecklistItem("eBalde", "clothingGear")}
+                />
+                <span className="text-sm text-slate-700">{t("Damit at Personal na gamit", "Clothing and Personal gear")}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.eBalde.importantDocsWaterproof}
+                  onCheckedChange={() => toggleChecklistItem("eBalde", "importantDocsWaterproof")}
+                />
+                <span className="text-sm text-slate-700">{t("Dokumentong nakalagay sa waterproof", "Documents in waterproof container")}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.eBalde.gadgetsInfo}
+                  onCheckedChange={() => toggleChecklistItem("eBalde", "gadgetsInfo")}
+                />
+                <span className="text-sm text-slate-700">{t("Gadgets at Impormasyon", "Gadgets and Information")}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={plan.checklist.eBalde.otherTools}
+                  onCheckedChange={() => toggleChecklistItem("eBalde", "otherTools")}
+                />
+                <span className="text-sm text-slate-700">{t("Iba pang Kasangkapan", "Other Tools")}</span>
               </label>
             </div>
           </div>
