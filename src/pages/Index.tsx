@@ -25,7 +25,9 @@ import {
   CloudLightning, 
   Cloud,
   Menu,
-  ChevronRight
+  ChevronRight,
+  Zap,
+  FileText
 } from "lucide-react";
 import {
   DropdownMenu,
