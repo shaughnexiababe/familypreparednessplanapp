@@ -23,7 +23,8 @@ import {
   AlertTriangle,
   Flame,
   Info,
-  Zap
+  Zap,
+  Bath
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -282,8 +283,31 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                 <div className="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-100">
                   <Droplets className="w-5 h-5 text-blue-500 shrink-0" />
                   <div className="flex-1 space-y-1">
-                    <Label className="text-[10px] font-bold text-slate-400 uppercase">{t("Tubig", "Water")}</Label>
-                    <Input value={plan.profile.waterSource} onChange={(e) => updateProfile({ waterSource: e.target.value })} className="border-none bg-transparent h-6 p-0 text-xs shadow-none focus-visible:ring-0 font-bold" placeholder="e.g. Faucet, Well" />
+                    <Label className="text-[10px] font-bold text-slate-400 uppercase">{t("Tubig", "Water Source")}</Label>
+                    <Select value={plan.profile.waterSource} onValueChange={(val) => updateProfile({ waterSource: val })}>
+                      <SelectTrigger className="border-none bg-transparent h-6 p-0 text-xs shadow-none focus:ring-0 font-bold"><SelectValue /></SelectTrigger>
+                      <SelectContent className="rounded-2xl">
+                        <SelectItem value="Faucet">{t("Gripo (Faucet)", "Faucet")}</SelectItem>
+                        <SelectItem value="Well">{t("Balon (Well)", "Well")}</SelectItem>
+                        <SelectItem value="Shared">{t("Nakikihati (Shared)", "Shared")}</SelectItem>
+                        <SelectItem value="Spring">{t("Bukal (Spring)", "Spring")}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                  <Bath className="w-5 h-5 text-emerald-500 shrink-0" />
+                  <div className="flex-1 space-y-1">
+                    <Label className="text-[10px] font-bold text-slate-400 uppercase">{t("Palikuran", "Toilet Facility")}</Label>
+                    <Select value={plan.profile.toiletFacility} onValueChange={(val) => updateProfile({ toiletFacility: val })}>
+                      <SelectTrigger className="border-none bg-transparent h-6 p-0 text-xs shadow-none focus:ring-0 font-bold"><SelectValue /></SelectTrigger>
+                      <SelectContent className="rounded-2xl">
+                        <SelectItem value="Water-sealed">{t("Water-sealed", "Water-sealed")}</SelectItem>
+                        <SelectItem value="Open pit">{t("Open pit", "Open pit")}</SelectItem>
+                        <SelectItem value="None">{t("Wala", "None")}</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
 
@@ -297,6 +321,7 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                         <SelectItem value="Gas">Gas (LPG)</SelectItem>
                         <SelectItem value="Charcoal">{t("Uling", "Charcoal")}</SelectItem>
                         <SelectItem value="Electric">{t("Kuryente", "Electric")}</SelectItem>
+                        <SelectItem value="Wood">{t("Kahoy", "Wood")}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

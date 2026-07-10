@@ -180,20 +180,23 @@ const Index = () => {
   // Calculate Preparedness Score
   const calculateScore = () => {
     let score = 0;
-    let total = 20; // Increased total points for stricter scoring
+    let total = 30; // Increased total points for even stricter scoring
 
-    // 1. Profile filled (Max 4)
+    // 1. Profile filled (Max 6)
     if (plan.profile.headOfHousehold) score += 1;
     if (plan.profile.barangay && plan.profile.sitio) score += 1;
     if (plan.profile.houseStructure && plan.profile.houseOwnership) score += 1;
+    if (plan.profile.waterSource && plan.profile.toiletFacility) score += 1;
+    if (plan.profile.electricitySource && plan.profile.cookingFacility) score += 1;
     if (plan.profile.hazardVulnerability.length > 0) score += 1;
 
-    // 2. Family members (Max 3)
+    // 2. Family members (Max 4)
     if (plan.members.length > 0) score += 1;
     if (plan.members.length >= 2) score += 1;
-    if (plan.members.every(m => m.name && m.phone)) score += 1;
+    if (plan.members.every(m => m.name && m.phone && m.bloodType)) score += 1;
+    if (plan.members.every(m => m.usualLocation && m.age)) score += 1;
 
-    // 3. Roles & Tasks (Max 4) - Stricter requirement
+    // 3. Roles & Tasks (Max 5) - Very strict
     if (plan.roles.length > 0) {
       score += 1;
       // Check if roles are assigned to members
@@ -203,15 +206,17 @@ const Index = () => {
       // Check if tasks are actually written
       const rolesWithTasks = plan.roles.filter(r => r.tasksBefore || r.tasksDuring || r.tasksAfter).length;
       if (rolesWithTasks > 0) score += 1;
-      if (rolesWithTasks === plan.roles.length) score += 1;
+      if (rolesWithTasks === plan.roles.length && plan.roles.length > 0) score += 1;
+      if (plan.roles.every(r => r.roleType && r.otherNotes)) score += 1;
     }
 
-    // 4. Evacuation places (Max 3)
-    if (plan.evacuation.meetingPlace1 && plan.evacuation.meetingPlace2) score += 1;
+    // 4. Evacuation places (Max 4)
+    if (plan.evacuation.meetingPlace1) score += 1;
+    if (plan.evacuation.meetingPlace2) score += 1;
     if (plan.evacuation.evacCenter1 && plan.evacuation.evacCenter2) score += 1;
     if (plan.evacuation.houseLayoutNotes) score += 1;
 
-    // 5. Checklist items checked (Max 5)
+    // 5. Checklist items checked (Max 8)
     const checkedCount = 
       Object.values(plan.checklist.documentsCash).filter(Boolean).length +
       Object.values(plan.checklist.toiletries).filter(Boolean).length +
@@ -219,13 +224,15 @@ const Index = () => {
       Object.values(plan.checklist.tools).filter(Boolean).length +
       Object.values(plan.checklist.eBalde).filter(Boolean).length;
     
-    if (checkedCount >= 25) score += 5;
-    else if (checkedCount >= 15) score += 3;
-    else if (checkedCount >= 8) score += 2;
-    else if (checkedCount >= 3) score += 1;
+    if (checkedCount >= 30) score += 8;
+    else if (checkedCount >= 20) score += 5;
+    else if (checkedCount >= 10) score += 3;
+    else if (checkedCount >= 5) score += 1;
 
-    // 6. Schedule (Max 1)
+    // 6. Schedule & Hotlines (Max 3)
     if (plan.schedule.date && plan.schedule.time) score += 1;
+    if (plan.profile.brgyHotline || plan.profile.bpsoHotline) score += 1;
+    if (plan.profile.bhwHotline) score += 1;
 
     const percentage = Math.round((score / total) * 100);
 
