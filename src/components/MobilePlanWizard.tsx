@@ -160,6 +160,11 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
     });
   };
 
+  const hasInfant = plan.members.some(m => m.vulnerability === "Infant");
+  const hasSenior = plan.members.some(m => m.vulnerability === "Senior Citizen");
+  const hasPWD = plan.members.some(m => m.vulnerability === "PWD");
+  const hasPregnant = plan.members.some(m => m.vulnerability === "Pregnant");
+
   return (
     <div className="flex flex-col h-full bg-slate-50 text-slate-900 font-sans select-none relative">
       {/* Mobile App Content Area */}
@@ -198,6 +203,18 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                     </SelectContent>
                   </Select>
                 </div>
+
+                {selectedMuni.hazardTypes && (
+                  <div className="bg-amber-50/50 p-3 rounded-2xl border border-amber-100/50 flex flex-wrap gap-2 items-center">
+                    <span className="text-[9px] font-black text-amber-700 uppercase tracking-tighter">{t("Banta sa Lokasyon:", "Local Hazards:")}</span>
+                    {selectedMuni.hazardTypes.map(h => (
+                      <span key={h} className="bg-white px-2 py-0.5 rounded-lg text-[9px] font-bold text-amber-600 border border-amber-100 shadow-sm flex items-center gap-1">
+                        <AlertTriangle className="w-2.5 h-2.5" />
+                        {h}
+                      </span>
+                    ))}
+                  </div>
+                )}
 
                 <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-1">
@@ -661,7 +678,10 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                     </label>
                     <label className="flex items-center gap-3 cursor-pointer">
                       <Checkbox checked={plan.checklist.toiletries.babyDiapers} onCheckedChange={() => toggleChecklistItem("toiletries", "babyDiapers")} />
-                      <span className="text-xs text-slate-700">{t("Diapers para sa sanggol (kung mayroon)", "Baby Diapers (if applicable)")}</span>
+                      <div className="flex flex-col">
+                        <span className="text-xs text-slate-700">{t("Diapers para sa sanggol (kung mayroon)", "Baby Diapers (if applicable)")}</span>
+                        {hasInfant && <span className="text-[8px] font-black text-pink-500 uppercase tracking-tighter">{t("Kailangan para sa Sanggol", "Required for Infant")}</span>}
+                      </div>
                     </label>
                     <label className="flex items-center gap-3 cursor-pointer">
                       <Checkbox checked={plan.checklist.toiletries.wetWipesTissue} onCheckedChange={() => toggleChecklistItem("toiletries", "wetWipesTissue")} />
@@ -688,7 +708,10 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                     </label>
                     <label className="flex items-center gap-3 cursor-pointer">
                       <Checkbox checked={plan.checklist.foodMeds.babyMeds} onCheckedChange={() => toggleChecklistItem("foodMeds", "babyMeds")} />
-                      <span className="text-xs text-slate-700">{t("Gamot para sa sanggol (kung mayroon)", "Medicines for baby (if applicable)")}</span>
+                      <div className="flex flex-col">
+                        <span className="text-xs text-slate-700">{t("Gamot para sa sanggol (kung mayroon)", "Medicines for baby (if applicable)")}</span>
+                        {hasInfant && <span className="text-[8px] font-black text-emerald-500 uppercase tracking-tighter">{t("Kailangan para sa Sanggol", "Required for Infant")}</span>}
+                      </div>
                     </label>
                     <label className="flex items-center gap-3 cursor-pointer">
                       <Checkbox checked={plan.checklist.foodMeds.canOpenerUtensils} onCheckedChange={() => toggleChecklistItem("foodMeds", "canOpenerUtensils")} />
@@ -696,7 +719,14 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                     </label>
                     <label className="flex items-center gap-3 cursor-pointer">
                       <Checkbox checked={plan.checklist.foodMeds.maintenanceMeds} onCheckedChange={() => toggleChecklistItem("foodMeds", "maintenanceMeds")} />
-                      <span className="text-xs text-slate-700">{t("Maintenance medicines (para sa may sakit)", "Maintenance medicines (if applicable)")}</span>
+                      <div className="flex flex-col">
+                        <span className="text-xs text-slate-700">{t("Maintenance medicines (para sa may sakit)", "Maintenance medicines (if applicable)")}</span>
+                        {(hasSenior || hasPWD || hasPregnant) && (
+                          <span className="text-[8px] font-black text-emerald-600 uppercase tracking-tighter">
+                            {t("Kailangan para sa Senior/PWD/Buntis", "Required for Senior/PWD/Pregnant")}
+                          </span>
+                        )}
+                      </div>
                     </label>
                   </div>
                 </div>
@@ -870,6 +900,23 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                     <div className="flex justify-between">
                       <span className="font-bold text-slate-500 flex items-center gap-1"><Droplets className="w-3 h-3 text-blue-400" /> Prime Water:</span>
                       <span className="font-black text-slate-800">{CAMARINES_NORTE_HOTLINES.utilities.primeWater}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-3">
+                  <p className="font-black text-slate-800 uppercase text-[10px] border-b border-slate-200 pb-1">{t("Opisyal na Advisory (Links)", "Official Advisory Links")}</p>
+                  <div className="flex flex-col gap-2">
+                    <a href={CAMARINES_NORTE_HOTLINES.links.pdrrmoFB} target="_blank" rel="noopener noreferrer" className="bg-blue-600 text-white p-2 rounded-xl text-center text-[10px] font-black uppercase tracking-wider flex items-center justify-center gap-2">
+                      PDRRMO FB Page
+                    </a>
+                    <div className="grid grid-cols-2 gap-2">
+                      <a href={CAMARINES_NORTE_HOTLINES.links.pagasa} target="_blank" rel="noopener noreferrer" className="bg-slate-800 text-white p-2 rounded-xl text-center text-[10px] font-black uppercase tracking-wider">
+                        PAGASA
+                      </a>
+                      <a href={CAMARINES_NORTE_HOTLINES.links.phivolcs} target="_blank" rel="noopener noreferrer" className="bg-slate-800 text-white p-2 rounded-xl text-center text-[10px] font-black uppercase tracking-wider">
+                        PHIVOLCS
+                      </a>
                     </div>
                   </div>
                 </div>

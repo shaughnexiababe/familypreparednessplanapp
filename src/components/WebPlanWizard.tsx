@@ -152,6 +152,11 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
     });
   };
 
+  const hasInfant = plan.members.some(m => m.vulnerability.includes("Infant"));
+  const hasSenior = plan.members.some(m => m.vulnerability === "Senior Citizen");
+  const hasPWD = plan.members.some(m => m.vulnerability === "PWD");
+  const hasPregnant = plan.members.some(m => m.vulnerability === "Pregnant");
+
   const selectedMuni = CAMARINES_NORTE_HOTLINES.municipalities.find(
     (m) => m.name.toLowerCase() === plan.profile.municipality.toLowerCase()
   ) || CAMARINES_NORTE_HOTLINES.municipalities[2];
@@ -205,6 +210,20 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
             </Select>
           </div>
 
+          {selectedMuni.hazardTypes && (
+            <div className="md:col-span-4 bg-amber-50 p-4 rounded-xl border border-amber-100 flex items-center gap-4 animate-fadeIn">
+              <span className="text-xs font-bold text-amber-800 uppercase tracking-wider">{t("Mga Banta sa Inyong Lokasyon:", "Potential Hazards in Your Location:")}</span>
+              <div className="flex flex-wrap gap-2">
+                {selectedMuni.hazardTypes.map(h => (
+                  <span key={h} className="bg-white px-3 py-1 rounded-full text-xs font-bold text-amber-600 border border-amber-200 shadow-sm flex items-center gap-2">
+                    <AlertTriangle className="w-3.5 h-3.5" />
+                    {h}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="space-y-2">
             <Label className="text-slate-700 font-semibold">{t("Barangay", "Barangay")}</Label>
             <Input
@@ -243,6 +262,20 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
             </Select>
           </div>
 
+          {selectedMuni.hazardTypes && (
+            <div className="md:col-span-4 bg-amber-50 p-4 rounded-xl border border-amber-100 flex items-center gap-4 animate-fadeIn">
+              <span className="text-xs font-bold text-amber-800 uppercase tracking-wider">{t("Mga Banta sa Inyong Lokasyon:", "Potential Hazards in Your Location:")}</span>
+              <div className="flex flex-wrap gap-2">
+                {selectedMuni.hazardTypes.map(h => (
+                  <span key={h} className="bg-white px-3 py-1 rounded-full text-xs font-bold text-amber-600 border border-amber-200 shadow-sm flex items-center gap-2">
+                    <AlertTriangle className="w-3.5 h-3.5" />
+                    {h}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="space-y-2">
             <Label className="text-slate-700 font-semibold">{t("Estruktura ng Bahay", "House Structure")}</Label>
             <Select
@@ -260,6 +293,20 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
               </SelectContent>
             </Select>
           </div>
+
+          {selectedMuni.hazardTypes && (
+            <div className="md:col-span-4 bg-amber-50 p-4 rounded-xl border border-amber-100 flex items-center gap-4 animate-fadeIn">
+              <span className="text-xs font-bold text-amber-800 uppercase tracking-wider">{t("Mga Banta sa Inyong Lokasyon:", "Potential Hazards in Your Location:")}</span>
+              <div className="flex flex-wrap gap-2">
+                {selectedMuni.hazardTypes.map(h => (
+                  <span key={h} className="bg-white px-3 py-1 rounded-full text-xs font-bold text-amber-600 border border-amber-200 shadow-sm flex items-center gap-2">
+                    <AlertTriangle className="w-3.5 h-3.5" />
+                    {h}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className="space-y-2">
             <Label className="text-slate-700 font-semibold">{t("Pinagkukunan ng Tubig", "Water Source")}</Label>
@@ -279,6 +326,20 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
             </Select>
           </div>
 
+          {selectedMuni.hazardTypes && (
+            <div className="md:col-span-4 bg-amber-50 p-4 rounded-xl border border-amber-100 flex items-center gap-4 animate-fadeIn">
+              <span className="text-xs font-bold text-amber-800 uppercase tracking-wider">{t("Mga Banta sa Inyong Lokasyon:", "Potential Hazards in Your Location:")}</span>
+              <div className="flex flex-wrap gap-2">
+                {selectedMuni.hazardTypes.map(h => (
+                  <span key={h} className="bg-white px-3 py-1 rounded-full text-xs font-bold text-amber-600 border border-amber-200 shadow-sm flex items-center gap-2">
+                    <AlertTriangle className="w-3.5 h-3.5" />
+                    {h}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="space-y-2">
             <Label className="text-slate-700 font-semibold">{t("Uri ng Palikuran", "Toilet Facility")}</Label>
             <Select
@@ -295,6 +356,20 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
               </SelectContent>
             </Select>
           </div>
+
+          {selectedMuni.hazardTypes && (
+            <div className="md:col-span-4 bg-amber-50 p-4 rounded-xl border border-amber-100 flex items-center gap-4 animate-fadeIn">
+              <span className="text-xs font-bold text-amber-800 uppercase tracking-wider">{t("Mga Banta sa Inyong Lokasyon:", "Potential Hazards in Your Location:")}</span>
+              <div className="flex flex-wrap gap-2">
+                {selectedMuni.hazardTypes.map(h => (
+                  <span key={h} className="bg-white px-3 py-1 rounded-full text-xs font-bold text-amber-600 border border-amber-200 shadow-sm flex items-center gap-2">
+                    <AlertTriangle className="w-3.5 h-3.5" />
+                    {h}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className="space-y-2">
             <Label className="text-slate-700 font-semibold">{t("Kuryente", "Electricity")}</Label>
@@ -313,6 +388,20 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
               </SelectContent>
             </Select>
           </div>
+
+          {selectedMuni.hazardTypes && (
+            <div className="md:col-span-4 bg-amber-50 p-4 rounded-xl border border-amber-100 flex items-center gap-4 animate-fadeIn">
+              <span className="text-xs font-bold text-amber-800 uppercase tracking-wider">{t("Mga Banta sa Inyong Lokasyon:", "Potential Hazards in Your Location:")}</span>
+              <div className="flex flex-wrap gap-2">
+                {selectedMuni.hazardTypes.map(h => (
+                  <span key={h} className="bg-white px-3 py-1 rounded-full text-xs font-bold text-amber-600 border border-amber-200 shadow-sm flex items-center gap-2">
+                    <AlertTriangle className="w-3.5 h-3.5" />
+                    {h}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className="space-y-2">
             <Label className="text-slate-700 font-semibold">{t("Gamit sa Pagluluto", "Cooking")}</Label>
@@ -872,7 +961,10 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
                   checked={plan.checklist.toiletries.babyDiapers}
                   onCheckedChange={() => toggleChecklistItem("toiletries", "babyDiapers")}
                 />
-                <span className="text-sm text-slate-700">{t("Diapers para sa sanggol (kung mayroon)", "Baby Diapers (if applicable)")}</span>
+                <div className="flex flex-col">
+                  <span className="text-sm text-slate-700">{t("Diapers para sa sanggol (kung mayroon)", "Baby Diapers (if applicable)")}</span>
+                  {hasInfant && <span className="text-[10px] font-bold text-pink-500 uppercase">{t("Kailangan para sa Sanggol", "Required for Infant")}</span>}
+                </div>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <Checkbox
@@ -921,7 +1013,10 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
                   checked={plan.checklist.foodMeds.babyMeds}
                   onCheckedChange={() => toggleChecklistItem("foodMeds", "babyMeds")}
                 />
-                <span className="text-sm text-slate-700">{t("Gamot para sa sanggol (kung mayroon)", "Medicines for baby (if applicable)")}</span>
+                <div className="flex flex-col">
+                  <span className="text-sm text-slate-700">{t("Gamot para sa sanggol (kung mayroon)", "Medicines for baby (if applicable)")}</span>
+                  {hasInfant && <span className="text-[10px] font-bold text-emerald-500 uppercase">{t("Kailangan para sa Sanggol", "Required for Infant")}</span>}
+                </div>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <Checkbox
@@ -935,7 +1030,14 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
                   checked={plan.checklist.foodMeds.maintenanceMeds}
                   onCheckedChange={() => toggleChecklistItem("foodMeds", "maintenanceMeds")}
                 />
-                <span className="text-sm text-slate-700">{t("Maintenance medicines (para sa may sakit)", "Maintenance medicines (if applicable)")}</span>
+                <div className="flex flex-col">
+                  <span className="text-sm text-slate-700">{t("Maintenance medicines (para sa may sakit)", "Maintenance medicines (if applicable)")}</span>
+                  {(hasSenior || hasPWD || hasPregnant) && (
+                    <span className="text-[10px] font-bold text-emerald-600 uppercase">
+                      {t("Kailangan para sa Senior/PWD/Buntis", "Required for Senior/PWD/Pregnant")}
+                    </span>
+                  )}
+                </div>
               </label>
             </div>
           </div>
@@ -1170,6 +1272,21 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
                   <span className="font-bold text-slate-500 flex items-center gap-1"><Shield className="w-3 h-3 text-red-500" /> BFP Provincial</span>
                   <span className="font-black text-slate-800">{CAMARINES_NORTE_HOTLINES.utilities.bfpProvincial}</span>
                 </div>
+              </div>
+            </div>
+
+            <div className="md:col-span-2 bg-slate-100/50 p-4 rounded-xl border border-slate-200 space-y-3">
+              <p className="font-black text-slate-800 uppercase text-xs border-b pb-2">{t("Opisyal na Advisory (Links)", "Official Advisory Links")}</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <a href={CAMARINES_NORTE_HOTLINES.links.pdrrmoFB} target="_blank" rel="noopener noreferrer" className="bg-[#1877F2] text-white p-2.5 rounded-xl text-center text-xs font-black uppercase tracking-wider shadow-sm hover:opacity-90 transition-all flex items-center justify-center gap-2">
+                  PDRRMO FB Page
+                </a>
+                <a href={CAMARINES_NORTE_HOTLINES.links.pagasa} target="_blank" rel="noopener noreferrer" className="bg-slate-800 text-white p-2.5 rounded-xl text-center text-xs font-black uppercase tracking-wider shadow-sm hover:opacity-90 transition-all">
+                  PAGASA Website
+                </a>
+                <a href={CAMARINES_NORTE_HOTLINES.links.phivolcs} target="_blank" rel="noopener noreferrer" className="bg-slate-800 text-white p-2.5 rounded-xl text-center text-xs font-black uppercase tracking-wider shadow-sm hover:opacity-90 transition-all">
+                  PHIVOLCS Website
+                </a>
               </div>
             </div>
           </div>
