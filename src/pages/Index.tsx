@@ -513,36 +513,36 @@ const Index = () => {
         </div>
 
         {/* Navigation Tabs (Desktop Only) */}
-        <div className="hidden lg:flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+        <div className="hidden lg:flex flex-col sm:flex-row justify-between items-center gap-6 bg-white p-4 rounded-[32px] border border-slate-200 shadow-sm">
+          <div className="bg-slate-50 p-2 rounded-2xl border border-slate-100 flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
             <Button
               variant={activeSection === "wizard" ? "default" : "ghost"}
               onClick={() => setActiveSection("wizard")}
-              className={`rounded-xl text-xs font-bold px-4 py-2 justify-start sm:justify-center ${
-                activeSection === "wizard" ? "bg-amber-500 hover:bg-amber-600 text-white" : "text-slate-600"
+              className={`rounded-xl text-sm font-black px-8 py-6 justify-start sm:justify-center transition-all ${
+                activeSection === "wizard" ? "bg-amber-500 hover:bg-amber-600 text-white shadow-lg shadow-amber-200 scale-105" : "text-slate-500 hover:bg-white"
               }`}
             >
-              <Monitor className="w-4 h-4 mr-2" />
-              {t("Gumawa ng Plano", "Create Plan")}
+              <Monitor className="w-5 h-5 mr-3" />
+              {t("Bumuo ng Plano", "Build Family Plan")}
             </Button>
             <Button
               variant={activeSection === "preview" ? "default" : "ghost"}
               onClick={() => setActiveSection("preview")}
-              className={`rounded-xl text-xs font-bold px-4 py-2 justify-start sm:justify-center ${
-                activeSection === "preview" ? "bg-amber-500 hover:bg-amber-600 text-white" : "text-slate-600"
+              className={`rounded-xl text-sm font-black px-8 py-6 justify-start sm:justify-center transition-all ${
+                activeSection === "preview" ? "bg-amber-500 hover:bg-amber-600 text-white shadow-lg shadow-amber-200 scale-105" : "text-slate-500 hover:bg-white"
               }`}
             >
-              <CheckCircle className="w-4 h-4 mr-2" />
+              <CheckCircle className="w-5 h-5 mr-3" />
               {t("I-preview at I-download", "Preview & Download")}
             </Button>
             <Button
               variant={activeSection === "education" ? "default" : "ghost"}
               onClick={() => setActiveSection("education")}
-              className={`rounded-xl text-xs font-bold px-4 py-2 justify-start sm:justify-center ${
-                activeSection === "education" ? "bg-amber-500 hover:bg-amber-600 text-white" : "text-slate-600"
+              className={`rounded-xl text-sm font-black px-8 py-6 justify-start sm:justify-center transition-all ${
+                activeSection === "education" ? "bg-amber-500 hover:bg-amber-600 text-white shadow-lg shadow-amber-200 scale-105" : "text-slate-500 hover:bg-white"
               }`}
             >
-              <BookOpen className="w-4 h-4 mr-2" />
+              <BookOpen className="w-5 h-5 mr-3" />
               {t("Edukasyon at Gabay", "Education & Guidelines")}
             </Button>
           </div>
@@ -550,8 +550,8 @@ const Index = () => {
           {/* Reset Button */}
           <Button
             onClick={handleReset}
-            variant="outline"
-            className="border-slate-200 text-slate-500 hover:bg-slate-50 rounded-xl text-xs flex items-center gap-2 w-full sm:w-auto justify-center"
+            variant="ghost"
+            className="text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl text-xs font-bold flex items-center gap-2 px-4"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             {t("I-reset ang Plano", "Reset Plan")}
