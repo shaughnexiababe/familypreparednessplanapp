@@ -512,45 +512,6 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Emergency Quick Access Card (High Value, Safe) */}
-        <div className="bg-red-600 rounded-3xl p-6 text-white shadow-xl shadow-red-100 flex flex-col md:flex-row justify-between items-start gap-6 relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-8 opacity-10 rotate-12">
-            <Shield className="w-40 h-40" />
-          </div>
-
-          <div className="relative z-10 space-y-4 max-w-xl">
-            <div className="inline-flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-white/30">
-              <Zap className="w-3 h-3 fill-white" />
-              {t("Mabilis na Pag-access sa Emergency", "Quick Emergency Access")}
-            </div>
-            <h3 className="text-2xl font-black leading-tight">{t("Impormasyon para sa Kaligtasan", "Critical Safety Info")}</h3>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/10">
-                <p className="text-[10px] font-bold text-red-100 uppercase opacity-80">{t("Tagpuan (Meeting Place)", "Primary Meeting Place")}</p>
-                <p className="font-black text-sm">{plan.evacuation.meetingPlace1 || "---"}</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/10">
-                <p className="text-[10px] font-bold text-red-100 uppercase opacity-80">{t("Likasan (Evac Center)", "Evacuation Center")}</p>
-                <p className="font-black text-sm">{plan.evacuation.evacCenter1 || "---"}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="relative z-10 w-full md:w-auto flex flex-col gap-2 self-center">
-            <Button
-              onClick={() => setActiveSection("preview")}
-              className="bg-white text-red-600 hover:bg-red-50 rounded-2xl font-black px-6 py-6 shadow-lg shadow-black/10 flex items-center gap-2"
-            >
-              <FileText className="w-5 h-5" />
-              {t("BUKSAN ANG PLANO", "OPEN FULL PLAN")}
-            </Button>
-            <p className="text-[9px] text-center text-red-100 font-bold uppercase tracking-tighter opacity-80">
-              {t("Maaaring i-screenshot para sa offline use", "Screenshot this for offline use")}
-            </p>
-          </div>
-        </div>
-
         {/* Navigation Tabs (Desktop Only) */}
         <div className="hidden lg:flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
