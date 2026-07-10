@@ -178,34 +178,61 @@ const Index = () => {
   // Calculate Preparedness Score
   const calculateScore = () => {
     let score = 0;
-    let total = 10;
+    let total = 20; // Increased total points for stricter scoring
 
-    // 1. Profile filled
-    if (plan.profile.barangay) score += 1;
-    if (plan.profile.sitio) score += 1;
+    // 1. Profile filled (Max 4)
+    if (plan.profile.headOfHousehold) score += 1;
+    if (plan.profile.barangay && plan.profile.sitio) score += 1;
+    if (plan.profile.houseStructure && plan.profile.houseOwnership) score += 1;
     if (plan.profile.hazardVulnerability.length > 0) score += 1;
 
-    // 2. Family members added
-    if (plan.members.length > 0) score += 2;
+    // 2. Family members (Max 3)
+    if (plan.members.length > 0) score += 1;
+    if (plan.members.length >= 2) score += 1;
+    if (plan.members.every(m => m.name && m.phone)) score += 1;
 
-    // 3. Evacuation places filled
-    if (plan.evacuation.meetingPlace1) score += 1;
-    if (plan.evacuation.evacCenter1) score += 1;
+    // 3. Roles & Tasks (Max 4) - Stricter requirement
+    if (plan.roles.length > 0) {
+      score += 1;
+      // Check if roles are assigned to members
+      const uniqueAssignedMembers = new Set(plan.roles.map(r => r.memberId)).size;
+      if (uniqueAssignedMembers >= Math.min(plan.members.length, 2)) score += 1;
 
-    // 4. Checklist items checked (at least 5 items)
+      // Check if tasks are actually written
+      const rolesWithTasks = plan.roles.filter(r => r.tasksBefore || r.tasksDuring || r.tasksAfter).length;
+      if (rolesWithTasks > 0) score += 1;
+      if (rolesWithTasks === plan.roles.length) score += 1;
+    }
+
+    // 4. Evacuation places (Max 3)
+    if (plan.evacuation.meetingPlace1 && plan.evacuation.meetingPlace2) score += 1;
+    if (plan.evacuation.evacCenter1 && plan.evacuation.evacCenter2) score += 1;
+    if (plan.evacuation.houseLayoutNotes) score += 1;
+
+    // 5. Checklist items checked (Max 5)
     const checkedCount = 
       Object.values(plan.checklist.documentsCash).filter(Boolean).length +
       Object.values(plan.checklist.toiletries).filter(Boolean).length +
       Object.values(plan.checklist.foodMeds).filter(Boolean).length +
-      Object.values(plan.checklist.tools).filter(Boolean).length;
+      Object.values(plan.checklist.tools).filter(Boolean).length +
+      Object.values(plan.checklist.eBalde).filter(Boolean).length;
     
-    if (checkedCount >= 15) score += 3;
+    if (checkedCount >= 25) score += 5;
+    else if (checkedCount >= 15) score += 3;
     else if (checkedCount >= 8) score += 2;
     else if (checkedCount >= 3) score += 1;
 
+    // 6. Schedule (Max 1)
+    if (plan.schedule.date && plan.schedule.time) score += 1;
+
+    const percentage = Math.round((score / total) * 100);
+
     return {
-      percentage: Math.round((score / total) * 100),
-      badge: score >= 9 ? t("Handang-Handa! 🌟", "Fully Prepared! 🌟") : score >= 6 ? t("Sapat ang Handa 👍", "Moderately Prepared 👍") : t("Kailangan pa ng Paghahanda ⚠️", "Needs More Preparation ⚠️")
+      percentage: Math.min(percentage, 100),
+      badge: percentage >= 95 ? t("Handang-Handa! 🌟", "Fully Prepared! 🌟") :
+             percentage >= 75 ? t("Handa na 👍", "Prepared 👍") :
+             percentage >= 40 ? t("Sapat ang Handa ⚠️", "Moderately Prepared ⚠️") :
+             t("Kailangan pa ng Paghahanda 🛑", "Needs More Preparation 🛑")
     };
   };
 
