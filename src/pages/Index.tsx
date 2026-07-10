@@ -334,19 +334,6 @@ const Index = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56 rounded-xl shadow-xl border-slate-200 z-[100]">
-              <DropdownMenuItem onClick={() => setActiveSection("wizard")} className="py-2.5 font-medium">
-                <Monitor className="w-4 h-4 mr-2 text-amber-500" />
-                {t("Bumuo ng Plano", "Build Family Plan")}
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setActiveSection("preview")} className="py-2.5 font-medium">
-                <CheckCircle className="w-4 h-4 mr-2 text-emerald-500" />
-                {t("I-preview at I-download", "Preview & Download")}
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setActiveSection("education")} className="py-2.5 font-medium">
-                <BookOpen className="w-4 h-4 mr-2 text-blue-500" />
-                {t("Edukasyon at Gabay", "Education & Guidelines")}
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
               <DropdownMenuItem onClick={toggleSiren} className={`py-2.5 font-medium ${isSirenPlaying ? 'text-red-600 animate-pulse' : ''}`}>
                 <Volume2 className="w-4 h-4 mr-2" />
                 {isSirenPlaying ? t("I-off ang Siren", "Stop Emergency Siren") : t("Emergency Siren", "Test Emergency Siren")}
@@ -512,38 +499,38 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Navigation Tabs (Desktop Only) */}
-        <div className="hidden lg:flex flex-col sm:flex-row justify-between items-center gap-6 bg-white p-4 rounded-[32px] border border-slate-200 shadow-sm">
+        {/* Navigation Tabs (Shared Web & Mobile) */}
+        <div className="flex flex-col lg:flex-row justify-between items-center gap-6 bg-white p-4 rounded-[32px] border border-slate-200 shadow-sm animate-fadeIn">
           <div className="bg-slate-50 p-2 rounded-2xl border border-slate-100 flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
             <Button
               variant={activeSection === "wizard" ? "default" : "ghost"}
               onClick={() => setActiveSection("wizard")}
-              className={`rounded-xl text-sm font-black px-8 py-6 justify-start sm:justify-center transition-all ${
-                activeSection === "wizard" ? "bg-amber-500 hover:bg-amber-600 text-white shadow-lg shadow-amber-200 scale-105" : "text-slate-500 hover:bg-white"
+              className={`rounded-xl text-xs sm:text-sm font-black px-4 sm:px-8 py-5 sm:py-6 justify-start sm:justify-center transition-all ${
+                activeSection === "wizard" ? "bg-amber-500 hover:bg-amber-600 text-white shadow-lg shadow-amber-200" : "text-slate-500 hover:bg-white"
               }`}
             >
-              <Monitor className="w-5 h-5 mr-3" />
-              {t("Bumuo ng Plano", "Build Family Plan")}
+              <Monitor className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" />
+              {t("Bumuo ng Plano", "Build Plan")}
             </Button>
             <Button
               variant={activeSection === "preview" ? "default" : "ghost"}
               onClick={() => setActiveSection("preview")}
-              className={`rounded-xl text-sm font-black px-8 py-6 justify-start sm:justify-center transition-all ${
-                activeSection === "preview" ? "bg-amber-500 hover:bg-amber-600 text-white shadow-lg shadow-amber-200 scale-105" : "text-slate-500 hover:bg-white"
+              className={`rounded-xl text-xs sm:text-sm font-black px-4 sm:px-8 py-5 sm:py-6 justify-start sm:justify-center transition-all ${
+                activeSection === "preview" ? "bg-amber-500 hover:bg-amber-600 text-white shadow-lg shadow-amber-200" : "text-slate-500 hover:bg-white"
               }`}
             >
-              <CheckCircle className="w-5 h-5 mr-3" />
-              {t("I-preview at I-download", "Preview & Download")}
+              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" />
+              {t("I-preview at I-download", "Preview & Save")}
             </Button>
             <Button
               variant={activeSection === "education" ? "default" : "ghost"}
               onClick={() => setActiveSection("education")}
-              className={`rounded-xl text-sm font-black px-8 py-6 justify-start sm:justify-center transition-all ${
-                activeSection === "education" ? "bg-amber-500 hover:bg-amber-600 text-white shadow-lg shadow-amber-200 scale-105" : "text-slate-500 hover:bg-white"
+              className={`rounded-xl text-xs sm:text-sm font-black px-4 sm:px-8 py-5 sm:py-6 justify-start sm:justify-center transition-all ${
+                activeSection === "education" ? "bg-amber-500 hover:bg-amber-600 text-white shadow-lg shadow-amber-200" : "text-slate-500 hover:bg-white"
               }`}
             >
-              <BookOpen className="w-5 h-5 mr-3" />
-              {t("Edukasyon at Gabay", "Education & Guidelines")}
+              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" />
+              {t("Edukasyon at Gabay", "Education")}
             </Button>
           </div>
 
@@ -551,7 +538,7 @@ const Index = () => {
           <Button
             onClick={handleReset}
             variant="ghost"
-            className="text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl text-xs font-bold flex items-center gap-2 px-4"
+            className="text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl text-[10px] sm:text-xs font-bold flex items-center gap-2 px-4"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             {t("I-reset ang Plano", "Reset Plan")}
