@@ -22,7 +22,8 @@ import {
   Home,
   AlertTriangle,
   Flame,
-  Info
+  Info,
+  Zap
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -33,8 +34,12 @@ interface MobilePlanWizardProps {
 }
 
 export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChange, lang }) => {
-  const [activeTab, setActiveTab] = useState<"profile" | "members" | "roles" | "evac" | "checklist" | "schedule">("profile");
+  const [activeTab, setActiveTab] = useState<"profile" | "members" | "roles" | "evac" | "checklist" | "hotlines" | "schedule">("profile");
   const t = (tl: string, en: string) => (lang === "tl" ? tl : en);
+
+  const selectedMuni = CAMARINES_NORTE_HOTLINES.municipalities.find(
+    (m) => m.name === plan.profile.municipality
+  ) || CAMARINES_NORTE_HOTLINES.municipalities[2];
 
   const updateProfile = (fields: Partial<typeof plan.profile>) => {
     onChange({
@@ -672,7 +677,106 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
           </div>
         )}
 
-        {/* Tab 6: Meeting Schedule */}
+        {/* Tab 6: Hotlines */}
+        {activeTab === "hotlines" && (
+          <div className="space-y-4 animate-fadeIn">
+            <div className="bg-white p-6 rounded-[32px] shadow-sm border border-slate-100 space-y-5">
+              <div className="border-b pb-4 mb-2 text-center">
+                <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center justify-center gap-2">
+                  <Phone className="w-5 h-5 text-amber-500" />
+                  {t("Mga Hotline sa Komunidad", "Community Hotlines")}
+                </h2>
+                <p className="text-[10px] text-slate-500 font-medium leading-relaxed mt-2 italic px-2">
+                  {t(
+                    "Ilista ang mga mahalagang numero sa inyong barangay upang mabilis na makahingi ng tulong sa oras ng pangangailangan.",
+                    "List important numbers in your barangay to quickly ask for help in times of need."
+                  )}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 gap-3">
+                <div className="space-y-1">
+                  <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Barangay Hotline", "Barangay Hotline")}</Label>
+                  <Input value={plan.profile.brgyHotline} onChange={(e) => updateProfile({ brgyHotline: e.target.value })} placeholder="09XX-XXX-XXXX" className="rounded-2xl border-slate-200 h-11 text-xs px-4" />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">BPSO / Tanod</Label>
+                  <Input value={plan.profile.bpsoHotline} onChange={(e) => updateProfile({ bpsoHotline: e.target.value })} placeholder="09XX-XXX-XXXX" className="rounded-2xl border-slate-200 h-11 text-xs px-4" />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">BHW</Label>
+                  <Input value={plan.profile.bhwHotline} onChange={(e) => updateProfile({ bhwHotline: e.target.value })} placeholder="09XX-XXX-XXXX" className="rounded-2xl border-slate-200 h-11 text-xs px-4" />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Iba pang Numero", "Other Hotline")}</Label>
+                  <Input value={plan.profile.otherHotline} onChange={(e) => updateProfile({ otherHotline: e.target.value })} placeholder="09XX-XXX-XXXX" className="rounded-2xl border-slate-200 h-11 text-xs px-4" />
+                </div>
+              </div>
+            </div>
+
+            {/* Reference Hotlines */}
+            <div className="bg-white p-6 rounded-[32px] shadow-sm border border-slate-100 space-y-4">
+              <h3 className="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                <Info className="w-4 h-4 text-blue-500" />
+                {t("Reference: Emergency Hotlines", "Reference: Emergency Hotlines")}
+              </h3>
+
+              <div className="space-y-4">
+                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-2">
+                  <p className="font-black text-amber-800 uppercase text-[10px] border-b border-amber-100 pb-1">PDRRMO CamNorte</p>
+                  <div className="grid grid-cols-1 gap-1 text-[10px]">
+                    <div className="flex justify-between">
+                      <span className="font-bold text-slate-500">OPCEN:</span>
+                      <span className="font-black text-slate-800">{CAMARINES_NORTE_HOTLINES.pdrrmo.opcen}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-bold text-slate-500">SMART:</span>
+                      <span className="font-black text-slate-800">{CAMARINES_NORTE_HOTLINES.pdrrmo.smart}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-bold text-slate-500">GLOBE:</span>
+                      <span className="font-black text-slate-800">{CAMARINES_NORTE_HOTLINES.pdrrmo.globe}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-2">
+                  <p className="font-black text-emerald-800 uppercase text-[10px] border-b border-emerald-100 pb-1">MDRRMO {selectedMuni.name}</p>
+                  <div className="grid grid-cols-1 gap-1 text-[10px]">
+                    <div className="flex justify-between">
+                      <span className="font-bold text-slate-500">MDRRMO:</span>
+                      <span className="font-black text-slate-800 text-right">{selectedMuni.mdrrmo.join(" / ")}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-bold text-slate-500">PNP {selectedMuni.name}:</span>
+                      <span className="font-black text-slate-800">{selectedMuni.pnp}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-bold text-slate-500">BFP {selectedMuni.name}:</span>
+                      <span className="font-black text-slate-800">{selectedMuni.bfp}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-2">
+                  <p className="font-black text-blue-800 uppercase text-[10px] border-b border-blue-100 pb-1">{t("Mga Utility Hotline", "Utility Hotlines")}</p>
+                  <div className="grid grid-cols-1 gap-1 text-[10px]">
+                    <div className="flex justify-between">
+                      <span className="font-bold text-slate-500 flex items-center gap-1"><Zap className="w-3 h-3 text-amber-500" /> CANORECO:</span>
+                      <span className="font-black text-slate-800">{CAMARINES_NORTE_HOTLINES.utilities.canoreco}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-bold text-slate-500 flex items-center gap-1"><Droplets className="w-3 h-3 text-blue-400" /> Prime Water:</span>
+                      <span className="font-black text-slate-800">{CAMARINES_NORTE_HOTLINES.utilities.primeWater}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Tab 7: Meeting Schedule */}
         {activeTab === "schedule" && (
           <div className="space-y-4 animate-fadeIn">
             <div className="bg-white p-6 rounded-[32px] shadow-sm border border-slate-100 space-y-5">
@@ -741,6 +845,11 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
         <button onClick={() => setActiveTab("checklist")} className={`flex flex-col items-center gap-1.5 min-w-[62px] transition-all ${activeTab === "checklist" ? "text-amber-500 scale-110" : "text-slate-300"}`}>
           <div className={`p-1.5 rounded-xl ${activeTab === "checklist" ? "bg-amber-50" : ""}`}><CheckSquare className="w-5 h-5" /></div>
           <span className="text-[8px] font-black uppercase tracking-tighter">{t("Gamit", "Kit")}</span>
+        </button>
+
+        <button onClick={() => setActiveTab("hotlines")} className={`flex flex-col items-center gap-1.5 min-w-[62px] transition-all ${activeTab === "hotlines" ? "text-amber-500 scale-110" : "text-slate-300"}`}>
+          <div className={`p-1.5 rounded-xl ${activeTab === "hotlines" ? "bg-amber-50" : ""}`}><Phone className="w-5 h-5" /></div>
+          <span className="text-[8px] font-black uppercase tracking-tighter">{t("Hotline", "Hotline")}</span>
         </button>
 
         <button onClick={() => setActiveTab("schedule")} className={`flex flex-col items-center gap-1.5 min-w-[62px] transition-all ${activeTab === "schedule" ? "text-amber-500 scale-110" : "text-slate-300"}`}>
