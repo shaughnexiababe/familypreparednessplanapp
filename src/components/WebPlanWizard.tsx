@@ -152,7 +152,7 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
     });
   };
 
-  const hasInfant = plan.members.some(m => m.vulnerability.includes("Infant"));
+  const hasInfant = plan.members.some(m => m.vulnerability === "Infant");
   const hasSenior = plan.members.some(m => m.vulnerability === "Senior Citizen");
   const hasPWD = plan.members.some(m => m.vulnerability === "PWD");
   const hasPregnant = plan.members.some(m => m.vulnerability === "Pregnant");
@@ -535,9 +535,9 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
                     <SelectContent>
                       <SelectItem value="None">{t("Walang Espesyal na Kondisyon", "No Special Condition")}</SelectItem>
                       <SelectItem value="Senior Citizen">{t("Senior Citizen", "Senior Citizen")}</SelectItem>
-                      <SelectItem value="Infant / Bata">{t("Bata / Infant", "Child / Infant")}</SelectItem>
+                      <SelectItem value="Infant">{t("Bata / Infant", "Child / Infant")}</SelectItem>
                       <SelectItem value="Pregnant">{t("Buntis (Pregnant)", "Pregnant")}</SelectItem>
-                      <SelectItem value="PWD">{t("PWD (Person with Disability)", "PWD")}</SelectItem>
+                      <SelectItem value="PWD">{t("PWD", "PWD")}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

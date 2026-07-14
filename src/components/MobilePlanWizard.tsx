@@ -440,6 +440,20 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                   </div>
 
                   <div className="space-y-1">
+                    <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Kondisyon / Vulnerability", "Vulnerability")}</Label>
+                    <Select value={m.vulnerability} onValueChange={(val) => updateMember(m.id, { vulnerability: val })}>
+                      <SelectTrigger className="rounded-2xl border-slate-200 h-10 text-xs px-3 shadow-sm"><SelectValue /></SelectTrigger>
+                      <SelectContent className="rounded-xl">
+                        <SelectItem value="None">{t("Walang Espesyal na Kondisyon", "No Special Condition")}</SelectItem>
+                        <SelectItem value="Senior Citizen">{t("Senior Citizen", "Senior Citizen")}</SelectItem>
+                        <SelectItem value="Infant">{t("Bata / Infant", "Child / Infant")}</SelectItem>
+                        <SelectItem value="Pregnant">{t("Buntis", "Pregnant")}</SelectItem>
+                        <SelectItem value="PWD">{t("PWD", "PWD")}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-1">
                     <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Status ng Kaligtasan", "Safety Status")}</Label>
                     <div className="flex gap-2 pt-1">
                       {(["Ligtas", "Nasa Panganib", "Hindi Pa Alam"] as const).map((s) => (
