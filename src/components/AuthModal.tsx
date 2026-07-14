@@ -96,10 +96,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, lang }) =
       <DialogContent className="sm:max-w-[420px] rounded-2xl p-6 bg-white border border-slate-100 shadow-2xl">
         <DialogHeader className="items-center text-center space-y-2">
           <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-md border-2 border-amber-100 bg-white">
-            <img src="/app-logo.png" alt="Ligtas CamNorte Logo" className="w-full h-full object-cover" />
+            <img src="/app-logo.png" alt="Tahanang Handa Logo" className="w-full h-full object-cover" />
           </div>
           <DialogTitle className="text-xl font-black text-slate-900 uppercase tracking-tight">
-            {t("Ligtas CamNorte Account", "Ligtas CamNorte Account")}
+            {t("Tahanang Handa Account", "Tahanang Handa Account")}
           </DialogTitle>
           <DialogDescription className="text-xs text-slate-500">
             {t(

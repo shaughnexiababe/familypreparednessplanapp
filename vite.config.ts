@@ -16,8 +16,8 @@ export default defineConfig(() => ({
       registerType: "autoUpdate",
       includeAssets: ["robots.txt", "app-logo.png", "favicon.ico", "*.png", "*.svg"],
       manifest: {
-        name: "Ligtas CamNorte",
-        short_name: "Ligtas",
+        name: "Tahanang Handa",
+        short_name: "Handa",
         description: "Family Preparedness Plan for Camarines Norte",
         theme_color: "#f39c12",
         background_color: "#ffffff",

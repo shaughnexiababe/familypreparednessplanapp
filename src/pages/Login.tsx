@@ -106,11 +106,11 @@ const Login = () => {
       <div className="w-full max-w-[420px] bg-white rounded-3xl p-8 border border-slate-100 shadow-2xl space-y-6">
         <div className="flex flex-col items-center text-center space-y-4">
           <div className="p-0 overflow-hidden rounded-3xl w-24 h-24 shadow-lg border-4 border-amber-100 bg-white flex items-center justify-center">
-            <img src="/app-logo.png" alt="Ligtas CamNorte Logo" className="w-full h-full object-cover" />
+            <img src="/app-logo.png" alt="Tahanang Handa Logo" className="w-full h-full object-cover" />
           </div>
           <div>
             <h1 className="text-2xl font-black text-slate-900 uppercase tracking-tight">
-              Ligtas CamNorte
+              Tahanang Handa
             </h1>
             <p className="text-sm text-slate-500 font-medium mt-1">
               {t(
@@ -309,7 +309,7 @@ const Login = () => {
       </div>
 
       <p className="mt-8 text-[11px] text-slate-400 font-bold uppercase tracking-widest">
-        Ligtas CamNorte &bull; Probinsya ng Camarines Norte
+        Tahanang Handa &bull; Probinsya ng Camarines Norte
       </p>
     </div>
   );

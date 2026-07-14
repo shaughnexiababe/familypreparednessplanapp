@@ -278,7 +278,7 @@ const Index = () => {
           <div className="relative">
             <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full blur opacity-25 animate-pulse"></div>
             <div className="relative bg-white overflow-hidden rounded-full inline-block border-2 border-amber-100 shadow-xl w-32 h-32 flex items-center justify-center">
-              <img src="/app-logo.png" alt="Ligtas CamNorte Logo" className="w-full h-full object-cover" />
+              <img src="/app-logo.png" alt="Tahanang Handa Logo" className="w-full h-full object-cover" />
             </div>
           </div>
 
@@ -320,7 +320,7 @@ const Index = () => {
         </div>
 
         <div className="mt-20 text-[10px] text-slate-300 font-bold uppercase tracking-widest">
-          Ligtas CamNorte &copy; 2026
+          Tahanang Handa &copy; 2026
         </div>
       </div>
     );
@@ -336,7 +336,7 @@ const Index = () => {
           </div>
           <div>
             <h1 className="text-base font-black tracking-tight uppercase leading-tight">
-              LIGTAS CAMNORTE
+              TAHANANG HANDA
             </h1>
             <p className="text-[10px] font-bold opacity-90 tracking-wide">
               {t("Plano ng Pamilya", "Family Preparedness Plan")}
@@ -388,7 +388,7 @@ const Index = () => {
             </div>
             <div>
               <h1 className="text-xl md:text-2xl font-black tracking-tight uppercase">
-                {t("Ligtas CamNorte: Plano ng Pamilya", "Ligtas CamNorte: Family Preparedness Plan")}
+                {t("Tahanang Handa: Plano ng Pamilya", "Tahanang Handa: Family Preparedness Plan")}
               </h1>
               <p className="text-xs md:text-sm opacity-90 font-medium">
                 {t(
@@ -493,7 +493,7 @@ const Index = () => {
           <div className="shrink-0 w-full md:w-auto flex justify-center">
             <img 
               src="/app-logo.png"
-              alt="Ligtas CamNorte Logo"
+              alt="Tahanang Handa Logo"
               className="w-full max-w-[200px] md:w-56 h-auto object-contain bg-white/10 backdrop-blur-sm rounded-3xl border-2 border-white/20 shadow-2xl p-4"
             />
           </div>
