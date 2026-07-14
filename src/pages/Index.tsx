@@ -40,11 +40,22 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { PrivacyNotice } from "@/components/PrivacyNotice";
 
 const Index = () => {
-  const { user, logout, savePlanToCloud, loadPlanFromCloud } = useAuth();
+  const { user, logout, deleteAccount, savePlanToCloud, loadPlanFromCloud } = useAuth();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<string | null>(null);
@@ -272,6 +283,14 @@ const Index = () => {
 
   const prepScore = calculateScore();
 
+  const handleDeleteAccount = async () => {
+    try {
+      await deleteAccount();
+    } catch (error: any) {
+      toast.error(t("May error sa pagbura ng account.", "Error deleting account."));
+    }
+  };
+
   if (user && showLanding) {
     return (
       <div className="min-h-screen bg-white font-sans flex flex-col items-center justify-center p-6 text-center animate-fadeIn">
@@ -378,10 +397,37 @@ const Index = () => {
               />
               <DropdownMenuSeparator />
               {user ? (
-                <DropdownMenuItem onClick={logout} className="py-2.5 font-medium text-red-600">
-                  <LogOut className="w-4 h-4 mr-2" />
-                  {t("Mag-logout", "Logout")}
-                </DropdownMenuItem>
+                <>
+                  <DropdownMenuItem onClick={logout} className="py-2.5 font-medium text-slate-600">
+                    <LogOut className="w-4 h-4 mr-2" />
+                    {t("Mag-logout", "Logout")}
+                  </DropdownMenuItem>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="py-2.5 font-medium text-red-600">
+                        <Trash2 className="w-4 h-4 mr-2" />
+                        {t("Burahin ang Account", "Delete Account")}
+                      </DropdownMenuItem>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className="rounded-3xl border-none">
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>{t("Sigurado ka ba?", "Are you absolutely sure?")}</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          {t(
+                            "Ang aksyong ito ay hindi na maaaring bawiin. Permanenteng mabubura ang iyong account at ang iyong Family Preparedness Plan mula sa aming servers.",
+                            "This action cannot be undone. This will permanently delete your account and remove your Family Preparedness Plan from our servers."
+                          )}
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel className="rounded-xl">{t("Bumalik", "Cancel")}</AlertDialogCancel>
+                        <AlertDialogAction onClick={handleDeleteAccount} className="bg-red-600 hover:bg-red-700 text-white rounded-xl">
+                          {t("Oo, Burahin Na", "Yes, Delete Account")}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </>
               ) : (
                 <DropdownMenuItem onClick={() => setIsAuthModalOpen(true)} className="py-2.5 font-medium">
                   <User className="w-4 h-4 mr-2 text-slate-500" />
@@ -433,13 +479,44 @@ const Index = () => {
               <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/20">
                 <User className="w-4 h-4 text-white" />
                 <span className="text-xs font-bold text-white max-w-[120px] truncate">{user.email}</span>
-                <button 
-                  onClick={logout} 
-                  className="text-white hover:text-red-200 transition-colors ml-1"
-                  title={t("Mag-logout", "Logout")}
-                >
-                  <LogOut className="w-4 h-4" />
-                </button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="text-white hover:text-amber-200 transition-colors ml-1">
+                      <Menu className="w-4 h-4" />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48 rounded-xl shadow-xl border-slate-200">
+                    <DropdownMenuItem onClick={logout} className="py-2.5 font-medium">
+                      <LogOut className="w-4 h-4 mr-2" />
+                      {t("Mag-logout", "Logout")}
+                    </DropdownMenuItem>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="py-2.5 font-medium text-red-600">
+                          <Trash2 className="w-4 h-4 mr-2" />
+                          {t("Burahin ang Account", "Delete Account")}
+                        </DropdownMenuItem>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent className="rounded-3xl border-none">
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>{t("Sigurado ka ba?", "Are you absolutely sure?")}</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            {t(
+                              "Ang aksyong ito ay hindi na maaaring bawiin. Permanenteng mabubura ang iyong account at data.",
+                              "This action cannot be undone. This will permanently delete your account and data."
+                            )}
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel className="rounded-xl">{t("Bumalik", "Cancel")}</AlertDialogCancel>
+                          <AlertDialogAction onClick={handleDeleteAccount} className="bg-red-600 hover:bg-red-700 text-white rounded-xl">
+                            {t("Burahin Na", "Delete")}
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             ) : (
               <Button

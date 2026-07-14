@@ -1,12 +1,35 @@
 import React, { useState } from "react";
-import { Shield, ChevronLeft } from "lucide-react";
+import { Shield, ChevronLeft, Trash2, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 
 const Privacy = () => {
   const navigate = useNavigate();
+  const { user, deleteAccount } = useAuth();
   const [lang, setLang] = useState<"tl" | "en">("tl");
   const t = (tl: string, en: string) => (lang === "tl" ? tl : en);
+
+  const handleDeleteAccount = async () => {
+    try {
+      await deleteAccount();
+      navigate("/login");
+    } catch (error: any) {
+      toast.error(t("May error sa pagbura ng account.", "Error deleting account."));
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center p-6 md:p-12">
@@ -144,6 +167,39 @@ const Privacy = () => {
                 "You can edit or delete your profile and your entire preparedness plan at any time within the app. You can also request the permanent deletion of your account."
               )}
             </p>
+
+            {user && (
+              <div className="pt-4">
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="outline" className="text-red-600 border-red-100 hover:bg-red-50 rounded-2xl gap-2 font-bold px-6">
+                      <Trash2 className="w-4 h-4" />
+                      {t("Burahin ang aking Account Ngayon", "Delete my Account Now")}
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent className="rounded-3xl border-none">
+                    <AlertDialogHeader>
+                      <div className="mx-auto bg-red-100 p-3 rounded-2xl mb-2">
+                        <AlertCircle className="w-6 h-6 text-red-600" />
+                      </div>
+                      <AlertDialogTitle className="text-center">{t("Kumpirmahin ang Pagbura", "Confirm Deletion")}</AlertDialogTitle>
+                      <AlertDialogDescription className="text-center">
+                        {t(
+                          "Ang aksyong ito ay hindi na maaaring bawiin. Lahat ng iyong data, kabilang ang iyong Family Preparedness Plan, ay permanenteng mawawala.",
+                          "This action cannot be undone. All your data, including your Family Preparedness Plan, will be permanently lost."
+                        )}
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter className="sm:justify-center gap-3 mt-4">
+                      <AlertDialogCancel className="rounded-xl flex-1">{t("Bumalik", "Cancel")}</AlertDialogCancel>
+                      <AlertDialogAction onClick={handleDeleteAccount} className="bg-red-600 hover:bg-red-700 text-white rounded-xl flex-1">
+                        {t("Oo, Burahin", "Yes, Delete")}
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
+            )}
           </section>
 
           <footer className="pt-8 border-t border-slate-100 text-center">

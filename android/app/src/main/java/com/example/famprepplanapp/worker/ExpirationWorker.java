@@ -7,7 +7,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
-import com.example.famprepplanapp.R;
+import com.tahananghanda.app.R;
 
 public class ExpirationWorker extends Worker {
     private static final String TAG = "ExpirationWorker";

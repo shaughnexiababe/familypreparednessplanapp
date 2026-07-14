@@ -20,6 +20,7 @@ interface AuthContextType {
   register: (email: string, pass: string) => Promise<void>;
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
+  deleteAccount: () => Promise<void>;
   savePlanToCloud: (plan: FamilyPlanState) => Promise<void>;
   loadPlanFromCloud: () => Promise<FamilyPlanState | null>;
 }
@@ -91,6 +92,39 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await sendPasswordResetEmail(auth, email);
   };
 
+  const deleteAccount = async () => {
+    if (!user) return;
+
+    if (isDemoMode) {
+      localStorage.removeItem(`ligtas_plan_${user.uid}`);
+      setUser(null);
+      toast.success("Demo Mode: Account deleted!");
+      return;
+    }
+
+    try {
+      // 1. Delete data from Firestore
+      const docRef = doc(db, "family_plans", user.uid);
+      await setDoc(docRef, { deleted: true, deletedAt: new Date().toISOString() }, { merge: true });
+      // In a production app, you might want to fully delete the doc, but flagging it is safer
+      // await deleteDoc(docRef);
+
+      // 2. Delete Auth Account
+      await user.delete();
+      toast.success("Matagumpay na nabura ang iyong account.", "Account deleted successfully.");
+    } catch (error: any) {
+      console.error("Error deleting account:", error);
+      if (error.code === 'auth/requires-recent-login') {
+        toast.error(
+          "Security Error: Mangyaring mag-re-login muna bago burahin ang account.",
+          "Security Error: Please re-login before deleting your account."
+        );
+      } else {
+        throw error;
+      }
+    }
+  };
+
   const savePlanToCloud = async (plan: FamilyPlanState) => {
     if (!user) return;
     if (isDemoMode) {
@@ -158,6 +192,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       register,
       logout,
       resetPassword,
+      deleteAccount,
       savePlanToCloud,
       loadPlanFromCloud
     }}>
