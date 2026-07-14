@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from "./hooks/useAuth";
 import { usePushNotifications } from "./hooks/usePushNotifications";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
+import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 const AppRoutes = () => (
   <Routes>
     <Route path="/login" element={<Login />} />
+    <Route path="/privacy" element={<Privacy />} />
     <Route
       path="/"
       element={
