@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Trash2, Shield, Users, Calendar, MapPin, CheckSquare, Phone, BookOpen, Zap, Droplets, AlertTriangle } from "lucide-react";
+import { Plus, Trash2, Shield, Users, Calendar, MapPin, CheckSquare, Phone, BookOpen, Zap, Droplets, AlertTriangle, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 
 interface WebPlanWizardProps {

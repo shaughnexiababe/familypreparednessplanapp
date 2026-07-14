@@ -24,7 +24,10 @@ import {
   Flame,
   Info,
   Zap,
-  Bath
+  Bath,
+  Sparkles,
+  CloudLightning,
+  Clock
 } from "lucide-react";
 import { toast } from "sonner";
 
