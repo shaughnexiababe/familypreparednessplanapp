@@ -40,11 +40,6 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 import { toast } from "sonner";
 
 const Index = () => {
@@ -70,7 +65,6 @@ const Index = () => {
   const [lang, setLang] = useState<"tl" | "en">("tl");
   const [activeSection, setActiveSection] = useState<"wizard" | "preview" | "education">("wizard");
   const [isSirenPlaying, setIsSirenPlaying] = useState(false);
-  const [isScoreOpen, setIsScoreOpen] = useState(false);
   const [pagasaSignal, setPagasaSignal] = useState<number>(0);
   const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
   const [oscillator, setOscillator] = useState<OscillatorNode | null>(null);
@@ -512,77 +506,70 @@ const Index = () => {
         <div className={`rounded-2xl border shadow-sm overflow-hidden animate-fadeIn transition-all duration-500 ${
           pagasaSignal > 0 ? "bg-red-50 border-red-200" : "bg-white border-slate-200"
         }`}>
-          <Collapsible open={isScoreOpen} onOpenChange={setIsScoreOpen}>
-            <div className="p-6 flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="space-y-2 text-center md:text-left">
-                <div className="flex items-center justify-center md:justify-start gap-2">
-                  <h3 className={`text-lg font-bold flex items-center gap-2 ${pagasaSignal > 0 ? "text-red-800" : "text-slate-800"}`}>
-                    <Sparkles className={`w-5 h-5 ${pagasaSignal > 0 ? "text-red-500" : "text-amber-500"}`} />
-                    {t("Antas ng Kahandaan ng Pamilya", "Family Preparedness Level")}
-                  </h3>
-                  {pagasaSignal > 0 && (
-                    <div className="bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full animate-pulse uppercase tracking-widest">
-                      Signal #{pagasaSignal} Active
-                    </div>
-                  )}
-                </div>
-                <p className={`text-xs ${pagasaSignal > 0 ? "text-red-600 font-medium" : "text-slate-500"}`}>
-                  {pagasaSignal > 0
-                    ? t("⚠️ MAY AKTIBONG TYPHOON SIGNAL! Pakisuri agad ang inyong Go-Bag.", "⚠️ ACTIVE TYPHOON SIGNAL! Please review your Go-Bag immediately.")
-                    : t("Awtomatikong kinakalkula batay sa mga impormasyon at checklist na iyong sinagutan.", "Automatically calculated based on the information and checklist items you completed.")}
-                </p>
+          <div className="p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="space-y-2 text-center md:text-left">
+              <div className="flex items-center justify-center md:justify-start gap-2">
+                <h3 className={`text-lg font-bold flex items-center gap-2 ${pagasaSignal > 0 ? "text-red-800" : "text-slate-800"}`}>
+                  <Sparkles className={`w-5 h-5 ${pagasaSignal > 0 ? "text-red-500" : "text-amber-500"}`} />
+                  {t("Antas ng Kahandaan ng Pamilya", "Family Preparedness Level")}
+                </h3>
+                {pagasaSignal > 0 && (
+                  <div className="bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full animate-pulse uppercase tracking-widest">
+                    Signal #{pagasaSignal} Active
+                  </div>
+                )}
               </div>
-
-              <div className="flex items-center gap-4 w-full md:w-auto">
-                <div className="text-center">
-                  <span className={`text-3xl font-black ${pagasaSignal > 0 ? "text-red-600" : "text-amber-600"}`}>{prepScore.percentage}%</span>
-                  <span className="text-[10px] text-slate-400 block uppercase font-bold">{t("KUMPLETO", "COMPLETE")}</span>
-                </div>
-                <div className="flex-1 md:w-48 bg-slate-100 h-3 rounded-full overflow-hidden">
-                  <div
-                    className={`${pagasaSignal > 0 ? "bg-red-500" : "bg-gradient-to-r from-amber-500 to-emerald-500"} h-full transition-all duration-500`}
-                    style={{ width: `${prepScore.percentage}%` }}
-                  ></div>
-                </div>
-                <div className={`${pagasaSignal > 0 ? "bg-red-100 border-red-300 text-red-800" : "bg-amber-50 border-amber-200 text-amber-800"} border px-3 py-1.5 rounded-xl text-xs font-bold shrink-0`}>
-                  {prepScore.badge}
-                </div>
-                <CollapsibleTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-slate-400">
-                    {isScoreOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
-                  </Button>
-                </CollapsibleTrigger>
-              </div>
+              <p className={`text-xs ${pagasaSignal > 0 ? "text-red-600 font-medium" : "text-slate-500"}`}>
+                {pagasaSignal > 0
+                  ? t("⚠️ MAY AKTIBONG TYPHOON SIGNAL! Pakisuri agad ang inyong Go-Bag.", "⚠️ ACTIVE TYPHOON SIGNAL! Please review your Go-Bag immediately.")
+                  : t("Awtomatikong kinakalkula batay sa mga impormasyon at checklist na iyong sinagutan.", "Automatically calculated based on the information and checklist items you completed.")}
+              </p>
             </div>
 
-            <CollapsibleContent className="border-t border-slate-50 bg-slate-50/50 p-6 animate-slideDown">
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                {prepScore.breakdown.map((item, idx) => (
-                  <div key={idx} className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-2">
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">{item.label}</p>
-                    <div className="flex items-end justify-between">
-                      <span className="text-xl font-black text-slate-800">{item.score}<span className="text-xs text-slate-300 ml-0.5">/{item.total}</span></span>
-                      <div className="w-10 h-1 bg-slate-100 rounded-full overflow-hidden mb-1.5">
-                        <div
-                          className={`h-full ${item.score === item.total ? 'bg-emerald-500' : 'bg-amber-500'}`}
-                          style={{ width: `${(item.score / item.total) * 100}%` }}
-                        ></div>
-                      </div>
+            <div className="flex items-center gap-4 w-full md:w-auto">
+              <div className="text-center">
+                <span className={`text-3xl font-black ${pagasaSignal > 0 ? "text-red-600" : "text-amber-600"}`}>{prepScore.percentage}%</span>
+                <span className="text-[10px] text-slate-400 block uppercase font-bold">{t("KUMPLETO", "COMPLETE")}</span>
+              </div>
+              <div className="flex-1 md:w-48 bg-slate-100 h-3 rounded-full overflow-hidden">
+                <div
+                  className={`${pagasaSignal > 0 ? "bg-red-500" : "bg-gradient-to-r from-amber-500 to-emerald-500"} h-full transition-all duration-500`}
+                  style={{ width: `${prepScore.percentage}%` }}
+                ></div>
+              </div>
+              <div className={`${pagasaSignal > 0 ? "bg-red-100 border-red-300 text-red-800" : "bg-amber-50 border-amber-200 text-amber-800"} border px-3 py-1.5 rounded-xl text-xs font-bold shrink-0`}>
+                {prepScore.badge}
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-slate-50 bg-slate-50/50 p-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              {prepScore.breakdown.map((item, idx) => (
+                <div key={idx} className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-2">
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">{item.label}</p>
+                  <div className="flex items-end justify-between">
+                    <span className="text-xl font-black text-slate-800">{item.score}<span className="text-xs text-slate-300 ml-0.5">/{item.total}</span></span>
+                    <div className="w-10 h-1 bg-slate-100 rounded-full overflow-hidden mb-1.5">
+                      <div
+                        className={`h-full ${item.score === item.total ? 'bg-emerald-500' : 'bg-amber-500'}`}
+                        style={{ width: `${(item.score / item.total) * 100}%` }}
+                      ></div>
                     </div>
                   </div>
-                ))}
-              </div>
-              <div className="mt-4 p-3 bg-amber-50 rounded-xl border border-amber-100 flex items-start gap-2">
-                <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                <p className="text-[11px] text-amber-800 leading-relaxed">
-                  {t(
-                    "Pahiwatig: Kumpletuhin ang bawat seksyon upang tumaas ang iyong score. Ang checklist (Go-Bag) ang may pinakamalaking puntos.",
-                    "Tip: Complete each section to increase your score. The checklist (Go-Bag) carries the most points."
-                  )}
-                </p>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 p-3 bg-amber-50 rounded-xl border border-amber-100 flex items-start gap-2">
+              <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+              <p className="text-[11px] text-amber-800 leading-relaxed">
+                {t(
+                  "Pahiwatig: Kumpletuhin ang bawat seksyon upang tumaas ang iyong score. Ang checklist (Go-Bag) ang may pinakamalaking puntos.",
+                  "Tip: Complete each section to increase your score. The checklist (Go-Bag) carries the most points."
+                )}
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Navigation Tabs (Shared Web & Mobile) */}
