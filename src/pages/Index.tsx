@@ -41,6 +41,7 @@ import {
   DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
+import { PrivacyNotice } from "@/components/PrivacyNotice";
 
 const Index = () => {
   const { user, logout, savePlanToCloud, loadPlanFromCloud } = useAuth();
@@ -319,8 +320,11 @@ const Index = () => {
           </div>
         </div>
 
-        <div className="mt-20 text-[10px] text-slate-300 font-bold uppercase tracking-widest">
-          Tahanang Handa &copy; 2026
+        <div className="mt-20 flex flex-col items-center gap-2">
+          <div className="text-[10px] text-slate-300 font-bold uppercase tracking-widest">
+            Tahanang Handa &copy; 2026
+          </div>
+          <PrivacyNotice lang={lang} />
         </div>
       </div>
     );
@@ -362,6 +366,16 @@ const Index = () => {
                 <Volume2 className="w-4 h-4 mr-2" />
                 {isSirenPlaying ? t("I-off ang Siren", "Stop Emergency Siren") : t("Emergency Siren", "Test Emergency Siren")}
               </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <PrivacyNotice
+                lang={lang}
+                trigger={
+                  <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="py-2.5 font-medium">
+                    <Shield className="w-4 h-4 mr-2 text-slate-500" />
+                    {t("Patakaran sa Privacy", "Privacy Notice")}
+                  </DropdownMenuItem>
+                }
+              />
               <DropdownMenuSeparator />
               {user ? (
                 <DropdownMenuItem onClick={logout} className="py-2.5 font-medium text-red-600">

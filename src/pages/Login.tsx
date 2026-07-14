@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Shield, Mail, Lock, AlertCircle } from "lucide-react";
+import { Mail, Lock, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
+import { PrivacyNotice } from "@/components/PrivacyNotice";
 
 const Login = () => {
   const { login, register, resetPassword, isDemoMode, user, loading } = useAuth();
@@ -308,9 +309,12 @@ const Login = () => {
         </Tabs>
       </div>
 
-      <p className="mt-8 text-[11px] text-slate-400 font-bold uppercase tracking-widest">
-        Tahanang Handa &bull; Probinsya ng Camarines Norte
-      </p>
+      <div className="mt-8 flex flex-col items-center gap-2">
+        <p className="text-[11px] text-slate-400 font-bold uppercase tracking-widest text-center">
+          Tahanang Handa &bull; Probinsya ng Camarines Norte
+        </p>
+        <PrivacyNotice lang={lang} />
+      </div>
     </div>
   );
 };
