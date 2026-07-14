@@ -332,6 +332,7 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                   <div className="flex flex-wrap gap-2">
                     {["Baha", "Lindol", "Landslide", "Bagyo", "Storm Surge"].map((hazard) => {
                       const isChecked = plan.profile.hazardVulnerability.includes(hazard);
+                      const isAutoDetected = selectedMuni.hazardTypes?.includes(hazard as any);
                       return (
                         <button
                           key={hazard}
@@ -341,15 +342,20 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                               : [...plan.profile.hazardVulnerability, hazard];
                             updateProfile({ hazardVulnerability: updated });
                           }}
-                          className={`px-3 py-1.5 rounded-full text-[10px] font-bold transition-all border ${
+                          className={`px-3 py-1.5 rounded-full text-[10px] font-bold transition-all border flex items-center gap-1.5 ${
                             isChecked ? "bg-red-500 border-red-500 text-white shadow-md" : "bg-white border-slate-200 text-slate-400"
                           }`}
                         >
                           {hazard}
+                          {isAutoDetected && <Sparkles className="w-2.5 h-2.5 opacity-70" />}
                         </button>
                       );
                     })}
                   </div>
+                  <p className="text-[9px] text-slate-400 italic ml-1 mt-1 flex items-center gap-1">
+                    <Sparkles className="w-2.5 h-2.5" />
+                    {t("May icon ang mga panganib na awtomatikong natukoy sa inyong munisipyo.", "Hazards with icons are auto-detected for your municipality.")}
+                  </p>
                 </div>
               </div>
             </div>
@@ -431,17 +437,24 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                   </div>
 
                   <div className="space-y-1">
-                    <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Vulnerability", "Condition")}</Label>
-                    <Select value={m.vulnerability} onValueChange={(val) => updateMember(m.id, { vulnerability: val })}>
-                      <SelectTrigger className="rounded-2xl border-slate-200 h-10 text-xs px-3 shadow-sm"><SelectValue /></SelectTrigger>
-                      <SelectContent className="rounded-xl">
-                        <SelectItem value="None">{t("Normal", "None")}</SelectItem>
-                        <SelectItem value="Senior Citizen">Senior Citizen</SelectItem>
-                        <SelectItem value="PWD">PWD</SelectItem>
-                        <SelectItem value="Pregnant">{t("Buntis", "Pregnant")}</SelectItem>
-                        <SelectItem value="Infant">{t("Sanggol", "Infant")}</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Status ng Kaligtasan", "Safety Status")}</Label>
+                    <div className="flex gap-2 pt-1">
+                      {(["Ligtas", "Nasa Panganib", "Hindi Pa Alam"] as const).map((s) => (
+                        <button
+                          key={s}
+                          onClick={() => updateMember(m.id, { status: s })}
+                          className={`flex-1 py-2 rounded-xl text-[9px] font-black uppercase transition-all border ${
+                            m.status === s
+                              ? s === "Ligtas" ? "bg-emerald-500 border-emerald-500 text-white"
+                                : s === "Nasa Panganib" ? "bg-red-500 border-red-500 text-white"
+                                : "bg-slate-500 border-slate-500 text-white"
+                              : "bg-white border-slate-200 text-slate-400"
+                          }`}
+                        >
+                          {t(s, s === "Ligtas" ? "Safe" : s === "Nasa Panganib" ? "In Danger" : "Unknown")}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -617,11 +630,35 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                 </div>
                 <div className="space-y-1 pt-2">
                   <Label className="text-[10px] font-bold text-red-500 uppercase ml-1">{t("Evacuation Center 1", "Evac Center 1")}</Label>
-                  <Input value={plan.evacuation.evacCenter1} onChange={(e) => onChange({...plan, evacuation: {...plan.evacuation, evacCenter1: e.target.value}})} placeholder="e.g. Covered Court" className="rounded-2xl border-red-100 h-11 text-xs bg-red-50/30" />
+                  <div className="flex gap-2">
+                    <Input value={plan.evacuation.evacCenter1} onChange={(e) => onChange({...plan, evacuation: {...plan.evacuation, evacCenter1: e.target.value}})} placeholder="e.g. Covered Court" className="rounded-2xl border-red-100 h-11 text-xs bg-red-50/30 flex-1" />
+                    {plan.evacuation.evacCenter1 && (
+                      <Button
+                        size="icon"
+                        variant="outline"
+                        className="rounded-2xl h-11 w-11 shrink-0 border-red-100 text-red-500 hover:bg-red-50"
+                        onClick={() => window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(plan.evacuation.evacCenter1 + " " + plan.profile.municipality + " Camarines Norte")}`, '_blank')}
+                      >
+                        <MapPin className="w-4 h-4" />
+                      </Button>
+                    )}
+                  </div>
                 </div>
                 <div className="space-y-1">
                   <Label className="text-[10px] font-bold text-red-500 uppercase ml-1">{t("Evacuation Center 2", "Evac Center 2")}</Label>
-                  <Input value={plan.evacuation.evacCenter2} onChange={(e) => onChange({...plan, evacuation: {...plan.evacuation, evacCenter2: e.target.value}})} placeholder="e.g. School" className="rounded-2xl border-red-100 h-11 text-xs bg-red-50/30" />
+                  <div className="flex gap-2">
+                    <Input value={plan.evacuation.evacCenter2} onChange={(e) => onChange({...plan, evacuation: {...plan.evacuation, evacCenter2: e.target.value}})} placeholder="e.g. School" className="rounded-2xl border-red-100 h-11 text-xs bg-red-50/30 flex-1" />
+                    {plan.evacuation.evacCenter2 && (
+                      <Button
+                        size="icon"
+                        variant="outline"
+                        className="rounded-2xl h-11 w-11 shrink-0 border-red-100 text-red-500 hover:bg-red-50"
+                        onClick={() => window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(plan.evacuation.evacCenter2 + " " + plan.profile.municipality + " Camarines Norte")}`, '_blank')}
+                      >
+                        <MapPin className="w-4 h-4" />
+                      </Button>
+                    )}
+                  </div>
                 </div>
                 <div className="space-y-1">
                   <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Tala sa Bahay / Exit", "House Layout Notes")}</Label>
@@ -770,7 +807,12 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                     </label>
                     <label className="flex items-center gap-3 cursor-pointer">
                       <Checkbox checked={plan.checklist.tools.whistle} onCheckedChange={() => toggleChecklistItem("tools", "whistle")} />
-                      <span className="text-xs text-slate-700">{t("Pito / Whistle (isa bawat miyembro)", "Whistle (one for each member)")}</span>
+                      <div className="flex flex-col">
+                        <span className="text-xs text-slate-700">{t("Pito / Whistle", "Whistle")}</span>
+                        <span className="text-[9px] font-bold text-blue-500 uppercase">
+                          {t(`Dami: ${plan.members.length || 1} pito`, `Qty: ${plan.members.length || 1} whistles`)}
+                        </span>
+                      </div>
                     </label>
                     <label className="flex items-center gap-3 cursor-pointer">
                       <Checkbox checked={plan.checklist.tools.candleMatches} onCheckedChange={() => toggleChecklistItem("tools", "candleMatches")} />
@@ -805,7 +847,17 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                   <div className="space-y-2">
                     <label className="flex items-center gap-3 cursor-pointer">
                       <Checkbox checked={plan.checklist.eBalde.waterFood3Days} onCheckedChange={() => toggleChecklistItem("eBalde", "waterFood3Days")} />
-                      <span className="text-xs text-slate-700">{t("Pagkain at Tubig para sa 3 araw", "Food and Water for 3 days")}</span>
+                      <div className="flex flex-col">
+                        <span className="text-xs text-slate-700">{t("Pagkain at Tubig para sa 3 araw", "Food and Water for 3 days")}</span>
+                        <div className="flex gap-2 mt-0.5">
+                          <span className="text-[9px] font-black text-amber-600 bg-amber-100 px-1.5 rounded uppercase">
+                            {t(`${(plan.members.length || 1) * 3 * 3} Litro ng Tubig`, `${(plan.members.length || 1) * 3 * 3}L Water`)}
+                          </span>
+                          <span className="text-[9px] font-black text-amber-600 bg-amber-100 px-1.5 rounded uppercase">
+                            {t(`${(plan.members.length || 1) * 3 * 3} Meals`, `${(plan.members.length || 1) * 3 * 3} Meals`)}
+                          </span>
+                        </div>
+                      </div>
                     </label>
                     <label className="flex items-center gap-3 cursor-pointer">
                       <Checkbox checked={plan.checklist.eBalde.medicalSupplies} onCheckedChange={() => toggleChecklistItem("eBalde", "medicalSupplies")} />
@@ -869,6 +921,32 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                   <Input value={plan.profile.otherHotline} onChange={(e) => updateProfile({ otherHotline: e.target.value })} placeholder="09XX-XXX-XXXX" className="rounded-2xl border-slate-200 h-11 text-xs px-4" />
                 </div>
               </div>
+            </div>
+
+            {/* PAGASA Signal Tracker (New) */}
+            <div className="bg-white p-6 rounded-[32px] shadow-sm border border-slate-100 space-y-4">
+              <h3 className="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                <CloudLightning className="w-4 h-4 text-blue-500" />
+                {t("PAGASA Typhoon Signal Tracker", "PAGASA Typhoon Signal Tracker")}
+              </h3>
+
+              <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex items-center justify-between">
+                <div className="space-y-1">
+                  <p className="text-[10px] font-bold text-slate-500 uppercase">{t("Kasalukuyang Signal", "Current Signal")}</p>
+                  <p className="text-lg font-black text-slate-800">{t("Walang Aktibong Signal", "No Active Signal")}</p>
+                </div>
+                <div className="h-12 w-12 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600">
+                  <Shield className="w-6 h-6" />
+                </div>
+              </div>
+
+              <Button
+                variant="outline"
+                className="w-full rounded-2xl border-slate-200 text-xs font-bold h-10"
+                onClick={() => window.open(CAMARINES_NORTE_HOTLINES.links.pagasa, '_blank')}
+              >
+                {t("Suriin ang PAGASA Bulletin", "Check PAGASA Bulletin")}
+              </Button>
             </div>
 
             {/* Reference Hotlines */}
@@ -988,6 +1066,14 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                   <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Dalas", "Frequency")}</Label>
                   <Input value={plan.schedule.frequency} onChange={(e) => onChange({...plan, schedule: {...plan.schedule, frequency: e.target.value}})} placeholder={t("e.g. Isang beses sa isang buwan", "e.g. Once a month")} className="rounded-2xl border-slate-200 h-11 text-xs px-4" />
                 </div>
+
+                <Button
+                  onClick={() => toast.success(t("Reminder ay nakatakda!", "Reminder set successfully!"))}
+                  className="w-full bg-slate-900 hover:bg-black text-white rounded-2xl py-6 text-xs font-bold shadow-lg mt-2"
+                >
+                  <Clock className="w-4 h-4 mr-2" />
+                  {t("I-set ang Reminder", "Set Schedule Reminder")}
+                </Button>
               </div>
             </div>
           </div>

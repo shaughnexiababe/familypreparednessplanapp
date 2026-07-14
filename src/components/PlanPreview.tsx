@@ -133,8 +133,8 @@ export const PlanPreview: React.FC<PlanPreviewProps> = ({ plan, lang }) => {
                   <th className="p-2 border">{t("Edad", "Age")}</th>
                   <th className="p-2 border">{t("Telepono", "Phone")}</th>
                   <th className="p-2 border">{t("Blood Type", "Blood")}</th>
-                  <th className="p-2 border">{t("Karaniwang Lugar", "Location")}</th>
                   <th className="p-2 border">{t("Kondisyon", "Vulnerability")}</th>
+                  <th className="p-2 border">{t("Status", "Status")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -145,7 +145,6 @@ export const PlanPreview: React.FC<PlanPreviewProps> = ({ plan, lang }) => {
                     <td className="p-2 border">{m.age}</td>
                     <td className="p-2 border">{m.phone}</td>
                     <td className="p-2 border font-mono">{m.bloodType}</td>
-                    <td className="p-2 border text-xs">{m.usualLocation}</td>
                     <td className="p-2 border">
                       {m.vulnerability !== "None" ? (
                         <span className="px-2 py-0.5 bg-red-100 text-red-800 rounded text-[10px] font-bold">
@@ -154,6 +153,17 @@ export const PlanPreview: React.FC<PlanPreviewProps> = ({ plan, lang }) => {
                       ) : (
                         <span className="text-slate-400">Normal</span>
                       )}
+                    </td>
+                    <td className="p-2 border">
+                      {m.status ? (
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                          m.status === "Ligtas" ? "bg-emerald-100 text-emerald-800" :
+                          m.status === "Nasa Panganib" ? "bg-red-100 text-red-800" :
+                          "bg-slate-100 text-slate-800"
+                        }`}>
+                          {m.status}
+                        </span>
+                      ) : "---"}
                     </td>
                   </tr>
                 ))}
@@ -329,7 +339,7 @@ export const PlanPreview: React.FC<PlanPreviewProps> = ({ plan, lang }) => {
               </ul>
             </div>
             <div>
-              <h3 className="font-bold text-emerald-700 uppercase mb-2 border-b border-emerald-100">{t("PAGKAIN", "FOOD & MEDS")}</h3>
+              <h3 className="font-bold text-emerald-700 uppercase mb-2 border-b border-emerald-100">{t("PAGKAIN & GAMOT", "FOOD & MEDS")}</h3>
               <ul className="space-y-1">
                 {Object.entries(plan.checklist.foodMeds).map(([key, val]) => (
                   <li key={key} className="flex items-center gap-1">
@@ -337,8 +347,8 @@ export const PlanPreview: React.FC<PlanPreviewProps> = ({ plan, lang }) => {
                       {val && <div className="w-1 h-1 bg-white rounded-full"></div>}
                     </div>
                     <span className={val ? 'font-bold text-slate-800' : 'text-slate-400 italic line-through'}>
-                      {key === 'drinkingWater' ? t('Tubig', 'Water') :
-                       key === 'readyToEatFood' ? t('Food', 'Food') :
+                      {key === 'drinkingWater' ? t(`Tubig (${(plan.members.length || 1) * 9}L)`, `Water (${(plan.members.length || 1) * 9}L)`) :
+                       key === 'readyToEatFood' ? t(`Food (${(plan.members.length || 1) * 9} meals)`, `Food (${(plan.members.length || 1) * 9} meals)`) :
                        key === 'firstAidMeds' ? t('First Aid', 'First Aid') :
                        key === 'babyMeds' ? t('Baby Meds', 'Baby Meds') :
                        key === 'canOpenerUtensils' ? t('Utensils', 'Utensils') :
@@ -359,7 +369,7 @@ export const PlanPreview: React.FC<PlanPreviewProps> = ({ plan, lang }) => {
                     <span className={val ? 'font-bold text-slate-800' : 'text-slate-400 italic line-through'}>
                       {key === 'flashlight' ? t('Flashlight', 'Flashlight') :
                        key === 'powerbank' ? t('Powerbank', 'Powerbank') :
-                       key === 'whistle' ? t('Pito', 'Whistle') :
+                       key === 'whistle' ? t(`Pito (${plan.members.length || 1} pcs)`, `Whistle (${plan.members.length || 1} pcs)`) :
                        key === 'candleMatches' ? t('Matches', 'Matches') :
                        key === 'ropeRaincoat' ? t('Tali/Kapote', 'Rope') :
                        key === 'radioBlanket' ? t('Radio/Kumot', 'Radio') :
@@ -380,7 +390,7 @@ export const PlanPreview: React.FC<PlanPreviewProps> = ({ plan, lang }) => {
                       {val && <div className="w-1 h-1 bg-white rounded-full"></div>}
                     </div>
                     <span className={val ? 'font-bold text-slate-800' : 'text-slate-400 italic line-through'}>
-                      {key === 'waterFood3Days' ? t('3-Day Food', '3-Day Food') :
+                      {key === 'waterFood3Days' ? t(`3-Day Food/Water (${(plan.members.length || 1) * 9}L)`, `3-Day Food/Water (${(plan.members.length || 1) * 9}L)`) :
                        key === 'medicalSupplies' ? t('Medical', 'Medical') :
                        key === 'clothingGear' ? t('Clothing', 'Clothing') :
                        key === 'importantDocsWaterproof' ? t('Waterproof Docs', 'Docs') :

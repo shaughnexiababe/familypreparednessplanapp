@@ -7,6 +7,7 @@ export interface FamilyMember {
   bloodType: string;
   usualLocation: string;
   vulnerability: string; // e.g., Senior, Infant, Pregnant, PWD, None
+  status?: "Ligtas" | "Nasa Panganib" | "Hindi Pa Alam"; // Safety status
 }
 
 export interface RelativeContact {

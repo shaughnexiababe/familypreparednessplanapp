@@ -326,20 +326,6 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
             </Select>
           </div>
 
-          {selectedMuni.hazardTypes && (
-            <div className="md:col-span-4 bg-amber-50 p-4 rounded-xl border border-amber-100 flex items-center gap-4 animate-fadeIn">
-              <span className="text-xs font-bold text-amber-800 uppercase tracking-wider">{t("Mga Banta sa Inyong Lokasyon:", "Potential Hazards in Your Location:")}</span>
-              <div className="flex flex-wrap gap-2">
-                {selectedMuni.hazardTypes.map(h => (
-                  <span key={h} className="bg-white px-3 py-1 rounded-full text-xs font-bold text-amber-600 border border-amber-200 shadow-sm flex items-center gap-2">
-                    <AlertTriangle className="w-3.5 h-3.5" />
-                    {h}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
           <div className="space-y-2">
             <Label className="text-slate-700 font-semibold">{t("Uri ng Palikuran", "Toilet Facility")}</Label>
             <Select
@@ -356,20 +342,6 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
               </SelectContent>
             </Select>
           </div>
-
-          {selectedMuni.hazardTypes && (
-            <div className="md:col-span-4 bg-amber-50 p-4 rounded-xl border border-amber-100 flex items-center gap-4 animate-fadeIn">
-              <span className="text-xs font-bold text-amber-800 uppercase tracking-wider">{t("Mga Banta sa Inyong Lokasyon:", "Potential Hazards in Your Location:")}</span>
-              <div className="flex flex-wrap gap-2">
-                {selectedMuni.hazardTypes.map(h => (
-                  <span key={h} className="bg-white px-3 py-1 rounded-full text-xs font-bold text-amber-600 border border-amber-200 shadow-sm flex items-center gap-2">
-                    <AlertTriangle className="w-3.5 h-3.5" />
-                    {h}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
 
           <div className="space-y-2">
             <Label className="text-slate-700 font-semibold">{t("Kuryente", "Electricity")}</Label>
@@ -388,20 +360,6 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
               </SelectContent>
             </Select>
           </div>
-
-          {selectedMuni.hazardTypes && (
-            <div className="md:col-span-4 bg-amber-50 p-4 rounded-xl border border-amber-100 flex items-center gap-4 animate-fadeIn">
-              <span className="text-xs font-bold text-amber-800 uppercase tracking-wider">{t("Mga Banta sa Inyong Lokasyon:", "Potential Hazards in Your Location:")}</span>
-              <div className="flex flex-wrap gap-2">
-                {selectedMuni.hazardTypes.map(h => (
-                  <span key={h} className="bg-white px-3 py-1 rounded-full text-xs font-bold text-amber-600 border border-amber-200 shadow-sm flex items-center gap-2">
-                    <AlertTriangle className="w-3.5 h-3.5" />
-                    {h}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
 
           <div className="space-y-2">
             <Label className="text-slate-700 font-semibold">{t("Gamit sa Pagluluto", "Cooking")}</Label>
@@ -424,10 +382,13 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
           <div className="md:col-span-3 space-y-2">
             <Label className="text-slate-700 font-semibold">{t("Mga Bantang Panganib sa Lokasyon", "Hazards in Location")}</Label>
             <div className="flex flex-wrap gap-3 pt-1">
-              {["Baha (Flood)", "Lindol (Earthquake)", "Landslide", "Bagyo (Typhoon)", "Tsunami", "Storm Surge"].map((hazard) => {
+              {["Baha", "Lindol", "Landslide", "Bagyo", "Tsunami", "Storm Surge"].map((hazard) => {
                 const isChecked = plan.profile.hazardVulnerability.includes(hazard);
+                const isAutoDetected = selectedMuni.hazardTypes?.includes(hazard as any);
                 return (
-                  <label key={hazard} className="flex items-center gap-2 bg-slate-50 hover:bg-slate-100 px-3 py-2 rounded-xl border border-slate-200 cursor-pointer transition-colors">
+                  <label key={hazard} className={`flex items-center gap-2 px-3 py-2 rounded-xl border cursor-pointer transition-all ${
+                    isChecked ? "bg-red-50 border-red-200 shadow-sm" : "bg-slate-50 border-slate-200 hover:bg-slate-100"
+                  }`}>
                     <Checkbox
                       checked={isChecked}
                       onCheckedChange={() => {
@@ -437,11 +398,18 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
                         updateProfile({ hazardVulnerability: updated });
                       }}
                     />
-                    <span className="text-sm text-slate-700 font-medium">{hazard}</span>
+                    <span className={`text-sm font-medium flex items-center gap-1.5 ${isChecked ? "text-red-700" : "text-slate-700"}`}>
+                      {hazard}
+                      {isAutoDetected && <Sparkles className="w-3.5 h-3.5 text-amber-500" title="Auto-detected" />}
+                    </span>
                   </label>
                 );
               })}
             </div>
+            <p className="text-xs text-slate-400 italic flex items-center gap-1.5 mt-1">
+              <Sparkles className="w-3.5 h-3.5" />
+              {t("Ang mga may bituin ay awtomatikong natukoy para sa inyong munisipyo.", "Starred hazards are auto-detected for your municipality.")}
+            </p>
           </div>
         </div>
       </div>
@@ -572,6 +540,27 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
                       <SelectItem value="PWD">{t("PWD (Person with Disability)", "PWD")}</SelectItem>
                     </SelectContent>
                   </Select>
+                </div>
+
+                <div className="space-y-1 md:col-span-4 border-t border-slate-100 pt-3">
+                  <Label className="text-[10px] font-bold text-slate-400 uppercase">{t("Status ng Kaligtasan (Check-in)", "Safety Status (Check-in)")}</Label>
+                  <div className="flex gap-3 mt-1">
+                    {(["Ligtas", "Nasa Panganib", "Hindi Pa Alam"] as const).map((s) => (
+                      <button
+                        key={s}
+                        onClick={() => updateMember(member.id, { status: s })}
+                        className={`px-6 py-2 rounded-xl text-xs font-bold transition-all border ${
+                          member.status === s
+                            ? s === "Ligtas" ? "bg-emerald-500 border-emerald-500 text-white shadow-md"
+                              : s === "Nasa Panganib" ? "bg-red-500 border-red-500 text-white shadow-md"
+                              : "bg-slate-600 border-slate-600 text-white shadow-md"
+                            : "bg-white border-slate-200 text-slate-400 hover:bg-slate-50"
+                        }`}
+                      >
+                        {t(s, s === "Ligtas" ? "Safe" : s === "Nasa Panganib" ? "In Danger" : "Unknown")}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -826,21 +815,45 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
             <div className="space-y-3">
               <div className="space-y-1">
                 <Label className="text-xs font-bold text-slate-500">{t("Evacuation Center 1", "Evacuation Center 1")}</Label>
-                <Input
-                  value={plan.evacuation.evacCenter1}
-                  onChange={(e) => updateEvacuation({ evacCenter1: e.target.value })}
-                  placeholder={t("Hal. Barangay Covered Court", "e.g. Barangay Covered Court")}
-                  className="rounded-xl border-slate-200"
-                />
+                <div className="flex gap-2">
+                  <Input
+                    value={plan.evacuation.evacCenter1}
+                    onChange={(e) => updateEvacuation({ evacCenter1: e.target.value })}
+                    placeholder={t("Hal. Barangay Covered Court", "e.g. Barangay Covered Court")}
+                    className="rounded-xl border-slate-200"
+                  />
+                  {plan.evacuation.evacCenter1 && (
+                    <Button
+                      variant="outline"
+                      className="rounded-xl border-slate-200 text-slate-500 hover:text-amber-600 hover:bg-amber-50"
+                      onClick={() => window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(plan.evacuation.evacCenter1 + " " + plan.profile.municipality + " Camarines Norte")}`, '_blank')}
+                    >
+                      <MapPin className="w-4 h-4 mr-2" />
+                      {t("Direksyon", "Directions")}
+                    </Button>
+                  )}
+                </div>
               </div>
               <div className="space-y-1">
                 <Label className="text-xs font-bold text-slate-500">{t("Evacuation Center 2", "Evacuation Center 2")}</Label>
-                <Input
-                  value={plan.evacuation.evacCenter2}
-                  onChange={(e) => updateEvacuation({ evacCenter2: e.target.value })}
-                  placeholder={t("Hal. Daet Elementary School", "e.g. Daet Elementary School")}
-                  className="rounded-xl border-slate-200"
-                />
+                <div className="flex gap-2">
+                  <Input
+                    value={plan.evacuation.evacCenter2}
+                    onChange={(e) => updateEvacuation({ evacCenter2: e.target.value })}
+                    placeholder={t("Hal. Daet Elementary School", "e.g. Daet Elementary School")}
+                    className="rounded-xl border-slate-200"
+                  />
+                  {plan.evacuation.evacCenter2 && (
+                    <Button
+                      variant="outline"
+                      className="rounded-xl border-slate-200 text-slate-500 hover:text-amber-600 hover:bg-amber-50"
+                      onClick={() => window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(plan.evacuation.evacCenter2 + " " + plan.profile.municipality + " Camarines Norte")}`, '_blank')}
+                    >
+                      <MapPin className="w-4 h-4 mr-2" />
+                      {t("Direksyon", "Directions")}
+                    </Button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -1065,7 +1078,10 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
                   checked={plan.checklist.tools.whistle}
                   onCheckedChange={() => toggleChecklistItem("tools", "whistle")}
                 />
-                <span className="text-sm text-slate-700">{t("Pito / Whistle (isa bawat miyembro)", "Whistle (one for each member)")}</span>
+                <div className="flex flex-col">
+                  <span className="text-sm text-slate-700">{t("Pito / Whistle", "Whistle")}</span>
+                  <span className="text-[10px] font-bold text-blue-500 uppercase">{t(`Dami: ${plan.members.length || 1} pito`, `Qty: ${plan.members.length || 1} whistles`)}</span>
+                </div>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <Checkbox
@@ -1121,7 +1137,17 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
                   checked={plan.checklist.eBalde.waterFood3Days}
                   onCheckedChange={() => toggleChecklistItem("eBalde", "waterFood3Days")}
                 />
-                <span className="text-sm text-slate-700">{t("Pagkain at Tubig para sa 3 araw", "Food and Water for 3 days")}</span>
+                <div className="flex flex-col">
+                  <span className="text-sm text-slate-700">{t("Pagkain at Tubig para sa 3 araw", "Food and Water for 3 days")}</span>
+                  <div className="flex gap-2 mt-0.5">
+                    <span className="text-[10px] font-black text-amber-600 bg-amber-100 px-2 rounded">
+                      {t(`${(plan.members.length || 1) * 3 * 3}L Tubig`, `${(plan.members.length || 1) * 3 * 3}L Water`)}
+                    </span>
+                    <span className="text-[10px] font-black text-amber-600 bg-amber-100 px-2 rounded">
+                      {t(`${(plan.members.length || 1) * 3 * 3} Meals`, `${(plan.members.length || 1) * 3 * 3} Meals`)}
+                    </span>
+                  </div>
+                </div>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <Checkbox

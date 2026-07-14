@@ -6,6 +6,7 @@ import { PlanPreview } from "@/components/PlanPreview";
 import { AuthModal } from "@/components/AuthModal";
 import { useAuth } from "@/hooks/useAuth";
 import { AGE_GUIDELINES, PREPARED_FAMILY_CHARACTERISTICS, DISASTER_TIPS } from "@/data/educationalContent";
+import { CAMARINES_NORTE_HOTLINES } from "@/data/camNorteData";
 import { Button } from "@/components/ui/button";
 import { 
   Shield, 
@@ -27,7 +28,10 @@ import {
   Menu,
   ChevronRight,
   Zap,
-  FileText
+  FileText,
+  Clock,
+  ChevronDown,
+  ChevronUp
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -36,6 +40,11 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { toast } from "sonner";
 
 const Index = () => {
@@ -61,6 +70,8 @@ const Index = () => {
   const [lang, setLang] = useState<"tl" | "en">("tl");
   const [activeSection, setActiveSection] = useState<"wizard" | "preview" | "education">("wizard");
   const [isSirenPlaying, setIsSirenPlaying] = useState(false);
+  const [isScoreOpen, setIsScoreOpen] = useState(false);
+  const [pagasaSignal, setPagasaSignal] = useState<number>(0);
   const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
   const [oscillator, setOscillator] = useState<OscillatorNode | null>(null);
 
@@ -179,69 +190,88 @@ const Index = () => {
 
   // Calculate Preparedness Score
   const calculateScore = () => {
-    let score = 0;
-    let total = 30; // Increased total points for even stricter scoring
+    let totalPoints = 30;
 
     // 1. Profile filled (Max 6)
-    if (plan.profile.headOfHousehold) score += 1;
-    if (plan.profile.barangay && plan.profile.sitio) score += 1;
-    if (plan.profile.houseStructure && plan.profile.houseOwnership) score += 1;
-    if (plan.profile.waterSource && plan.profile.toiletFacility) score += 1;
-    if (plan.profile.electricitySource && plan.profile.cookingFacility) score += 1;
-    if (plan.profile.hazardVulnerability.length > 0) score += 1;
+    let profileScore = 0;
+    if (plan.profile.headOfHousehold) profileScore += 1;
+    if (plan.profile.barangay && plan.profile.sitio) profileScore += 1;
+    if (plan.profile.houseStructure && plan.profile.houseOwnership) profileScore += 1;
+    if (plan.profile.waterSource && plan.profile.toiletFacility) profileScore += 1;
+    if (plan.profile.electricitySource && plan.profile.cookingFacility) profileScore += 1;
+
+    // Check if auto-detected or manual hazards are present
+    const selectedMuni = CAMARINES_NORTE_HOTLINES.municipalities.find(m => m.name === plan.profile.municipality);
+    const hasAutoHazards = selectedMuni?.hazardTypes && selectedMuni.hazardTypes.length > 0;
+    const hasManualHazards = plan.profile.hazardVulnerability.length > 0;
+    if (hasAutoHazards || hasManualHazards) profileScore += 1;
 
     // 2. Family members (Max 4)
-    if (plan.members.length > 0) score += 1;
-    if (plan.members.length >= 2) score += 1;
-    if (plan.members.every(m => m.name && m.phone && m.bloodType)) score += 1;
-    if (plan.members.every(m => m.usualLocation && m.age)) score += 1;
+    let familyScore = 0;
+    if (plan.members.length > 0) familyScore += 1;
+    if (plan.members.length >= 2) familyScore += 1;
+    if (plan.members.length > 0 && plan.members.every(m => m.name && m.phone && m.bloodType)) familyScore += 1;
+    if (plan.members.length > 0 && plan.members.every(m => m.usualLocation && m.age)) familyScore += 1;
 
-    // 3. Roles & Tasks (Max 5) - Very strict
+    // 3. Roles & Tasks (Max 5)
+    let rolesScore = 0;
     if (plan.roles.length > 0) {
-      score += 1;
-      // Check if roles are assigned to members
+      rolesScore += 1;
       const uniqueAssignedMembers = new Set(plan.roles.map(r => r.memberId)).size;
-      if (uniqueAssignedMembers >= Math.min(plan.members.length, 2)) score += 1;
+      if (uniqueAssignedMembers >= Math.min(plan.members.length, 2)) rolesScore += 1;
 
-      // Check if tasks are actually written
       const rolesWithTasks = plan.roles.filter(r => r.tasksBefore || r.tasksDuring || r.tasksAfter).length;
-      if (rolesWithTasks > 0) score += 1;
-      if (rolesWithTasks === plan.roles.length && plan.roles.length > 0) score += 1;
-      if (plan.roles.every(r => r.roleType && r.otherNotes)) score += 1;
+      if (rolesWithTasks > 0) rolesScore += 1;
+      if (rolesWithTasks === plan.roles.length && plan.roles.length > 0) rolesScore += 1;
+      if (plan.roles.every(r => r.roleType && r.otherNotes)) rolesScore += 1;
     }
 
     // 4. Evacuation places (Max 4)
-    if (plan.evacuation.meetingPlace1) score += 1;
-    if (plan.evacuation.meetingPlace2) score += 1;
-    if (plan.evacuation.evacCenter1 && plan.evacuation.evacCenter2) score += 1;
-    if (plan.evacuation.houseLayoutNotes) score += 1;
+    let evacScore = 0;
+    if (plan.evacuation.meetingPlace1) evacScore += 1;
+    if (plan.evacuation.meetingPlace2) evacScore += 1;
+    if (plan.evacuation.evacCenter1 && plan.evacuation.evacCenter2) evacScore += 1;
+    if (plan.evacuation.houseLayoutNotes) evacScore += 1;
 
     // 5. Checklist items checked (Max 8)
-    const checkedCount = 
+    let checklistScore = 0;
+    const checkedCount =
       Object.values(plan.checklist.documentsCash).filter(Boolean).length +
       Object.values(plan.checklist.toiletries).filter(Boolean).length +
       Object.values(plan.checklist.foodMeds).filter(Boolean).length +
       Object.values(plan.checklist.tools).filter(Boolean).length +
       Object.values(plan.checklist.eBalde).filter(Boolean).length;
     
-    if (checkedCount >= 30) score += 8;
-    else if (checkedCount >= 20) score += 5;
-    else if (checkedCount >= 10) score += 3;
-    else if (checkedCount >= 5) score += 1;
+    if (checkedCount >= 30) checklistScore = 8;
+    else if (checkedCount >= 20) checklistScore = 5;
+    else if (checkedCount >= 10) checklistScore = 3;
+    else if (checkedCount >= 5) checklistScore = 1;
 
     // 6. Schedule & Hotlines (Max 3)
-    if (plan.schedule.date && plan.schedule.time) score += 1;
-    if (plan.profile.brgyHotline || plan.profile.bpsoHotline) score += 1;
-    if (plan.profile.bhwHotline) score += 1;
+    let hotlinesScore = 0;
+    if (plan.schedule.date && plan.schedule.time) hotlinesScore += 1;
+    if (plan.profile.brgyHotline || plan.profile.bpsoHotline) hotlinesScore += 1;
+    if (plan.profile.bhwHotline) hotlinesScore += 1;
 
-    const percentage = Math.round((score / total) * 100);
+    const totalScore = profileScore + familyScore + rolesScore + evacScore + checklistScore + hotlinesScore;
+    const percentage = Math.min(Math.round((totalScore / totalPoints) * 100), 100);
+
+    const badge = percentage >= 95 ? t("Handang-Handa! 🌟", "Fully Prepared! 🌟") :
+                  percentage >= 75 ? t("Handa na 👍", "Prepared 👍") :
+                  percentage >= 40 ? t("Sapat ang Handa ⚠️", "Moderately Prepared ⚠️") :
+                  t("Kailangan pa ng Paghahanda 🛑", "Needs More Preparation 🛑");
 
     return {
-      percentage: Math.min(percentage, 100),
-      badge: percentage >= 95 ? t("Handang-Handa! 🌟", "Fully Prepared! 🌟") :
-             percentage >= 75 ? t("Handa na 👍", "Prepared 👍") :
-             percentage >= 40 ? t("Sapat ang Handa ⚠️", "Moderately Prepared ⚠️") :
-             t("Kailangan pa ng Paghahanda 🛑", "Needs More Preparation 🛑")
+      percentage,
+      badge,
+      breakdown: [
+        { label: t("Profil", "Profile"), score: profileScore, total: 6 },
+        { label: t("Pamilya", "Family"), score: familyScore, total: 4 },
+        { label: t("Tungkulin", "Roles"), score: rolesScore, total: 5 },
+        { label: t("Likas", "Evac"), score: evacScore, total: 4 },
+        { label: t("Go-Bag", "Kit"), score: checklistScore, total: 8 },
+        { label: t("Hotline/Sched", "Hotlines"), score: hotlinesScore, total: 3 },
+      ]
     };
   };
 
@@ -413,7 +443,18 @@ const Index = () => {
               </Button>
             )}
 
-            <div className="bg-white/10 backdrop-blur-md p-1 rounded-xl border border-white/20 flex">
+            <div className="bg-white/10 backdrop-blur-md p-1 rounded-xl border border-white/20 flex gap-1">
+              <button
+                onClick={() => setPagasaSignal(pagasaSignal === 0 ? 2 : 0)}
+                className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all flex items-center gap-1.5 ${
+                  pagasaSignal > 0 ? "bg-red-500 text-white" : "text-white hover:bg-white/10"
+                }`}
+                title={t("I-simulate ang Typhoon Signal", "Simulate Typhoon Signal")}
+              >
+                <CloudLightning className="w-3.5 h-3.5" />
+                {pagasaSignal > 0 ? "Signal #" + pagasaSignal : "SIMULATE"}
+              </button>
+              <div className="w-px h-4 bg-white/20 self-center mx-1"></div>
               <button
                 onClick={() => setLang("tl")}
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
@@ -468,35 +509,80 @@ const Index = () => {
       {/* Main Dashboard Layout */}
       <main className="max-w-7xl mx-auto px-4 md:px-8 mt-4 lg:mt-8 space-y-6 lg:space-y-8">
         {/* Preparedness Score Widget */}
-        <div className="flex bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-2 text-center md:text-left">
-            <h3 className="text-lg font-bold text-slate-800 flex items-center justify-center md:justify-start gap-2">
-              <Sparkles className="w-5 h-5 text-amber-500" />
-              {t("Antas ng Kahandaan ng Pamilya", "Family Preparedness Level")}
-            </h3>
-            <p className="text-xs text-slate-500">
-              {t(
-                "Awtomatikong kinakalkula batay sa mga impormasyon at checklist na iyong sinagutan.",
-                "Automatically calculated based on the information and checklist items you completed."
-              )}
-            </p>
-          </div>
+        <div className={`rounded-2xl border shadow-sm overflow-hidden animate-fadeIn transition-all duration-500 ${
+          pagasaSignal > 0 ? "bg-red-50 border-red-200" : "bg-white border-slate-200"
+        }`}>
+          <Collapsible open={isScoreOpen} onOpenChange={setIsScoreOpen}>
+            <div className="p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="space-y-2 text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start gap-2">
+                  <h3 className={`text-lg font-bold flex items-center gap-2 ${pagasaSignal > 0 ? "text-red-800" : "text-slate-800"}`}>
+                    <Sparkles className={`w-5 h-5 ${pagasaSignal > 0 ? "text-red-500" : "text-amber-500"}`} />
+                    {t("Antas ng Kahandaan ng Pamilya", "Family Preparedness Level")}
+                  </h3>
+                  {pagasaSignal > 0 && (
+                    <div className="bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full animate-pulse uppercase tracking-widest">
+                      Signal #{pagasaSignal} Active
+                    </div>
+                  )}
+                </div>
+                <p className={`text-xs ${pagasaSignal > 0 ? "text-red-600 font-medium" : "text-slate-500"}`}>
+                  {pagasaSignal > 0
+                    ? t("⚠️ MAY AKTIBONG TYPHOON SIGNAL! Pakisuri agad ang inyong Go-Bag.", "⚠️ ACTIVE TYPHOON SIGNAL! Please review your Go-Bag immediately.")
+                    : t("Awtomatikong kinakalkula batay sa mga impormasyon at checklist na iyong sinagutan.", "Automatically calculated based on the information and checklist items you completed.")}
+                </p>
+              </div>
 
-          <div className="flex items-center gap-4 w-full md:w-auto">
-            <div className="text-center">
-              <span className="text-3xl font-black text-amber-600">{prepScore.percentage}%</span>
-              <span className="text-[10px] text-slate-400 block uppercase font-bold">{t("KUMPLETO", "COMPLETE")}</span>
+              <div className="flex items-center gap-4 w-full md:w-auto">
+                <div className="text-center">
+                  <span className={`text-3xl font-black ${pagasaSignal > 0 ? "text-red-600" : "text-amber-600"}`}>{prepScore.percentage}%</span>
+                  <span className="text-[10px] text-slate-400 block uppercase font-bold">{t("KUMPLETO", "COMPLETE")}</span>
+                </div>
+                <div className="flex-1 md:w-48 bg-slate-100 h-3 rounded-full overflow-hidden">
+                  <div
+                    className={`${pagasaSignal > 0 ? "bg-red-500" : "bg-gradient-to-r from-amber-500 to-emerald-500"} h-full transition-all duration-500`}
+                    style={{ width: `${prepScore.percentage}%` }}
+                  ></div>
+                </div>
+                <div className={`${pagasaSignal > 0 ? "bg-red-100 border-red-300 text-red-800" : "bg-amber-50 border-amber-200 text-amber-800"} border px-3 py-1.5 rounded-xl text-xs font-bold shrink-0`}>
+                  {prepScore.badge}
+                </div>
+                <CollapsibleTrigger asChild>
+                  <Button variant="ghost" size="icon" className="text-slate-400">
+                    {isScoreOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                  </Button>
+                </CollapsibleTrigger>
+              </div>
             </div>
-            <div className="flex-1 md:w-48 bg-slate-100 h-3 rounded-full overflow-hidden">
-              <div 
-                className="bg-gradient-to-r from-amber-500 to-emerald-500 h-full transition-all duration-500"
-                style={{ width: `${prepScore.percentage}%` }}
-              ></div>
-            </div>
-            <div className="bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-xl text-xs font-bold text-amber-800">
-              {prepScore.badge}
-            </div>
-          </div>
+
+            <CollapsibleContent className="border-t border-slate-50 bg-slate-50/50 p-6 animate-slideDown">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                {prepScore.breakdown.map((item, idx) => (
+                  <div key={idx} className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-2">
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">{item.label}</p>
+                    <div className="flex items-end justify-between">
+                      <span className="text-xl font-black text-slate-800">{item.score}<span className="text-xs text-slate-300 ml-0.5">/{item.total}</span></span>
+                      <div className="w-10 h-1 bg-slate-100 rounded-full overflow-hidden mb-1.5">
+                        <div
+                          className={`h-full ${item.score === item.total ? 'bg-emerald-500' : 'bg-amber-500'}`}
+                          style={{ width: `${(item.score / item.total) * 100}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 p-3 bg-amber-50 rounded-xl border border-amber-100 flex items-start gap-2">
+                <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                <p className="text-[11px] text-amber-800 leading-relaxed">
+                  {t(
+                    "Pahiwatig: Kumpletuhin ang bawat seksyon upang tumaas ang iyong score. Ang checklist (Go-Bag) ang may pinakamalaking puntos.",
+                    "Tip: Complete each section to increase your score. The checklist (Go-Bag) carries the most points."
+                  )}
+                </p>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
         </div>
 
         {/* Navigation Tabs (Shared Web & Mobile) */}
