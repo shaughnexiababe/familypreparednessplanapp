@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Trash2, Shield, Users, Calendar, MapPin, CheckSquare, Phone, BookOpen, Zap, Droplets, AlertTriangle, Sparkles } from "lucide-react";
+import { Plus, Trash, Shield, Users, Calendar, MapPin, CheckSquare, Phone, BookOpen, Zap, Droplets, AlertTriangle, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 
 interface WebPlanWizardProps {
@@ -442,7 +442,7 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
             <div key={member.id} className="p-4 border border-slate-100 rounded-2xl bg-slate-50/50 space-y-4 relative">
               <div className="absolute top-4 right-4">
                 <Button variant="ghost" size="icon" onClick={() => removeMember(member.id)} className="text-red-500 hover:text-red-700 hover:bg-red-50 rounded-xl">
-                  <Trash2 className="w-4 h-4" />
+                  <Trash className="w-4 h-4" />
                 </Button>
               </div>
 
@@ -590,7 +590,7 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
               <div key={relative.id} className="p-4 border border-slate-100 rounded-2xl bg-slate-50/50 space-y-4 relative">
                 <div className="absolute top-4 right-4">
                   <Button variant="ghost" size="icon" onClick={() => removeRelative(relative.id)} className="text-red-500 hover:text-red-700 hover:bg-red-50 rounded-xl">
-                    <Trash2 className="w-4 h-4" />
+                    <Trash className="w-4 h-4" />
                   </Button>
                 </div>
 
@@ -601,6 +601,33 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
                       value={relative.name}
                       onChange={(e) => updateRelative(relative.id, { name: e.target.value })}
                       placeholder={t("Buong Pangalan", "Full Name")}
+                      className="rounded-xl border-slate-200 bg-white"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <Label className="text-xs font-bold text-slate-500">{t("Kasarian", "Gender")}</Label>
+                    <Select
+                      value={relative.gender}
+                      onValueChange={(val) => updateRelative(relative.id, { gender: val })}
+                    >
+                      <SelectTrigger className="rounded-xl border-slate-200 bg-white">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Lalaki (Male)">{t("Lalaki (Male)", "Male")}</SelectItem>
+                        <SelectItem value="Babae (Female)">{t("Babae (Female)", "Female")}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-1">
+                    <Label className="text-xs font-bold text-slate-500">{t("Edad", "Age")}</Label>
+                    <Input
+                      value={relative.age}
+                      onChange={(e) => updateRelative(relative.id, { age: e.target.value })}
+                      placeholder={t("Edad", "Age")}
+                      type="number"
                       className="rounded-xl border-slate-200 bg-white"
                     />
                   </div>
@@ -678,7 +705,7 @@ export const WebPlanWizard: React.FC<WebPlanWizardProps> = ({ plan, onChange, la
             <div key={idx} className="p-4 border border-slate-100 rounded-2xl bg-slate-50/50 space-y-4 relative">
               <div className="absolute top-4 right-4">
                 <Button variant="ghost" size="icon" onClick={() => removeRole(idx)} className="text-red-500 hover:text-red-700 hover:bg-red-50 rounded-xl">
-                  <Trash2 className="w-4 h-4" />
+                  <Trash className="w-4 h-4" />
                 </Button>
               </div>
 

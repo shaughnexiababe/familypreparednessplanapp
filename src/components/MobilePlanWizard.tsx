@@ -15,7 +15,7 @@ import {
   CheckSquare,
   Phone,
   Plus,
-  Trash2,
+  Trash,
   Briefcase,
   Lightbulb,
   Droplets,
@@ -395,7 +395,7 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                 <div key={m.id} className="bg-white p-5 rounded-[32px] shadow-sm border border-slate-100 space-y-3 relative overflow-hidden">
                   <div className="absolute top-0 right-0 p-2">
                     <Button variant="ghost" size="icon" onClick={() => removeMember(m.id)} className="text-red-400 h-8 w-8 hover:bg-red-50 rounded-xl">
-                      <Trash2 className="w-4 h-4" />
+                      <Trash className="w-4 h-4" />
                     </Button>
                   </div>
 
@@ -498,11 +498,28 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                   <div key={r.id} className="bg-white p-5 rounded-[32px] shadow-sm border border-slate-100 space-y-3 relative overflow-hidden">
                     <div className="absolute top-0 right-0 p-2">
                       <Button variant="ghost" size="icon" onClick={() => removeRelative(r.id)} className="text-red-400 h-8 w-8 hover:bg-red-50 rounded-xl">
-                        <Trash2 className="w-4 h-4" />
+                        <Trash className="w-4 h-4" />
                       </Button>
                     </div>
 
                     <Input value={r.name} onChange={(e) => updateRelative(r.id, { name: e.target.value })} placeholder={t("Pangalan", "Full Name")} className="rounded-2xl border-slate-200 h-10 text-xs font-bold pr-10" />
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-1">
+                        <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Kasarian", "Gender")}</Label>
+                        <Select value={r.gender} onValueChange={(val) => updateRelative(r.id, { gender: val })}>
+                          <SelectTrigger className="rounded-2xl border-slate-200 h-10 text-xs px-3 shadow-sm"><SelectValue /></SelectTrigger>
+                          <SelectContent className="rounded-xl">
+                            <SelectItem value="Lalaki (Male)">{t("Lalaki (Male)", "Male")}</SelectItem>
+                            <SelectItem value="Babae (Female)">{t("Babae (Female)", "Female")}</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-[10px] font-bold text-slate-400 uppercase ml-1">{t("Edad", "Age")}</Label>
+                        <Input value={r.age} onChange={(e) => updateRelative(r.id, { age: e.target.value })} type="number" className="rounded-2xl border-slate-200 h-10 text-xs" />
+                      </div>
+                    </div>
 
                     <div className="grid grid-cols-2 gap-3">
                       <div className="space-y-1">
@@ -561,7 +578,7 @@ export const MobilePlanWizard: React.FC<MobilePlanWizardProps> = ({ plan, onChan
                 {plan.roles.map((role, idx) => (
                 <div key={idx} className="bg-white p-5 rounded-[32px] shadow-sm border border-slate-100 space-y-3 relative">
                   <div className="absolute top-0 right-0 p-2">
-                    <Button variant="ghost" size="icon" onClick={() => removeRole(idx)} className="text-red-400 h-8 w-8 hover:bg-red-50 rounded-xl"><Trash2 className="w-4 h-4" /></Button>
+                    <Button variant="ghost" size="icon" onClick={() => removeRole(idx)} className="text-red-400 h-8 w-8 hover:bg-red-50 rounded-xl"><Trash className="w-4 h-4" /></Button>
                   </div>
 
                   <div className="space-y-3">

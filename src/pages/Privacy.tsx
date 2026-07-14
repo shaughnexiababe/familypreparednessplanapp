@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Shield, ChevronLeft, Trash2, AlertCircle } from "lucide-react";
+import { Shield, ChevronLeft, Trash, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
@@ -173,7 +173,7 @@ const Privacy = () => {
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button variant="outline" className="text-red-600 border-red-100 hover:bg-red-50 rounded-2xl gap-2 font-bold px-6">
-                      <Trash2 className="w-4 h-4" />
+                      <Trash className="w-4 h-4" />
                       {t("Burahin ang aking Account Ngayon", "Delete my Account Now")}
                     </Button>
                   </AlertDialogTrigger>

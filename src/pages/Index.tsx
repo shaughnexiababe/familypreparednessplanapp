@@ -31,7 +31,8 @@ import {
   FileText,
   Clock,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Trash
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -405,7 +406,7 @@ const Index = () => {
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="py-2.5 font-medium text-red-600">
-                        <Trash2 className="w-4 h-4 mr-2" />
+                        <Trash className="w-4 h-4 mr-2" />
                         {t("Burahin ang Account", "Delete Account")}
                       </DropdownMenuItem>
                     </AlertDialogTrigger>
@@ -493,7 +494,7 @@ const Index = () => {
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="py-2.5 font-medium text-red-600">
-                          <Trash2 className="w-4 h-4 mr-2" />
+                          <Trash className="w-4 h-4 mr-2" />
                           {t("Burahin ang Account", "Delete Account")}
                         </DropdownMenuItem>
                       </AlertDialogTrigger>
