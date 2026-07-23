@@ -4,6 +4,7 @@ import { WebPlanWizard } from "@/components/WebPlanWizard";
 import { MobilePlanWizard } from "@/components/MobilePlanWizard";
 import { PlanPreview } from "@/components/PlanPreview";
 import { AuthModal } from "@/components/AuthModal";
+import { EducationTips } from "@/components/EducationTips";
 import { useAuth } from "@/hooks/useAuth";
 import { AGE_GUIDELINES, PREPARED_FAMILY_CHARACTERISTICS, DISASTER_TIPS } from "@/data/educationalContent";
 import { CAMARINES_NORTE_HOTLINES } from "@/data/camNorteData";
@@ -654,12 +655,21 @@ const Index = () => {
             </div>
             <div className="mt-4 p-3 bg-amber-50 rounded-xl border border-amber-100 flex items-start gap-2">
               <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-              <p className="text-[11px] text-amber-800 leading-relaxed">
-                {t(
-                  "Pahiwatig: Kumpletuhin ang bawat seksyon upang tumaas ang iyong score. Ang checklist (Go-Bag) ang may pinakamalaking puntos.",
-                  "Tip: Complete each section to increase your score. The checklist (Go-Bag) carries the most points."
-                )}
-              </p>
+              <div className="flex-1 space-y-1">
+                <p className="text-[11px] text-amber-800 leading-relaxed">
+                  {t(
+                    "Pahiwatig: Kumpletuhin ang bawat seksyon upang tumaas ang iyong score. Ang checklist (Go-Bag) ang may pinakamalaking puntos.",
+                    "Tip: Complete each section to increase your score. The checklist (Go-Bag) carries the most points."
+                  )}
+                </p>
+                <button
+                  onClick={() => setActiveSection("education")}
+                  className="text-[10px] font-black text-amber-600 uppercase hover:underline flex items-center gap-1"
+                >
+                  <BookOpen className="w-3 h-3" />
+                  {t("Magbasa ng Gabay", "Read Guidelines")}
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -895,7 +905,7 @@ const Index = () => {
               </div>
             </section>
 
-            {/* 3. Disaster Tips (Before, During, After) */}
+            {/* 3. Disaster Tips (OCD Broadcaster's Manual) */}
             <section className="space-y-6">
               <div className="text-center max-w-2xl mx-auto">
                 <h2 className="text-2xl font-black text-slate-800">
@@ -903,64 +913,13 @@ const Index = () => {
                 </h2>
                 <p className="text-sm text-slate-500 mt-1">
                   {t(
-                    "Mga dapat gawin Bago, Habang, at Pagkatapos ng iba't ibang uri ng sakuna.",
-                    "What to do Before, During, and After different types of disasters."
+                    "Mga gabay mula sa OCD para sa iba't ibang uri ng sakuna bago, habang, at pagkatapos nito.",
+                    "Official OCD guidelines for various disasters before, during, and after they occur."
                   )}
                 </p>
               </div>
 
-              <div className="space-y-6">
-                {DISASTER_TIPS.map((tip, idx) => (
-                  <div key={idx} className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                    <div className="relative h-64 md:h-80 bg-white p-2">
-                      <img 
-                        src={tip.imageUrl} 
-                        alt={t(tip.title.tl, tip.title.en)} 
-                        className="w-full h-full object-contain"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent flex items-end p-6">
-                        <h3 className="text-xl md:text-2xl font-black text-white">
-                          {t(tip.title.tl, tip.title.en)}
-                        </h3>
-                      </div>
-                    </div>
-                    <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-                      <div className="bg-amber-50/50 p-4 rounded-xl space-y-2">
-                        <h4 className="font-bold text-amber-700 uppercase tracking-wider">
-                          {t("BAGO (BEFORE)", "BEFORE")}
-                        </h4>
-                        <ul className="list-disc list-inside space-y-1 text-slate-600">
-                          {tip.before.map((b, bIdx) => (
-                            <li key={bIdx}>{t(b.tl, b.en)}</li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="bg-red-50/50 p-4 rounded-xl space-y-2">
-                        <h4 className="font-bold text-red-700 uppercase tracking-wider">
-                          {t("HABANG (DURING)", "DURING")}
-                        </h4>
-                        <ul className="list-disc list-inside space-y-1 text-slate-600">
-                          {tip.during.map((d, dIdx) => (
-                            <li key={dIdx}>{t(d.tl, d.en)}</li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="bg-emerald-50/50 p-4 rounded-xl space-y-2">
-                        <h4 className="font-bold text-emerald-700 uppercase tracking-wider">
-                          {t("PAGKATAPOS (AFTER)", "AFTER")}
-                        </h4>
-                        <ul className="list-disc list-inside space-y-1 text-slate-600">
-                          {tip.after.map((a, aIdx) => (
-                            <li key={aIdx}>{t(a.tl, a.en)}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <EducationTips lang={lang} />
             </section>
           </div>
         )}
